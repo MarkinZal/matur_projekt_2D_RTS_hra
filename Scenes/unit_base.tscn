@@ -1,0 +1,41 @@
+[gd_scene load_steps=6 format=3 uid="uid://bdbn2a3p48834"]
+
+[ext_resource type="Script" uid="uid://7a48xa6h1mva" path="res://Scripts/unit.gd" id="1_2vsbj"]
+[ext_resource type="Texture2D" uid="uid://dctregtirgu7n" path="res://Assets/Sprites/Characters/tile_0096.png" id="1_yagyl"]
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_yagyl"]
+radius = 8.0
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_2vsbj"]
+bg_color = Color(0.2159017, 0.21590173, 0.21590161, 1)
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_aj46g"]
+bg_color = Color(0.79607844, 0, 0, 1)
+border_width_left = 5
+border_width_top = 5
+border_width_right = 5
+border_width_bottom = 5
+border_color = Color(0.21568628, 0.21568628, 0.21568628, 1)
+
+[node name="Unit_Base" type="Area2D"]
+script = ExtResource("1_2vsbj")
+
+[node name="Sprite" type="Sprite2D" parent="."]
+texture = ExtResource("1_yagyl")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+position = Vector2(0, 2)
+shape = SubResource("CircleShape2D_yagyl")
+
+[node name="NavigationAgent2D" type="NavigationAgent2D" parent="."]
+
+[node name="HealthBar" type="ProgressBar" parent="."]
+offset_left = -10.0
+offset_top = -12.0
+offset_right = 190.0
+offset_bottom = 28.0
+scale = Vector2(0.1, 0.1)
+theme_override_styles/background = SubResource("StyleBoxFlat_2vsbj")
+theme_override_styles/fill = SubResource("StyleBoxFlat_aj46g")
+value = 60.0
+show_percentage = false
