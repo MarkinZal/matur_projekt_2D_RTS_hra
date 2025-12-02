@@ -25,7 +25,8 @@ func _ready():
 	set_move_to_target(Vector2.ZERO)
 
 func _process (delta):
-	_move(delta)
+	if not agent.is_target_reached():
+		_move(delta)
 
 func _move (delta):
 	var move_pos = agent.get_next_path_position()
