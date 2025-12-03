@@ -21,8 +21,6 @@ var attack_target : Unit
 
 @onready var agent : NavigationAgent2D = $NavigationAgent2D
 
-func _ready():
-	set_move_to_target(Vector2.ZERO)
 
 func _process (delta):
 	if not agent.is_target_reached():
