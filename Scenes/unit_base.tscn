@@ -1,7 +1,9 @@
-[gd_scene load_steps=6 format=3 uid="uid://bdbn2a3p48834"]
+[gd_scene load_steps=8 format=3 uid="uid://bdbn2a3p48834"]
 
 [ext_resource type="Script" uid="uid://7a48xa6h1mva" path="res://Scripts/unit.gd" id="1_2vsbj"]
 [ext_resource type="Texture2D" uid="uid://dctregtirgu7n" path="res://Assets/Sprites/Characters/tile_0096.png" id="1_yagyl"]
+[ext_resource type="Script" uid="uid://dpy78u6qmjf3u" path="res://Scripts/unit_visual.gd" id="3_3wtx8"]
+[ext_resource type="Script" uid="uid://cgh2k4lw3fl4l" path="res://Scripts/health_bar.gd" id="3_aj46g"]
 
 [sub_resource type="CircleShape2D" id="CircleShape2D_yagyl"]
 radius = 8.0
@@ -17,11 +19,14 @@ border_width_right = 5
 border_width_bottom = 5
 border_color = Color(0.21568628, 0.21568628, 0.21568628, 1)
 
-[node name="Unit_Base" type="Area2D"]
+[node name="Unit_Base" type="Area2D" groups=["Unit"]]
 script = ExtResource("1_2vsbj")
 
 [node name="Sprite" type="Sprite2D" parent="."]
+position = Vector2(0, 10)
 texture = ExtResource("1_yagyl")
+offset = Vector2(0, -8.305)
+script = ExtResource("3_3wtx8")
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
 position = Vector2(0, 2)
@@ -41,3 +46,4 @@ theme_override_styles/background = SubResource("StyleBoxFlat_2vsbj")
 theme_override_styles/fill = SubResource("StyleBoxFlat_aj46g")
 value = 60.0
 show_percentage = false
+script = ExtResource("3_aj46g")
