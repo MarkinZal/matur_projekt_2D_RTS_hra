@@ -1,17 +1,28 @@
-[gd_scene load_steps=7 format=4 uid="uid://c6bkqujj3ue2j"]
+[gd_scene load_steps=11 format=4 uid="uid://c6bkqujj3ue2j"]
 
 [ext_resource type="Script" uid="uid://c2djnlai8ur1d" path="res://Scripts/unit_controller.gd" id="1_8gbba"]
+[ext_resource type="Script" uid="uid://dtpmcscmsb8es" path="res://Scripts/game_manager.gd" id="1_21xkr"]
 [ext_resource type="TileSet" uid="uid://dql5d80ygsq4e" path="res://Assets/Sprites/Tiles/new_tile_set.tres" id="1_jjgbg"]
 [ext_resource type="PackedScene" uid="uid://bu2b225xv741d" path="res://Scenes/unit_player.tscn" id="2_bo1nx"]
 [ext_resource type="Script" uid="uid://oe77idptic6m" path="res://Scripts/camera_controller.gd" id="2_kry3j"]
 [ext_resource type="PackedScene" uid="uid://4nsdvq6d3jmt" path="res://Scenes/unit_ai.tscn" id="4_jjvhh"]
+[ext_resource type="Script" uid="uid://cjwimbur0c3sl" path="res://Scripts/end_screen.gd" id="7_6bp64"]
 
 [sub_resource type="NavigationPolygon" id="NavigationPolygon_jjgbg"]
 vertices = PackedVector2Array(278, -150, 278, 150, -278, 150, -262, -22, -246, -54, -214, -70, -278, -22, -262, -54, -246, -70, -214, -102, -198, -102, -182, -118, -150, -134, -198, -118, -182, -134, -150, -150)
 polygons = Array[PackedInt32Array]([PackedInt32Array(0, 1, 2, 3, 4, 5), PackedInt32Array(2, 6, 3), PackedInt32Array(3, 7, 4), PackedInt32Array(4, 8, 5), PackedInt32Array(5, 9, 10), PackedInt32Array(0, 5, 10, 11, 12), PackedInt32Array(10, 13, 11), PackedInt32Array(11, 14, 12), PackedInt32Array(0, 12, 15)])
 outlines = Array[PackedVector2Array]([PackedVector2Array(-288, 160, -288, -32, -272, -32, -272, -64, -256, -64, -256, -80, -224, -80, -224, -112, -208, -112, -208, -128, -192, -128, -192, -144, -160, -144, -160, -160, 288, -160, 288, 160, -288, 160)])
 
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_21xkr"]
+bg_color = Color(0.4098507, 0.03952407, 0.047954284, 1)
+
+[sub_resource type="LabelSettings" id="LabelSettings_6bp64"]
+font_size = 32
+shadow_color = Color(0.23137255, 0.23137255, 0.23137255, 0.83137256)
+shadow_offset = Vector2(3, 3)
+
 [node name="Main" type="Node2D"]
+script = ExtResource("1_21xkr")
 
 [node name="UnitController" type="Node2D" parent="."]
 script = ExtResource("1_8gbba")
@@ -41,3 +52,50 @@ position = Vector2(108, -2)
 
 [node name="Unit_AI5" parent="." instance=ExtResource("4_jjvhh")]
 position = Vector2(193, -66)
+
+[node name="CanvasLayer" type="CanvasLayer" parent="."]
+
+[node name="EndScreen" type="Panel" parent="CanvasLayer"]
+visible = false
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_styles/panel = SubResource("StyleBoxFlat_21xkr")
+script = ExtResource("7_6bp64")
+
+[node name="HeaderText" type="Label" parent="CanvasLayer/EndScreen"]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -211.0
+offset_top = -66.0
+offset_right = 211.0
+offset_bottom = 66.0
+grow_horizontal = 2
+grow_vertical = 2
+text = "Player team has won! "
+label_settings = SubResource("LabelSettings_6bp64")
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="MenuButton" type="Button" parent="CanvasLayer/EndScreen"]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -79.0
+offset_top = 48.0
+offset_right = 78.0
+offset_bottom = 118.0
+grow_horizontal = 2
+grow_vertical = 2
+text = "Menu"
+
+[connection signal="pressed" from="CanvasLayer/EndScreen/MenuButton" to="CanvasLayer/EndScreen" method="_on_menu_button_pressed"]
