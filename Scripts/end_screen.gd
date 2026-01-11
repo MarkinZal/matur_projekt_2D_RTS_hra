@@ -7,4 +7,4 @@ func set_screen (winning_team : String):
 	header_text.text = winning_team + " team has won!"
 
 func _on_menu_button_pressed():
-	pass
+	get_tree().change_scene_to_file("res://Scenes/menu.tscn")
