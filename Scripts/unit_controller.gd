@@ -12,7 +12,7 @@ func _input (event):
 func _try_select_unit ():
 	var unit = _get_selected_unit()
 	
-	if unit == null or unit.team != Unit.Team.Player:
+	if unit == null or unit.team != Unit.Team.PLAYER:
 		_unselect_unit()
 	else:
 		_select_unit(unit)
@@ -35,10 +35,10 @@ func _try_command_unit ():
 	var target = _get_selected_unit()
 	
 	if target != null:
-		if target.team != Unit.Team.Player:
-			selected_unit.set_attack_target(target)
+		if target.team != Unit.Team.PLAYER:
+			selected_unit.set_target(target)
 	else:
-		selected_unit.set_move_to_target(get_global_mouse_position())
+		selected_unit.move_to_target(get_global_mouse_position())
 
 func _get_selected_unit () -> Unit:
 	var space = get_world_2d().direct_space_state

@@ -5,7 +5,7 @@ extends Sprite2D
 var unit_pos_last_frame : Vector2
 
 func _ready ():
-	unit.OnTakeDamage.connect(_damage_flash)
+	unit.health_changed.connect(_damage_flash)
 
 func _process(delta):
 	var time = Time.get_unix_time_from_system()

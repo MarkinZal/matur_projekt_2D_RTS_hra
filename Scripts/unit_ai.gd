@@ -38,4 +38,4 @@ func _detect ():
 			closest_dist = dist
 		
 	if closest_enemy != null:
-		unit.set_attack_target(closest_enemy)
+		unit.set_target(closest_enemy)
