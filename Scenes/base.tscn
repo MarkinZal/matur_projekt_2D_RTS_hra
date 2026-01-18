@@ -1,0 +1,41 @@
+[gd_scene load_steps=7 format=3 uid="uid://burie6p4gvvy3"]
+
+[ext_resource type="Script" uid="uid://bx7vfp0t6f4l" path="res://Scripts/building.gd" id="1_31hd7"]
+[ext_resource type="Script" uid="uid://bxto5tjgfrjim" path="res://Scripts/unit_player.gd" id="2_6qyon"]
+[ext_resource type="Texture2D" uid="uid://dvhjxn1i7c6ym" path="res://Assets.2/MiniWorldSprites/Buildings/Wood/Keep.png" id="3_jdayy"]
+
+[sub_resource type="Gradient" id="Gradient_qq154"]
+offsets = PackedFloat32Array(1)
+colors = PackedColorArray(0, 0.84705883, 0, 1)
+
+[sub_resource type="GradientTexture1D" id="GradientTexture1D_8nfiu"]
+gradient = SubResource("Gradient_qq154")
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_e4po7"]
+size = Vector2(32, 24)
+
+[node name="Base" type="Area2D" groups=["Unit"]]
+script = ExtResource("1_31hd7")
+
+[node name="PlayerUnit" type="Node" parent="."]
+script = ExtResource("2_6qyon")
+
+[node name="SelectionVisual" type="Sprite2D" parent="."]
+visible = false
+position = Vector2(4.7683716e-07, -1.5000005)
+scale = Vector2(0.13281251, 21.000002)
+texture = SubResource("GradientTexture1D_8nfiu")
+
+[node name="Sprite2D" type="Sprite2D" parent="."]
+texture = ExtResource("3_jdayy")
+offset = Vector2(0, -8)
+hframes = 3
+vframes = 2
+frame = 5
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+position = Vector2(0, -4)
+shape = SubResource("RectangleShape2D_e4po7")
+
+[node name="NavigationObstacle2D" type="NavigationObstacle2D" parent="."]
+vertices = PackedVector2Array(16, -16, 16, 8, -16, 8, -16, -16)

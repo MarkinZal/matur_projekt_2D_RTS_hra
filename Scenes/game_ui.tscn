@@ -1,0 +1,29 @@
+[gd_scene load_steps=2 format=3 uid="uid://c3ygdbo7ocoxv"]
+
+[ext_resource type="Script" uid="uid://dp4p746g6se7w" path="res://Scripts/game_ui.gd" id="1_gek4i"]
+
+[node name="GameUI" type="CanvasLayer"]
+script = ExtResource("1_gek4i")
+
+[node name="Control" type="Control" parent="."]
+layout_mode = 3
+anchors_preset = 3
+anchor_left = 1.0
+anchor_top = 1.0
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = -44.0
+offset_top = -20.0
+grow_horizontal = 0
+grow_vertical = 0
+
+[node name="ActionPanel" type="PanelContainer" parent="Control"]
+layout_mode = 0
+offset_left = -138.0
+offset_top = -35.0
+offset_right = 30.0
+offset_bottom = 5.0
+
+[node name="Label" type="Label" parent="Control/ActionPanel"]
+layout_mode = 2
+text = "[Q] trénovat jednotku"

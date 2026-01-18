@@ -1,11 +1,12 @@
-extends Node2D
+extends Node
 
 var unit_counts = {
 	Unit.Team.PLAYER: 0,
 	Unit.Team.ENEMY: 0
 }
 
-@onready var end_screen = $CanvasLayer/EndScreen
+@export var end_screen : Node
+@export var unit_controller : Node2D 
 
 func _ready ():
 	var all_units = get_tree().get_nodes_in_group("Unit")
@@ -31,5 +32,10 @@ func _check_game_over ():
 	if teams_alive > 1:
 		return
 	
-	var team_name = Unit.Team.keys()[winner]
-	end_screen.set_screen(team_name)
+	if unit_controller != null:
+		unit_controller._deselect_all()
+		unit_controller.set_process_input(false)
+	
+	if end_screen != null:
+		var team_name = Unit.Team.keys()[winner]
+		end_screen.set_screen(team_name)

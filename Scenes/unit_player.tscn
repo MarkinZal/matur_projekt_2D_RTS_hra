@@ -1,15 +1,15 @@
 [gd_scene load_steps=6 format=3 uid="uid://bu2b225xv741d"]
 
 [ext_resource type="PackedScene" uid="uid://bdbn2a3p48834" path="res://Scenes/unit_base.tscn" id="1_dr6x0"]
-[ext_resource type="Script" uid="uid://bxto5tjgfrjim" path="res://Scripts/player_unit.gd" id="2_to24h"]
+[ext_resource type="Script" uid="uid://bxto5tjgfrjim" path="res://Scripts/unit_player.gd" id="2_to24h"]
 [ext_resource type="Texture2D" uid="uid://dhw2irgy81q6k" path="res://Assets.2/MiniWorldSprites/Characters/Soldiers/Melee/AxemanTemplate.png" id="3_qq154"]
 
-[sub_resource type="Gradient" id="Gradient_dr6x0"]
+[sub_resource type="Gradient" id="Gradient_qq154"]
 offsets = PackedFloat32Array(1)
 colors = PackedColorArray(0, 0.84705883, 0, 1)
 
 [sub_resource type="GradientTexture1D" id="GradientTexture1D_to24h"]
-gradient = SubResource("Gradient_dr6x0")
+gradient = SubResource("Gradient_qq154")
 
 [node name="Unit_Player" groups=["UnitPlayer"] instance=ExtResource("1_dr6x0")]
 move_speed = 40.0

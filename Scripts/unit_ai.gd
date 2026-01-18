@@ -1,41 +1,46 @@
 extends Node
 
-@export var detect_range : float = 100.0
-@export var detect_rate : float = 0.2
-var last_detect_time : float
-var enemy_list : Array[Unit] = []
-
 @onready var unit : Unit = get_parent()
 
-func _process (delta):
-	var time = Time.get_unix_time_from_system()
-	
-	if time - last_detect_time > detect_rate:
-		last_detect_time = time
-		_update_enemy_list()
-		_detect()
+var detection_range : float = 400.0
+var scan_timer : float = 0.0
+var scan_interval : float = 0.25
 
-func _update_enemy_list ():
-	enemy_list.clear()
+func _process(delta):
+	if unit == null or not is_instance_valid(unit) or unit.health_current <= 0:
+		return
 	
-	var raw_list = get_tree().get_nodes_in_group("UnitPlayer")
+	if is_instance_valid(unit.target_unit):
+		var dist = unit.global_position.distance_to(unit.target_unit.global_position)
+		if dist > detection_range * 1.5:
+			unit.target_unit = null
+
+	scan_timer -= delta
+	if scan_timer <= 0:
+		scan_timer = scan_interval
+		_find_closest_enemy()
+
+func _find_closest_enemy():
+	var shortest_dist = detection_range
+	var closest_target = null
 	
-	for node in raw_list:
-		if node is not Unit:
+	var all_units = get_tree().get_nodes_in_group("Unit")
+	
+	for target in all_units:
+		if not is_instance_valid(target):
+			continue
+			
+		if target == unit:
 			continue
 		
-		enemy_list.append(node)
-
-func _detect ():
-	var closest_enemy = null
-	var closest_dist = 999999
+		if target.team == unit.team:
+			continue
+			
+		var dist = unit.global_position.distance_to(target.global_position)
+		
+		if dist < shortest_dist:
+			shortest_dist = dist
+			closest_target = target
 	
-	for enemy in enemy_list:
-		var dist = unit.global_position.distance_to(enemy.global_position)
-		
-		if dist < closest_dist:
-			closest_enemy = enemy
-			closest_dist = dist
-		
-	if closest_enemy != null:
-		unit.set_target(closest_enemy)
+	if closest_target != null:
+		unit.set_target(closest_target)

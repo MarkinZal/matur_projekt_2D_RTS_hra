@@ -1,56 +1,159 @@
 extends Node2D
 
-var selected_unit : Unit
+var selected_units : Array[Unit] = []
+var dragging : bool = false
+var drag_start : Vector2 = Vector2.ZERO
+var is_drag_active : bool = false
 
-func _input (event):
-	if event is InputEventMouseButton and event.pressed:
-		if event.button_index == MOUSE_BUTTON_LEFT:
-			_try_select_unit()
-		elif event.button_index == MOUSE_BUTTON_RIGHT:
-			_try_command_unit()
+@export var game_ui : Node
 
-func _try_select_unit ():
-	var unit = _get_selected_unit()
+func _ready():
+	z_index = 100
+
+func _input(event):
+	if event is InputEventMouseButton and event.button_index == MOUSE_BUTTON_LEFT:
+		if event.pressed:
+			dragging = true
+			drag_start = get_global_mouse_position()
+			is_drag_active = false
+		else:
+			dragging = false
+			queue_redraw()
+			
+			if not is_drag_active:
+				_select_unit_at_point(get_global_mouse_position())
+			
+			is_drag_active = false
+			_update_ui()
 	
-	if unit == null or unit.team != Unit.Team.PLAYER:
-		_unselect_unit()
-	else:
-		_select_unit(unit)
+	elif event is InputEventMouseMotion and dragging:
+		var current_pos = get_global_mouse_position()
+		
+		if not is_drag_active and drag_start.distance_to(current_pos) > 10:
+			is_drag_active = true
+			_deselect_all()
+			
+		if is_drag_active:
+			queue_redraw()
+			_update_selection_in_box(drag_start, current_pos)
 
-func _select_unit (unit : Unit):
-	_unselect_unit()
-	selected_unit = unit
-	unit.get_node("PlayerUnit").toggle_selection_visual(true)
+	elif event is InputEventMouseButton and event.button_index == MOUSE_BUTTON_RIGHT and event.pressed:
+		_command_selected_units()
 
-func _unselect_unit ():
-	if selected_unit != null:
-		selected_unit.get_node("PlayerUnit").toggle_selection_visual(false)
+func _draw():
+	if dragging and is_drag_active:
+		var current_pos = get_global_mouse_position()
+		var rect = Rect2(to_local(drag_start), to_local(current_pos) - to_local(drag_start))
+		draw_rect(rect, Color(0, 1, 0, 0.2), true)
+		draw_rect(rect, Color(0, 1, 0, 1), false, 2.0)
+
+func _update_selection_in_box(start : Vector2, end : Vector2):
+	var space = get_world_2d().direct_space_state
+	var query = PhysicsShapeQueryParameters2D.new()
+	var shape = RectangleShape2D.new()
 	
-	selected_unit = null
+	var center = (start + end) / 2
+	var size = (end - start).abs()
+	
+	shape.size = size
+	query.shape = shape
+	query.transform = Transform2D(0, center)
+	query.collide_with_areas = true
+	
+	var result = space.intersect_shape(query)
+	
+	var units_in_box : Array[Unit] = []
+	for item in result:
+		var collider = item.collider
+		if collider is Unit and collider.team == Unit.Team.PLAYER:
+			units_in_box.append(collider)
+	
+	for unit in units_in_box:
+		if not selected_units.has(unit):
+			_add_to_selection(unit)
+			
+	var current_selection = selected_units.duplicate()
+	for unit in current_selection:
+		if not units_in_box.has(unit):
+			_remove_from_selection(unit)
 
-func _try_command_unit ():
-	if selected_unit == null:
+func _select_unit_at_point(point : Vector2):
+	_deselect_all()
+	
+	var space = get_world_2d().direct_space_state
+	var query = PhysicsPointQueryParameters2D.new()
+	query.position = point
+	query.collide_with_areas = true
+	
+	var result = space.intersect_point(query, 1)
+	
+	if not result.is_empty():
+		var collider = result[0].collider
+		if collider is Unit and collider.team == Unit.Team.PLAYER:
+			_add_to_selection(collider)
+
+func _add_to_selection(unit : Unit):
+	if not selected_units.has(unit):
+		selected_units.append(unit)
+		if is_instance_valid(unit):
+			if unit.has_node("PlayerUnit"):
+				unit.get_node("PlayerUnit").toggle_selection_visual(true)
+			if unit is Building:
+				unit.is_selected = true
+
+func _remove_from_selection(unit : Unit):
+	if selected_units.has(unit):
+		selected_units.erase(unit)
+		if is_instance_valid(unit):
+			if unit.has_node("PlayerUnit"):
+				unit.get_node("PlayerUnit").toggle_selection_visual(false)
+			if unit is Building:
+				unit.is_selected = false
+
+func _deselect_all():
+	for unit in selected_units:
+		if is_instance_valid(unit):
+			if unit.has_node("PlayerUnit"):
+				unit.get_node("PlayerUnit").toggle_selection_visual(false)
+			if unit is Building:
+				unit.is_selected = false
+	selected_units.clear()
+	_update_ui()
+
+func _command_selected_units():
+	if selected_units.is_empty():
 		return
 	
-	var target = _get_selected_unit()
+	var target_unit = _get_unit_at_mouse()
+	var mouse_pos = get_global_mouse_position()
 	
-	if target != null:
-		if target.team != Unit.Team.PLAYER:
-			selected_unit.set_target(target)
-	else:
-		selected_unit.move_to_target(get_global_mouse_position())
+	for unit in selected_units:
+		if not is_instance_valid(unit):
+			continue
+			
+		if target_unit != null and target_unit.team != Unit.Team.PLAYER:
+			unit.set_target(target_unit)
+		else:
+			unit.move_to_target(mouse_pos)
 
-func _get_selected_unit () -> Unit:
+func _get_unit_at_mouse() -> Unit:
 	var space = get_world_2d().direct_space_state
 	var query = PhysicsPointQueryParameters2D.new()
 	query.position = get_global_mouse_position()
 	query.collide_with_areas = true
-	var intersection = space.intersect_point(query, 1)
+	var result = space.intersect_point(query, 1)
 	
-	if intersection.is_empty():
-		return null
+	if result.is_empty(): return null
+	if result[0].collider is Unit: return result[0].collider
+	return null
+
+func _update_ui():
+	if game_ui == null: return
 	
-	if intersection[0].collider is not Unit:
-		return null
+	var has_building = false
+	for unit in selected_units:
+		if unit is Building:
+			has_building = true
+			break
 	
-	return intersection[0].collider
+	game_ui.show_action(has_building)
