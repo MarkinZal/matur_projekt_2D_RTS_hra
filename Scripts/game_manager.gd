@@ -5,6 +5,10 @@ var unit_counts = {
 	Unit.Team.ENEMY: 0
 }
 
+signal resource_updated(resource_type: String, amount: int)
+var drevo : int = 0
+
+
 @export var end_screen : Node
 @export var unit_controller : Node2D 
 
@@ -15,6 +19,11 @@ func _ready ():
 		if unit is Unit:
 			unit_counts[unit.team] += 1
 			unit.unit_death.connect(_on_unit_die)
+	resource_updated.emit("wood", drevo)
+
+func add_wood(amount : int):
+	drevo += amount
+	resource_updated.emit("wood", drevo)
 
 func _on_unit_die (unit : Unit):
 	unit_counts[unit.team] -= 1

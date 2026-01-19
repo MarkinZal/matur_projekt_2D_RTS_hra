@@ -1,8 +1,9 @@
 extends Area2D
 class_name ResourceTree
 
-var health : int = 30
+var health : int = 25
 var is_dead : bool = false
+var wood_per_hit : int = 1
 
 @onready var sprite_tree = $SpriteTree
 @onready var sprite_stump = $SpriteStump
@@ -29,6 +30,8 @@ func take_damage(amount):
 	
 	health -= amount
 	
+	GameManager.add_wood(wood_per_hit)
+	
 	health_bar.visible = true
 	health_bar.value = health
 	
@@ -42,6 +45,9 @@ func die():
 	sprite_tree.visible = false
 	sprite_stump.visible = true
 	health_bar.visible = false
+	
+	if collision_shape:
+		collision_shape.set_deferred("disabled", true)
 	
 	nav_obstacle.queue_free()
 
