@@ -1,0 +1,32 @@
+[gd_scene load_steps=7 format=3 uid="uid://cthq7biai7wpy"]
+
+[ext_resource type="PackedScene" uid="uid://bdbn2a3p48834" path="res://Scenes/unit_base.tscn" id="1_e62rc"]
+[ext_resource type="Script" uid="uid://bxto5tjgfrjim" path="res://Scripts/unit_player.gd" id="2_kyclo"]
+[ext_resource type="Script" uid="uid://b5xffm4m6yegu" path="res://Scripts/unit_worker.gd" id="2_ucp6w"]
+[ext_resource type="Texture2D" uid="uid://do6xy7fv64ihn" path="res://Assets.2/MiniWorldSprites/Characters/Workers/FarmerTemplate.png" id="3_e62rc"]
+
+[sub_resource type="Gradient" id="Gradient_qq154"]
+offsets = PackedFloat32Array(1)
+colors = PackedColorArray(0, 0.84705883, 0, 1)
+
+[sub_resource type="GradientTexture1D" id="GradientTexture1D_to24h"]
+gradient = SubResource("Gradient_qq154")
+
+[node name="Unit_Worker" groups=["UnitPlayer"] instance=ExtResource("1_e62rc")]
+script = ExtResource("2_ucp6w")
+
+[node name="PlayerUnit" type="Node" parent="." index="0"]
+script = ExtResource("2_kyclo")
+
+[node name="SelectionVisual" type="Sprite2D" parent="." index="1"]
+visible = false
+position = Vector2(-2.3841858e-07, 7)
+scale = Vector2(0.0703125, 6)
+texture = SubResource("GradientTexture1D_to24h")
+
+[node name="Sprite" parent="." index="2"]
+position = Vector2(-2.3841858e-07, 10.304999)
+scale = Vector2(0.99999994, 0.9999999)
+texture = ExtResource("3_e62rc")
+hframes = 5
+vframes = 12

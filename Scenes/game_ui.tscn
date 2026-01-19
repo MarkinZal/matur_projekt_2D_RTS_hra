@@ -26,4 +26,5 @@ offset_bottom = 5.0
 
 [node name="Label" type="Label" parent="Control/ActionPanel"]
 layout_mode = 2
-text = "[Q] trénovat jednotku"
+text = "[Y] trénovat útočníka
+[X] trénovat dělníka"

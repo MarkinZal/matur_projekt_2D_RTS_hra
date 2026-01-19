@@ -120,31 +120,45 @@ func _deselect_all():
 	selected_units.clear()
 	_update_ui()
 
+
 func _command_selected_units():
 	if selected_units.is_empty():
 		return
 	
-	var target_unit = _get_unit_at_mouse()
+	var target_obj = _get_object_at_mouse()
 	var mouse_pos = get_global_mouse_position()
 	
 	for unit in selected_units:
 		if not is_instance_valid(unit):
 			continue
+		
+		if target_obj != null and target_obj.is_in_group("Tree"):
+			if unit is Worker:
+				unit.set_target(target_obj)
+			else:
+				unit.move_to_target(mouse_pos)
+		
+		elif target_obj != null and target_obj is Unit and target_obj.team != Unit.Team.PLAYER:
+			unit.set_target(target_obj)
 			
-		if target_unit != null and target_unit.team != Unit.Team.PLAYER:
-			unit.set_target(target_unit)
 		else:
 			unit.move_to_target(mouse_pos)
 
-func _get_unit_at_mouse() -> Unit:
+func _get_object_at_mouse() -> Node:
 	var space = get_world_2d().direct_space_state
 	var query = PhysicsPointQueryParameters2D.new()
 	query.position = get_global_mouse_position()
 	query.collide_with_areas = true
 	var result = space.intersect_point(query, 1)
 	
-	if result.is_empty(): return null
-	if result[0].collider is Unit: return result[0].collider
+	if result.is_empty():
+		return null
+	
+	var collider = result[0].collider
+	
+	if collider is Unit or collider.is_in_group("Tree"):
+		return collider
+	
 	return null
 
 func _update_ui():

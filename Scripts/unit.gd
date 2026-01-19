@@ -21,7 +21,7 @@ signal unit_death (unit : Unit)
 enum Team { PLAYER, ENEMY }
 @export var team : Team
 
-var target_unit : Unit = null
+var target_unit : Node2D = null
 var last_attack_time : float = 0.0
 
 @onready var agent : NavigationAgent2D = $NavigationAgent2D
@@ -65,7 +65,7 @@ func _move(delta):
 
 
 func _utok_logic ():
-	if target_unit == null:
+	if not is_instance_valid(target_unit):
 		return
 	
 	var distance = global_position.distance_to(target_unit.global_position)
@@ -83,15 +83,18 @@ func _try_attack ():
 		return
 	
 	last_attack_time = time
-	target_unit.take_damage(attack_damage)
+	
+	if target_unit.has_method("take_damage"):
+		target_unit.take_damage(attack_damage)
 
 func move_to_target (target : Vector2):
 	agent.target_position = target
 	target_unit = null
 
-func set_target (target : Unit):
-	if target.team == team:
-		return
+func set_target (target : Node2D):
+	if target is Unit:
+		if target.team == team:
+			return
 	
 	target_unit = target
 

@@ -1,0 +1,49 @@
+[gd_scene load_steps=6 format=3 uid="uid://dmq5ua2m1x08k"]
+
+[ext_resource type="Texture2D" uid="uid://4tm5ofgdbdjr" path="res://Assets.2/MiniWorldSprites/Nature/Trees.png" id="1_0vwjc"]
+[ext_resource type="Script" uid="uid://dxxjkyj2eplwt" path="res://Scripts/tree.gd" id="1_rsuno"]
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_rsuno"]
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_rsuno"]
+bg_color = Color(0.52156866, 0, 0, 1)
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_l7sa7"]
+bg_color = Color(0, 0.76862746, 0, 1)
+
+[node name="Tree" type="Area2D"]
+script = ExtResource("1_rsuno")
+
+[node name="NavigationObstacle2D" type="NavigationObstacle2D" parent="."]
+radius = 15.0
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+shape = SubResource("CircleShape2D_rsuno")
+
+[node name="SpriteTree" type="Sprite2D" parent="."]
+position = Vector2(0, 5)
+texture = ExtResource("1_0vwjc")
+offset = Vector2(0, -10)
+region_enabled = true
+region_rect = Rect2(16, 0, 13.965416, 16.324402)
+
+[node name="SpriteStump" type="Sprite2D" parent="."]
+visible = false
+texture = ExtResource("1_0vwjc")
+offset = Vector2(0, -5)
+region_enabled = true
+region_rect = Rect2(0, 0, 13.83366, 16)
+
+[node name="ProgressBar" type="ProgressBar" parent="."]
+visible = false
+offset_left = -7.0
+offset_top = -17.0
+offset_right = 7.0
+offset_bottom = -13.0
+theme_override_styles/background = SubResource("StyleBoxFlat_rsuno")
+theme_override_styles/fill = SubResource("StyleBoxFlat_l7sa7")
+show_percentage = false
+
+[node name="HideTimer" type="Timer" parent="."]
+wait_time = 3.0
+one_shot = true
