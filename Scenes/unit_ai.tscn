@@ -5,7 +5,7 @@
 [ext_resource type="Texture2D" uid="uid://35uiby0pdxve" path="res://Assets.2/MiniWorldSprites/Characters/Champions/Grum.png" id="2_gu8n8"]
 
 [node name="Unit_AI" instance=ExtResource("1_t8do7")]
-move_speed = 15.0
+move_speed = 0.0
 attack_range = 30.0
 attack_rate = 0.7
 team = 1
