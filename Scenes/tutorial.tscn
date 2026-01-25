@@ -1087,8 +1087,9 @@ font_size = 13
 font_color = Color(0, 0, 0, 1)
 shadow_color = Color(0, 0, 0, 0.29803923)
 
-[node name="Tutorial" type="Node2D"]
+[node name="Tutorial" type="Node2D" node_paths=PackedStringArray("end_screen")]
 script = ExtResource("1_djl3p")
+end_screen = NodePath("CanvasLayer/EndScreen")
 
 [node name="GameManager" type="Node2D" parent="." node_paths=PackedStringArray("end_screen", "unit_controller")]
 script = ExtResource("1_1cu4j")
@@ -1160,34 +1161,34 @@ text = "Menu"
 [node name="GameUI" parent="." instance=ExtResource("21_ilalk")]
 
 [node name="Tree" parent="." instance=ExtResource("22_b3wap")]
-position = Vector2(221, 127)
+position = Vector2(198, -110)
 
 [node name="Tree6" parent="." instance=ExtResource("22_b3wap")]
-position = Vector2(231, 112)
+position = Vector2(10, -12)
 
 [node name="Tree7" parent="." instance=ExtResource("22_b3wap")]
-position = Vector2(196, 104)
+position = Vector2(-157, -13)
 
 [node name="Tree8" parent="." instance=ExtResource("22_b3wap")]
-position = Vector2(190, 118)
+position = Vector2(-156, 126)
 
 [node name="Tree9" parent="." instance=ExtResource("22_b3wap")]
-position = Vector2(212, 113)
+position = Vector2(84, -126)
 
 [node name="Tree10" parent="." instance=ExtResource("22_b3wap")]
-position = Vector2(196, 85)
+position = Vector2(73, -44)
 
 [node name="Tree2" parent="." instance=ExtResource("22_b3wap")]
 position = Vector2(203, 131)
 
 [node name="Tree3" parent="." instance=ExtResource("22_b3wap")]
-position = Vector2(230, 94)
+position = Vector2(142, 42)
 
 [node name="Tree4" parent="." instance=ExtResource("22_b3wap")]
-position = Vector2(212, 92)
+position = Vector2(31, 105)
 
 [node name="Tree5" parent="." instance=ExtResource("22_b3wap")]
-position = Vector2(177, 107)
+position = Vector2(206, -27)
 
 [node name="Unit_Worker" parent="." instance=ExtResource("23_djl3p")]
 position = Vector2(-48, 81)
@@ -1199,20 +1200,20 @@ position = Vector2(-72, 34)
 position = Vector2(-26, 31)
 
 [node name="Label" type="Label" parent="."]
-offset_left = -210.0
-offset_top = -58.0
-offset_right = 77.0
-offset_bottom = 17.0
-text = "Pohyb kamery: WASD
+offset_left = -193.0
+offset_top = -155.0
+offset_right = 94.0
+offset_bottom = -80.0
+text = "Ovládání kamery: WASD, kolečko myši
 Označení jednotek: Levý klik myši
 Pohyb/akce jednotek: Pravý klik myši"
 label_settings = SubResource("LabelSettings_pkgwa")
 
 [node name="Label2" type="Label" parent="."]
-offset_left = 121.0
-offset_top = 43.0
-offset_right = 272.0
-offset_bottom = 66.0
+offset_left = -152.0
+offset_top = -79.0
+offset_right = -1.0
+offset_bottom = -56.0
 text = "Pokácej všechny stromy"
 label_settings = SubResource("LabelSettings_radxo")
 
