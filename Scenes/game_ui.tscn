@@ -2,9 +2,11 @@
 
 [ext_resource type="Script" uid="uid://dp4p746g6se7w" path="res://Scripts/game_ui.gd" id="1_gek4i"]
 
-[node name="GameUI" type="CanvasLayer" node_paths=PackedStringArray("wood_label")]
+[node name="GameUI" type="CanvasLayer" node_paths=PackedStringArray("wood_label", "gold_label", "food_label")]
 script = ExtResource("1_gek4i")
 wood_label = NodePath("Control/ResourcePanel/HBoxContainer/Drevo")
+gold_label = NodePath("Control/ResourcePanel/HBoxContainer/Zlato")
+food_label = NodePath("Control/ResourcePanel/HBoxContainer/Jidlo")
 
 [node name="Control" type="Control" parent="."]
 layout_mode = 3
@@ -32,10 +34,10 @@ text = "[Y] trénovat útočníka
 
 [node name="ResourcePanel" type="PanelContainer" parent="Control"]
 layout_mode = 0
-offset_left = -1100.0
-offset_top = -614.0
-offset_right = -1060.0
-offset_bottom = -574.0
+offset_left = -1090.0
+offset_top = -600.0
+offset_right = -909.0
+offset_bottom = -552.35
 
 [node name="HBoxContainer" type="HBoxContainer" parent="Control/ResourcePanel"]
 layout_mode = 2
@@ -43,3 +45,11 @@ layout_mode = 2
 [node name="Drevo" type="Label" parent="Control/ResourcePanel/HBoxContainer"]
 layout_mode = 2
 text = "Dřevo: 0"
+
+[node name="Zlato" type="Label" parent="Control/ResourcePanel/HBoxContainer"]
+layout_mode = 2
+text = "Zlato: 0"
+
+[node name="Jidlo" type="Label" parent="Control/ResourcePanel/HBoxContainer"]
+layout_mode = 2
+text = "Jidlo: 0"

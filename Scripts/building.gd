@@ -5,6 +5,9 @@ var is_selected : bool = false
 var unit_scene = preload("res://Scenes/unit_player.tscn")
 var worker_scene = preload("res://Scenes/unit_worker.tscn")
 
+var cost_soldier = {"wood": 10, "gold": 5, "food": 1}
+var cost_worker = {"wood": 5, "gold": 0, "food": 1}
+
 func _ready():
 	move_speed = 0.0
 
@@ -17,9 +20,16 @@ func _input(event):
 		
 	if event is InputEventKey and event.pressed:
 		if event.keycode == KEY_Y:
-			spawn_unit(unit_scene)
+			if GameManager.try_spend_resources(cost_soldier.wood, cost_soldier.gold, cost_soldier.food):
+				spawn_unit(unit_scene)
+			else:
+				print("Nemáš dost surovin na vojáka!")
+				
 		elif event.keycode == KEY_X:
-			spawn_unit(worker_scene)
+			if GameManager.try_spend_resources(cost_worker.wood, cost_worker.gold, cost_worker.food):
+				spawn_unit(worker_scene)
+			else:
+				print("Nemáš dost surovin na dělníka!")
 
 func spawn_unit(scene_to_spawn):
 	var new_unit = scene_to_spawn.instantiate()

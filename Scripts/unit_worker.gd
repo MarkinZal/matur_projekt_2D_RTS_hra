@@ -20,6 +20,6 @@ func _try_attack():
 	if time - last_attack_time < attack_rate:
 		return
 		
-	if target_unit.is_in_group("Tree"):
+	if target_unit.is_in_group("Tree") or target_unit.is_in_group("GoldMine"):
 		last_attack_time = time
-		target_unit.take_damage(attack_damage)
+		target_unit.take_damage(attack_damage) #

@@ -1,0 +1,24 @@
+[gd_scene load_steps=4 format=3 uid="uid://b4q73iuwnpuq4"]
+
+[ext_resource type="Script" uid="uid://bp5h0s6ey0clj" path="res://Scripts/gold_mine.gd" id="1_da0p1"]
+[ext_resource type="Texture2D" uid="uid://doegi8p6e731n" path="res://Assets.2/MiniWorldSprites/Buildings/Wood/CaveV2.png" id="1_ko8gm"]
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_da0p1"]
+
+[node name="goldmine" type="Area2D"]
+script = ExtResource("1_da0p1")
+
+[node name="SpriteZlatyDul" type="Sprite2D" parent="."]
+visible = false
+texture = ExtResource("1_ko8gm")
+hframes = 3
+vframes = 2
+frame = 3
+
+[node name="SpriteDul" type="Sprite2D" parent="."]
+texture = ExtResource("1_ko8gm")
+hframes = 3
+vframes = 2
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+shape = SubResource("CircleShape2D_da0p1")

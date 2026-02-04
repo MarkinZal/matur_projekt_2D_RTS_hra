@@ -7,7 +7,8 @@ var unit_counts = {
 
 signal resource_updated(resource_type: String, amount: int)
 var drevo : int = 0
-
+var zlato : int = 0
+var jidlo : int = 0
 
 @export var end_screen : Node
 @export var unit_controller : Node2D 
@@ -21,9 +22,29 @@ func _ready ():
 			unit.unit_death.connect(_on_unit_die)
 	resource_updated.emit("wood", drevo)
 
-func add_wood(amount : int):
-	drevo += amount
-	resource_updated.emit("wood", drevo)
+func add_resource(type: String, amount: int):
+	match type:
+		"wood":
+			drevo += amount
+			resource_updated.emit("wood", drevo)
+		"gold":
+			zlato += amount
+			resource_updated.emit("gold", zlato)
+		"food":
+			jidlo += amount
+			resource_updated.emit("food", jidlo)
+
+func try_spend_resources(wood_cost: int, gold_cost: int, food_cost: int) -> bool:
+	if drevo >= wood_cost and zlato >= gold_cost and jidlo >= food_cost:
+		drevo -= wood_cost
+		zlato -= gold_cost
+		jidlo -= food_cost
+		
+		resource_updated.emit("wood", drevo)
+		resource_updated.emit("gold", zlato)
+		resource_updated.emit("food", jidlo)
+		return true
+	return false
 
 func _on_unit_die (unit : Unit):
 	unit_counts[unit.team] -= 1

@@ -1,4 +1,4 @@
-[gd_scene load_steps=43 format=4 uid="uid://c6bkqujj3ue2j"]
+[gd_scene load_steps=44 format=4 uid="uid://c6bkqujj3ue2j"]
 
 [ext_resource type="Script" uid="uid://c2djnlai8ur1d" path="res://Scripts/unit_controller.gd" id="1_8gbba"]
 [ext_resource type="Script" uid="uid://dtpmcscmsb8es" path="res://Scripts/game_manager.gd" id="1_21xkr"]
@@ -23,6 +23,7 @@
 [ext_resource type="PackedScene" uid="uid://dmq5ua2m1x08k" path="res://Scenes/tree.tscn" id="23_3pmx8"]
 [ext_resource type="PackedScene" uid="uid://c3ygdbo7ocoxv" path="res://Scenes/game_ui.tscn" id="23_gt3je"]
 [ext_resource type="PackedScene" uid="uid://4nsdvq6d3jmt" path="res://Scenes/unit_ai.tscn" id="23_u50mg"]
+[ext_resource type="PackedScene" uid="uid://cthq7biai7wpy" path="res://Scenes/unit_worker.tscn" id="24_3pmx8"]
 
 [sub_resource type="NavigationPolygon" id="NavigationPolygon_pdsj5"]
 vertices = PackedVector2Array(277.03125, -176, 277.96875, 150.03906, -184, 151.95313, -184, 56.40625, -155.42969, 37.78125, 15.7265625, -54.15625, -185, 6.96875, -185, -27, -109.390625, -27, 46, -130.32813, 46, -176, -108.38281, -52.148438, 17.757813, -126.28906)
@@ -1078,10 +1079,8 @@ shadow_offset = Vector2(3, 3)
 [node name="Main" type="Node2D"]
 script = ExtResource("1_21xkr")
 
-[node name="GameManager" type="Node2D" parent="." node_paths=PackedStringArray("end_screen", "unit_controller")]
+[node name="GameManager" type="Node2D" parent="."]
 script = ExtResource("1_21xkr")
-end_screen = NodePath("../CanvasLayer/EndScreen")
-unit_controller = NodePath("../UnitController")
 
 [node name="UnitController" type="Node2D" parent="." node_paths=PackedStringArray("game_ui")]
 script = ExtResource("1_8gbba")
@@ -1188,5 +1187,8 @@ position = Vector2(165, -50)
 
 [node name="Unit_AI3" parent="." instance=ExtResource("23_u50mg")]
 position = Vector2(190, -99)
+
+[node name="Unit_Worker" parent="." instance=ExtResource("24_3pmx8")]
+position = Vector2(-30, 80)
 
 [connection signal="pressed" from="CanvasLayer/EndScreen/MenuButton" to="CanvasLayer/EndScreen" method="_on_menu_button_pressed"]
