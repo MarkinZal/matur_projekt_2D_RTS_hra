@@ -36,10 +36,10 @@ text = "[Y] trénovat útočníka
 layout_mode = 0
 offset_left = -1090.0
 offset_top = -600.0
-offset_right = -909.0
-offset_bottom = -552.35
+offset_right = -982.0
+offset_bottom = -523.0
 
-[node name="HBoxContainer" type="HBoxContainer" parent="Control/ResourcePanel"]
+[node name="HBoxContainer" type="VBoxContainer" parent="Control/ResourcePanel"]
 layout_mode = 2
 
 [node name="Drevo" type="Label" parent="Control/ResourcePanel/HBoxContainer"]

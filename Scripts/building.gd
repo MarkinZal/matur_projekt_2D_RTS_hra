@@ -22,14 +22,10 @@ func _input(event):
 		if event.keycode == KEY_Y:
 			if GameManager.try_spend_resources(cost_soldier.wood, cost_soldier.gold, cost_soldier.food):
 				spawn_unit(unit_scene)
-			else:
-				print("Nemáš dost surovin na vojáka!")
 				
 		elif event.keycode == KEY_X:
 			if GameManager.try_spend_resources(cost_worker.wood, cost_worker.gold, cost_worker.food):
 				spawn_unit(worker_scene)
-			else:
-				print("Nemáš dost surovin na dělníka!")
 
 func spawn_unit(scene_to_spawn):
 	var new_unit = scene_to_spawn.instantiate()
@@ -43,3 +39,6 @@ func spawn_unit(scene_to_spawn):
 
 func move_to_target(target: Vector2):
 	pass
+
+func _die():
+	queue_free()

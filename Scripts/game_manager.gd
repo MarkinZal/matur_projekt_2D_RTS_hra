@@ -6,21 +6,20 @@ var unit_counts = {
 }
 
 signal resource_updated(resource_type: String, amount: int)
-var drevo : int = 0
-var zlato : int = 0
-var jidlo : int = 0
+signal supply_updated(current: int, max_amount: int)
 
-@export var end_screen : Node
-@export var unit_controller : Node2D 
+var drevo : int = 100
+var zlato : int = 100
 
-func _ready ():
-	var all_units = get_tree().get_nodes_in_group("Unit")
-	
-	for unit in all_units:
-		if unit is Unit:
-			unit_counts[unit.team] += 1
-			unit.unit_death.connect(_on_unit_die)
+var current_food : int = 0
+var max_food : int = 10
+
+var game_ui : CanvasLayer
+
+func _ready():
 	resource_updated.emit("wood", drevo)
+	resource_updated.emit("gold", zlato)
+	supply_updated.emit(current_food, max_food)
 
 func add_resource(type: String, amount: int):
 	match type:
@@ -30,42 +29,34 @@ func add_resource(type: String, amount: int):
 		"gold":
 			zlato += amount
 			resource_updated.emit("gold", zlato)
-		"food":
-			jidlo += amount
-			resource_updated.emit("food", jidlo)
+
+func increase_food_cap(amount: int):
+	max_food += amount
+	supply_updated.emit(current_food, max_food)
+
+func use_food(amount: int):
+	current_food += amount
+	supply_updated.emit(current_food, max_food)
+
+func free_food(amount: int):
+	current_food -= amount
+	if current_food < 0: current_food = 0
+	supply_updated.emit(current_food, max_food)
 
 func try_spend_resources(wood_cost: int, gold_cost: int, food_cost: int) -> bool:
-	if drevo >= wood_cost and zlato >= gold_cost and jidlo >= food_cost:
+	if food_cost > 0:
+		if current_food + food_cost > max_food:
+			return false
+
+	if drevo >= wood_cost and zlato >= gold_cost:
 		drevo -= wood_cost
 		zlato -= gold_cost
-		jidlo -= food_cost
+		
+		if food_cost > 0:
+			use_food(food_cost)
 		
 		resource_updated.emit("wood", drevo)
 		resource_updated.emit("gold", zlato)
-		resource_updated.emit("food", jidlo)
 		return true
+		
 	return false
-
-func _on_unit_die (unit : Unit):
-	unit_counts[unit.team] -= 1
-	_check_game_over()
-
-func _check_game_over ():
-	var winner = 0
-	var teams_alive = 0
-	
-	for team in unit_counts:
-		if unit_counts[team] > 0:
-			teams_alive += 1
-			winner = team
-	
-	if teams_alive > 1:
-		return
-	
-	if unit_controller != null:
-		unit_controller._deselect_all()
-		unit_controller.set_process_input(false)
-	
-	if end_screen != null:
-		var team_name = Unit.Team.keys()[winner]
-		end_screen.set_screen(team_name)

@@ -5,7 +5,7 @@ func _ready():
 	move_speed = 60.0
 	health_max = 20
 	health_current = 20
-	attack_range = 30.0
+	attack_range = 15.0
 	attack_damage = 5
 	attack_rate = 1.0
 

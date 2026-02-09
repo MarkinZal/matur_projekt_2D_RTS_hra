@@ -6,21 +6,42 @@ extends CanvasLayer
 @export var gold_label : Label
 @export var food_label : Label
 
-func _ready():
-	action_panel.visible = false
-	
-	if get_node("/root/GameManager"): 
-		var gm = get_node("/root/GameManager")
-		if gm.has_signal("resource_updated"):
-			gm.resource_updated.connect(_update_resource)
+signal train_soldier_pressed
+signal train_worker_pressed
 
-func show_action(show : bool):
-	action_panel.visible = show
+func _ready():
+	GameManager.game_ui = self
+	
+	GameManager.resource_updated.connect(_update_resource)
+	GameManager.supply_updated.connect(_update_supply)
+	
+	if action_panel:
+		action_panel.visible = false
 
 func _update_resource(type : String, amount : int):
 	if type == "wood" and wood_label != null:
 		wood_label.text = "Dřevo: " + str(amount)
 	elif type == "gold" and gold_label != null:
 		gold_label.text = "Zlato: " + str(amount)
-	elif type == "food" and food_label != null:
-		food_label.text = "Jídlo: " + str(amount)
+
+func _update_supply(current : int, max_amount : int):
+	if food_label != null:
+		food_label.text = "Jídlo: " + str(current) + " / " + str(max_amount)
+		
+		if current >= max_amount:
+			food_label.modulate = Color.RED
+		else:
+			food_label.modulate = Color.WHITE
+
+func show_action(action_type : String):
+	print("UI: Zobrazuji akce pro " + action_type)
+	
+	if action_panel:
+		action_panel.visible = true
+
+func hide_actions():
+	if action_panel:
+		action_panel.visible = false
+
+func _on_train_soldier_button_pressed():
+	pass

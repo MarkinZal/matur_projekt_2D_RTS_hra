@@ -32,7 +32,7 @@ func take_damage(amount):
 	
 	health -= amount
 	
-	GameManager.add_wood(wood_per_hit)
+	GameManager.add_resource("wood", wood_per_hit)
 	
 	health_bar.visible = true
 	health_bar.value = health

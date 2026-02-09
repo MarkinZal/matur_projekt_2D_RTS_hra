@@ -14,4 +14,7 @@ func take_damage(amount):
 	health -= amount
 	GameManager.add_resource("gold", gold_per_hit)
 	if health <= 0:
-		die()
+		_die()
+
+func _die():
+	queue_free()

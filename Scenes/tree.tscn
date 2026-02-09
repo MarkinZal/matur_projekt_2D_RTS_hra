@@ -15,9 +15,11 @@ bg_color = Color(0, 0.76862746, 0, 1)
 script = ExtResource("1_rsuno")
 
 [node name="NavigationObstacle2D" type="NavigationObstacle2D" parent="."]
-radius = 15.0
+position = Vector2(0, -3.27)
+radius = 12.0
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+position = Vector2(0, -3)
 shape = SubResource("CircleShape2D_rsuno")
 
 [node name="SpriteTree" type="Sprite2D" parent="."]

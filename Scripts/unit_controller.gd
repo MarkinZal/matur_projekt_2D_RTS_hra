@@ -162,12 +162,18 @@ func _get_object_at_mouse() -> Node:
 	return null
 
 func _update_ui():
-	if game_ui == null: return
-	
-	var has_building = false
-	for unit in selected_units:
-		if unit is Building:
-			has_building = true
-			break
-	
-	game_ui.show_action(has_building)
+	var ui = GameManager.game_ui 
+	if ui == null:
+		return
+
+	if selected_units.size() == 1:
+		var unit = selected_units[0]
+		
+		if unit is BarracksBuilding:
+			ui.show_action("barracks")
+		elif unit is Building:
+			ui.show_action("base")
+		else:
+			ui.hide_actions()
+	else:
+		ui.hide_actions()
