@@ -34,9 +34,17 @@ func _update_supply(current : int, max_amount : int):
 			food_label.modulate = Color.WHITE
 
 func show_action(action_type : String):
-	print("UI: Zobrazuji akce pro " + action_type)
-	
 	if action_panel:
+		action_panel.visible = true
+
+func update_ui(selected_object):
+	if selected_object == null:
+		return
+
+	if selected_object is BarracksBuilding:
+		action_panel.visible = false
+	
+	elif selected_object is Building:
 		action_panel.visible = true
 
 func hide_actions():

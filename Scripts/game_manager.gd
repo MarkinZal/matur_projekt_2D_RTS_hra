@@ -27,8 +27,6 @@ func register_unit(unit: Unit):
 	
 	if not unit.unit_death.is_connected(_on_unit_die):
 		unit.unit_death.connect(_on_unit_die)
-	
-	print("Unit registered: ", unit.name, " Team: ", unit.team)
 
 func add_resource(type: String, amount: int):
 	match type:
@@ -73,7 +71,6 @@ func try_spend_resources(wood_cost: int, gold_cost: int, food_cost: int) -> bool
 func _on_unit_die(unit : Unit):
 	if unit.team in unit_counts:
 		unit_counts[unit.team] -= 1
-		print("Unit died. Team ", unit.team, " count: ", unit_counts[unit.team])
 		_check_game_over()
 
 func _check_game_over():
@@ -91,7 +88,5 @@ func _check_game_over():
 	var winner_name = "Nikdo"
 	if possible_winner != -1:
 		winner_name = Unit.Team.keys()[possible_winner]
-	
-	print("Game Over! Winner: ", winner_name)
 	
 	game_ended.emit(winner_name)

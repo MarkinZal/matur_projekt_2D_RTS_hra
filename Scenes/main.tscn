@@ -1104,6 +1104,7 @@ tile_set = SubResource("TileSet_xdkp6")
 [node name="CanvasLayer" type="CanvasLayer" parent="."]
 
 [node name="EndScreen" type="Panel" parent="CanvasLayer"]
+process_mode = 3
 visible = false
 anchors_preset = 15
 anchor_right = 1.0
@@ -1198,5 +1199,14 @@ position = Vector2(-110, 125)
 
 [node name="barracks" parent="." instance=ExtResource("26_1w6v2")]
 position = Vector2(-60, 119)
+move_speed = 30.0
+health_max = 20
+health_current = 20
+attack_range = 20.0
+attack_rate = 0.5
+attack_damage = 5
+separation_radius = 35.0
+separation_strength = 200.0
+team = 0
 
 [connection signal="pressed" from="CanvasLayer/EndScreen/MenuButton" to="CanvasLayer/EndScreen" method="_on_menu_button_pressed"]

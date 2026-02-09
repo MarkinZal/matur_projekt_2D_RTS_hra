@@ -29,6 +29,9 @@ func _on_tree_destroyed():
 
 func finish_tutorial():
 	if end_screen:
+		if end_screen.has_method("set_screen_color"):
+			end_screen.set_screen_color(Color.GREEN)
+		
 		if end_screen.has_method("set_custom_message"):
 			end_screen.set_custom_message("Tutorial Dokončen!")
 		else:

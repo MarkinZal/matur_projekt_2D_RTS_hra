@@ -6,10 +6,17 @@ func _ready():
 	GameManager.game_ended.connect(set_screen)
 	visible = false
 
-func set_screen (winning_team : String):
+func set_screen_color(color: Color):
+	self.modulate = color
+
+func set_screen(winning_team : String):
 	visible = true
 	header_text.text = winning_team + " team has won!"
-	get_tree().paused = true
+	
+	if winning_team == "PLAYER":
+		set_screen_color(Color.GREEN)
+	elif winning_team == "ENEMY":
+		set_screen_color(Color.RED)
 
 func set_custom_message(message : String):
 	visible = true

@@ -7,6 +7,9 @@ func _ready():
 	super._ready()
 	GameManager.increase_food_cap(food_supply_amount)
 
+func _input(event):
+	pass
+
 func _die():
 	GameManager.increase_food_cap(-food_supply_amount)
 	queue_free()
