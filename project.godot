@@ -19,6 +19,12 @@ config/icon="res://icon.svg"
 
 GameManager="*res://Scripts/game_manager.gd"
 
+[display]
+
+window/size/mode=3
+window/stretch/mode="canvas_items"
+window/stretch/aspect="expand"
+
 [input]
 
 cam_left={

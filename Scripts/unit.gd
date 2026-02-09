@@ -26,6 +26,8 @@ var last_attack_time : float = 0.0
 
 @onready var agent : NavigationAgent2D = $NavigationAgent2D
 
+func _ready():
+	GameManager.register_unit(self)
 
 func _process (delta):
 	if not agent.is_navigation_finished():

@@ -7,10 +7,10 @@ var unit_counts = {
 
 signal resource_updated(resource_type: String, amount: int)
 signal supply_updated(current: int, max_amount: int)
+signal game_ended(winning_team_name: String)
 
 var drevo : int = 100
 var zlato : int = 100
-
 var current_food : int = 0
 var max_food : int = 10
 
@@ -20,6 +20,15 @@ func _ready():
 	resource_updated.emit("wood", drevo)
 	resource_updated.emit("gold", zlato)
 	supply_updated.emit(current_food, max_food)
+
+func register_unit(unit: Unit):
+	if unit.team in unit_counts:
+		unit_counts[unit.team] += 1
+	
+	if not unit.unit_death.is_connected(_on_unit_die):
+		unit.unit_death.connect(_on_unit_die)
+	
+	print("Unit registered: ", unit.name, " Team: ", unit.team)
 
 func add_resource(type: String, amount: int):
 	match type:
@@ -60,3 +69,29 @@ func try_spend_resources(wood_cost: int, gold_cost: int, food_cost: int) -> bool
 		return true
 		
 	return false
+
+func _on_unit_die(unit : Unit):
+	if unit.team in unit_counts:
+		unit_counts[unit.team] -= 1
+		print("Unit died. Team ", unit.team, " count: ", unit_counts[unit.team])
+		_check_game_over()
+
+func _check_game_over():
+	var teams_alive = 0
+	var possible_winner = -1
+	
+	for team in unit_counts:
+		if unit_counts[team] > 0:
+			teams_alive += 1
+			possible_winner = team
+	
+	if teams_alive > 1:
+		return
+	
+	var winner_name = "Nikdo"
+	if possible_winner != -1:
+		winner_name = Unit.Team.keys()[possible_winner]
+	
+	print("Game Over! Winner: ", winner_name)
+	
+	game_ended.emit(winner_name)
