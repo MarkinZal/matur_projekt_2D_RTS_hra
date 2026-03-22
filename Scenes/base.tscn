@@ -1,9 +1,9 @@
 [gd_scene load_steps=10 format=3 uid="uid://burie6p4gvvy3"]
 
-[ext_resource type="Script" uid="uid://hogsc3032tud" path="res://Scripts/base_building.gd" id="1_jdayy"]
-[ext_resource type="Script" uid="uid://bxto5tjgfrjim" path="res://Scripts/unit_player.gd" id="2_6qyon"]
+[ext_resource type="Script" uid="uid://hogsc3032tud" path="res://Scripts/Buildings/base_building.gd" id="1_jdayy"]
+[ext_resource type="Script" uid="uid://bxto5tjgfrjim" path="res://Scripts/Units/unit_player.gd" id="2_6qyon"]
 [ext_resource type="Texture2D" uid="uid://dvhjxn1i7c6ym" path="res://Assets.2/MiniWorldSprites/Buildings/Wood/Keep.png" id="3_jdayy"]
-[ext_resource type="Script" uid="uid://cgh2k4lw3fl4l" path="res://Scripts/health_bar.gd" id="4_8nfiu"]
+[ext_resource type="Script" uid="uid://cgh2k4lw3fl4l" path="res://Scripts/GameManagement/health_bar.gd" id="4_8nfiu"]
 
 [sub_resource type="Gradient" id="Gradient_qq154"]
 offsets = PackedFloat32Array(1)

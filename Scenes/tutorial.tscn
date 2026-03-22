@@ -1,9 +1,9 @@
 [gd_scene load_steps=45 format=4 uid="uid://dx3dxpb4vaon2"]
 
-[ext_resource type="Script" uid="uid://dtpmcscmsb8es" path="res://Scripts/game_manager.gd" id="1_1cu4j"]
-[ext_resource type="Script" uid="uid://d0copq3nlnq2f" path="res://Scripts/tutorial_logic.gd" id="1_djl3p"]
-[ext_resource type="Script" uid="uid://c2djnlai8ur1d" path="res://Scripts/unit_controller.gd" id="2_djl3p"]
-[ext_resource type="Script" uid="uid://oe77idptic6m" path="res://Scripts/camera_controller.gd" id="3_73805"]
+[ext_resource type="Script" uid="uid://dtpmcscmsb8es" path="res://Scripts/GameManagement/game_manager.gd" id="1_1cu4j"]
+[ext_resource type="Script" uid="uid://d0copq3nlnq2f" path="res://Scripts/GameManagement/tutorial_logic.gd" id="1_djl3p"]
+[ext_resource type="Script" uid="uid://c2djnlai8ur1d" path="res://Scripts/Miscellaneous/unit_controller.gd" id="2_djl3p"]
+[ext_resource type="Script" uid="uid://oe77idptic6m" path="res://Scripts/GameManagement/camera_controller.gd" id="3_73805"]
 [ext_resource type="Texture2D" uid="uid://b12hd3uy3jsll" path="res://World Asset Pack Opengameart/128x128/tile_000.png" id="4_lh8ri"]
 [ext_resource type="Texture2D" uid="uid://db7cgihgmm8d7" path="res://World Asset Pack Opengameart/128x128/tile_001.png" id="5_a2i7a"]
 [ext_resource type="Texture2D" uid="uid://bxngonacf8fyp" path="res://World Asset Pack Opengameart/128x128/tile_035.png" id="6_0upaw"]
@@ -19,7 +19,7 @@
 [ext_resource type="Texture2D" uid="uid://dh6f04yxp11qn" path="res://World Asset Pack Opengameart/128x128/tile_024.png" id="16_gyc06"]
 [ext_resource type="Texture2D" uid="uid://c761tjbb51iia" path="res://World Asset Pack Opengameart/128x128/tile_029.png" id="17_0uns8"]
 [ext_resource type="Texture2D" uid="uid://qbq3mexnqjtg" path="res://World Asset Pack Opengameart/128x128/tile_034.png" id="18_d0bl5"]
-[ext_resource type="Script" uid="uid://cjwimbur0c3sl" path="res://Scripts/end_screen.gd" id="19_boubs"]
+[ext_resource type="Script" uid="uid://cjwimbur0c3sl" path="res://Scripts/GameManagement/end_screen.gd" id="19_boubs"]
 [ext_resource type="PackedScene" uid="uid://c3ygdbo7ocoxv" path="res://Scenes/game_ui.tscn" id="21_ilalk"]
 [ext_resource type="PackedScene" uid="uid://dmq5ua2m1x08k" path="res://Scenes/tree.tscn" id="22_b3wap"]
 [ext_resource type="PackedScene" uid="uid://cthq7biai7wpy" path="res://Scenes/unit_worker.tscn" id="23_djl3p"]
@@ -1091,10 +1091,8 @@ shadow_color = Color(0, 0, 0, 0.29803923)
 script = ExtResource("1_djl3p")
 end_screen = NodePath("CanvasLayer/EndScreen")
 
-[node name="GameManager" type="Node2D" parent="." node_paths=PackedStringArray("end_screen", "unit_controller")]
+[node name="GameManager" type="Node2D" parent="."]
 script = ExtResource("1_1cu4j")
-end_screen = NodePath("../CanvasLayer/EndScreen")
-unit_controller = NodePath("../UnitController")
 
 [node name="UnitController" type="Node2D" parent="." node_paths=PackedStringArray("game_ui")]
 script = ExtResource("2_djl3p")

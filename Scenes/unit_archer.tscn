@@ -1,13 +1,51 @@
-[gd_scene load_steps=4 format=3 uid="uid://cx5eb3p3gyfw4"]
+[gd_scene load_steps=8 format=3 uid="uid://cx5eb3p3gyfw4"]
 
-[ext_resource type="PackedScene" uid="uid://bdbn2a3p48834" path="res://Scenes/unit_base.tscn" id="1_i87m8"]
-[ext_resource type="Script" uid="uid://bdeifavp4u7jp" path="res://Scripts/unit_archer.gd" id="2_pbmdn"]
+[ext_resource type="Script" uid="uid://b2u5u26lk7t0" path="res://Scripts/Units/unit_archer.gd" id="2_pbmdn"]
+[ext_resource type="Script" uid="uid://dpy78u6qmjf3u" path="res://Scripts/Miscellaneous/unit_visual.gd" id="3_k5h6d"]
 [ext_resource type="Texture2D" uid="uid://cyby8gmyp1yhi" path="res://Assets.2/MiniWorldSprites/Characters/Soldiers/Ranged/BowmanTemplate.png" id="3_ww6j8"]
+[ext_resource type="Script" uid="uid://cgh2k4lw3fl4l" path="res://Scripts/GameManagement/health_bar.gd" id="4_8alod"]
 
-[node name="unit_archer" instance=ExtResource("1_i87m8")]
+[sub_resource type="CircleShape2D" id="CircleShape2D_yagyl"]
+radius = 8.0
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_2vsbj"]
+bg_color = Color(0.2159017, 0.21590173, 0.21590161, 1)
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_aj46g"]
+bg_color = Color(0.79607844, 0, 0, 1)
+border_width_left = 5
+border_width_top = 5
+border_width_right = 5
+border_width_bottom = 5
+border_color = Color(0.21568628, 0.21568628, 0.21568628, 1)
+
+[node name="unit_archer" type="Area2D" groups=["Unit"]]
 script = ExtResource("2_pbmdn")
 
-[node name="Sprite" parent="." index="0"]
+[node name="Sprite" type="Sprite2D" parent="."]
+position = Vector2(0, 10)
 texture = ExtResource("3_ww6j8")
+offset = Vector2(0, -8.305)
 hframes = 5
 vframes = 7
+script = ExtResource("3_k5h6d")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+position = Vector2(0, 2)
+shape = SubResource("CircleShape2D_yagyl")
+
+[node name="NavigationAgent2D" type="NavigationAgent2D" parent="."]
+path_desired_distance = 5.0
+target_desired_distance = 5.0
+
+[node name="HealthBar" type="ProgressBar" parent="."]
+offset_left = -10.0
+offset_top = -12.0
+offset_right = 190.0
+offset_bottom = 28.0
+scale = Vector2(0.1, 0.1)
+theme_override_styles/background = SubResource("StyleBoxFlat_2vsbj")
+theme_override_styles/fill = SubResource("StyleBoxFlat_aj46g")
+value = 60.0
+show_percentage = false
+script = ExtResource("4_8alod")

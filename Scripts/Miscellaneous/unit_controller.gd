@@ -1,6 +1,6 @@
 extends Node2D
 
-var selected_units : Array[Unit] = []
+var selected_units : Array = [] 
 var dragging : bool = false
 var drag_start : Vector2 = Vector2.ZERO
 var is_drag_active : bool = false
@@ -21,7 +21,7 @@ func _input(event):
 			queue_redraw()
 			
 			if not is_drag_active:
-				_select_unit_at_point(get_global_mouse_position())
+				_select_entity_at_point(get_global_mouse_position())
 			
 			is_drag_active = false
 			_update_ui()
@@ -62,10 +62,10 @@ func _update_selection_in_box(start : Vector2, end : Vector2):
 	
 	var result = space.intersect_shape(query)
 	
-	var units_in_box : Array[Unit] = []
+	var units_in_box : Array = []
 	for item in result:
 		var collider = item.collider
-		if collider is Unit and collider.team == Unit.Team.PLAYER:
+		if collider is Unit and collider.team == Entity.Team.PLAYER:
 			units_in_box.append(collider)
 	
 	for unit in units_in_box:
@@ -77,7 +77,7 @@ func _update_selection_in_box(start : Vector2, end : Vector2):
 		if not units_in_box.has(unit):
 			_remove_from_selection(unit)
 
-func _select_unit_at_point(point : Vector2):
+func _select_entity_at_point(point : Vector2):
 	_deselect_all()
 	
 	var space = get_world_2d().direct_space_state
@@ -89,34 +89,34 @@ func _select_unit_at_point(point : Vector2):
 	
 	if not result.is_empty():
 		var collider = result[0].collider
-		if collider is Unit and collider.team == Unit.Team.PLAYER:
+		if collider is Entity and collider.team == Entity.Team.PLAYER:
 			_add_to_selection(collider)
 
-func _add_to_selection(unit : Unit):
-	if not selected_units.has(unit):
-		selected_units.append(unit)
-		if is_instance_valid(unit):
-			if unit.has_node("PlayerUnit"):
-				unit.get_node("PlayerUnit").toggle_selection_visual(true)
-			if unit is Building:
-				unit.is_selected = true
+func _add_to_selection(entity : Entity):
+	if not selected_units.has(entity):
+		selected_units.append(entity)
+		if is_instance_valid(entity):
+			if entity.has_node("PlayerUnit"):
+				entity.get_node("PlayerUnit").toggle_selection_visual(true)
+			if entity is Building:
+				entity.is_selected = true
 
-func _remove_from_selection(unit : Unit):
-	if selected_units.has(unit):
-		selected_units.erase(unit)
-		if is_instance_valid(unit):
-			if unit.has_node("PlayerUnit"):
-				unit.get_node("PlayerUnit").toggle_selection_visual(false)
-			if unit is Building:
-				unit.is_selected = false
+func _remove_from_selection(entity : Entity):
+	if selected_units.has(entity):
+		selected_units.erase(entity)
+		if is_instance_valid(entity):
+			if entity.has_node("PlayerUnit"):
+				entity.get_node("PlayerUnit").toggle_selection_visual(false)
+			if entity is Building:
+				entity.is_selected = false
 
 func _deselect_all():
-	for unit in selected_units:
-		if is_instance_valid(unit):
-			if unit.has_node("PlayerUnit"):
-				unit.get_node("PlayerUnit").toggle_selection_visual(false)
-			if unit is Building:
-				unit.is_selected = false
+	for entity in selected_units:
+		if is_instance_valid(entity):
+			if entity.has_node("PlayerUnit"):
+				entity.get_node("PlayerUnit").toggle_selection_visual(false)
+			if entity is Building:
+				entity.is_selected = false
 	selected_units.clear()
 	_update_ui()
 
@@ -128,21 +128,22 @@ func _command_selected_units():
 	var target_obj = _get_object_at_mouse()
 	var mouse_pos = get_global_mouse_position()
 	
-	for unit in selected_units:
-		if not is_instance_valid(unit):
+	for entity in selected_units:
+		if not is_instance_valid(entity):
 			continue
 		
-		if target_obj != null and target_obj.is_in_group("Tree"):
-			if unit is Worker:
-				unit.set_target(target_obj)
-			else:
-				unit.move_to_target(mouse_pos)
-		
-		elif target_obj != null and target_obj is Unit and target_obj.team != Unit.Team.PLAYER:
-			unit.set_target(target_obj)
+		if entity is Unit:
+			if target_obj != null and target_obj.is_in_group("Tree"):
+				if entity is Worker:
+					entity.set_target(target_obj)
+				else:
+					entity.move_to_target(mouse_pos)
 			
-		else:
-			unit.move_to_target(mouse_pos)
+			elif target_obj != null and target_obj is Entity and target_obj.team != Entity.Team.PLAYER:
+				entity.set_target(target_obj)
+				
+			else:
+				entity.move_to_target(mouse_pos)
 
 func _get_object_at_mouse() -> Node:
 	var space = get_world_2d().direct_space_state
@@ -156,28 +157,17 @@ func _get_object_at_mouse() -> Node:
 	
 	var collider = result[0].collider
 	
-	if collider is Unit or collider.is_in_group("Tree"):
+	if collider is Entity or collider.is_in_group("Tree"):
 		return collider
 	
 	return null
 
 func _update_ui():
-	var ui = GameManager.game_ui 
+	var ui = GameManager.game_ui
 	if ui == null:
 		return
-
+	
 	if selected_units.size() == 1:
-		var unit = selected_units[0]
-		
-		if unit is Barracks:
-			ui.hide_actions()
-		if unit is DefenseTower:
-			ui.hide_actions()
-		if unit is TrainingGrounds:
-			ui.hide_actions()
-		elif unit is Building:
-			ui.show_action("base")
-		else:
-			ui.hide_actions()
+		ui.update_ui(selected_units[0])
 	else:
-		ui.hide_actions()
+		ui.update_ui(null)

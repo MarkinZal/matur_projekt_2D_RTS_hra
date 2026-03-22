@@ -1,6 +1,6 @@
 [gd_scene load_steps=2 format=3 uid="uid://c3ygdbo7ocoxv"]
 
-[ext_resource type="Script" uid="uid://dp4p746g6se7w" path="res://Scripts/game_ui.gd" id="1_gek4i"]
+[ext_resource type="Script" uid="uid://dp4p746g6se7w" path="res://Scripts/GameManagement/game_ui.gd" id="1_gek4i"]
 
 [node name="GameUI" type="CanvasLayer" node_paths=PackedStringArray("wood_label", "gold_label", "food_label")]
 script = ExtResource("1_gek4i")
@@ -19,6 +19,7 @@ offset_left = -44.0
 offset_top = -20.0
 grow_horizontal = 0
 grow_vertical = 0
+mouse_filter = 2
 
 [node name="TGPanel" type="PanelContainer" parent="Control"]
 layout_mode = 0

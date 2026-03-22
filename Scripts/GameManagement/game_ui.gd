@@ -1,6 +1,7 @@
 extends CanvasLayer
 
-@onready var action_panel = $Control/ActionPanel
+@onready var base_panel = $Control/BasePanel
+@onready var tg_panel = $Control/TGPanel
 
 @export var wood_label : Label
 @export var gold_label : Label
@@ -15,8 +16,7 @@ func _ready():
 	GameManager.resource_updated.connect(_update_resource)
 	GameManager.supply_updated.connect(_update_supply)
 	
-	if action_panel:
-		action_panel.visible = false
+	hide_actions()
 
 func _update_resource(type : String, amount : int):
 	if type == "wood" and wood_label != null:
@@ -34,23 +34,29 @@ func _update_supply(current : int, max_amount : int):
 			food_label.modulate = Color.WHITE
 
 func show_action(action_type : String):
-	if action_panel:
-		action_panel.visible = true
+	hide_actions()
+	if action_type == "base" and base_panel:
+		base_panel.visible = true
+	elif action_type == "training" and tg_panel:
+		tg_panel.visible = true
 
 func update_ui(selected_object):
-	if action_panel:
-		action_panel.visible = false
+	hide_actions()
 
 	if selected_object == null:
 		return
 
 	if selected_object is Building:
-		if selected_object.can_train_units:
-			action_panel.visible = true
+		if selected_object.can_train_units and base_panel:
+			base_panel.visible = true
+		elif selected_object.is_training_grounds and tg_panel:
+			tg_panel.visible = true
 
 func hide_actions():
-	if action_panel:
-		action_panel.visible = false
+	if base_panel:
+		base_panel.visible = false
+	if tg_panel:
+		tg_panel.visible = false
 
 func _on_train_soldier_button_pressed():
 	pass

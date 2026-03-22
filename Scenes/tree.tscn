@@ -1,7 +1,7 @@
 [gd_scene load_steps=6 format=3 uid="uid://dmq5ua2m1x08k"]
 
 [ext_resource type="Texture2D" uid="uid://4tm5ofgdbdjr" path="res://Assets.2/MiniWorldSprites/Nature/Trees.png" id="1_0vwjc"]
-[ext_resource type="Script" uid="uid://dxxjkyj2eplwt" path="res://Scripts/tree.gd" id="1_rsuno"]
+[ext_resource type="Script" uid="uid://dxxjkyj2eplwt" path="res://Scripts/Resources/tree.gd" id="1_rsuno"]
 
 [sub_resource type="CircleShape2D" id="CircleShape2D_rsuno"]
 

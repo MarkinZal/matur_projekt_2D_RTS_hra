@@ -1,8 +1,8 @@
 [gd_scene load_steps=7 format=3 uid="uid://b4q73iuwnpuq4"]
 
-[ext_resource type="Script" uid="uid://bp5h0s6ey0clj" path="res://Scripts/gold_mine.gd" id="1_da0p1"]
+[ext_resource type="Script" uid="uid://bp5h0s6ey0clj" path="res://Scripts/Resources/gold_mine.gd" id="1_da0p1"]
 [ext_resource type="Texture2D" uid="uid://doegi8p6e731n" path="res://Assets.2/MiniWorldSprites/Buildings/Wood/CaveV2.png" id="1_ko8gm"]
-[ext_resource type="Script" uid="uid://cgh2k4lw3fl4l" path="res://Scripts/health_bar.gd" id="3_upfdr"]
+[ext_resource type="Script" uid="uid://cgh2k4lw3fl4l" path="res://Scripts/GameManagement/health_bar.gd" id="3_upfdr"]
 
 [sub_resource type="CircleShape2D" id="CircleShape2D_da0p1"]
 

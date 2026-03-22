@@ -1,8 +1,8 @@
 [gd_scene load_steps=7 format=3 uid="uid://bsspm6cf0pbvt"]
 
-[ext_resource type="Script" uid="uid://cdd4xgh626ok1" path="res://Scripts/barracks.gd" id="1_coeoc"]
+[ext_resource type="Script" uid="uid://cdd4xgh626ok1" path="res://Scripts/Buildings/barracks.gd" id="1_coeoc"]
 [ext_resource type="Texture2D" uid="uid://rds5ce0of8ft" path="res://Assets.2/MiniWorldSprites/Buildings/Wood/Barracks.png" id="2_3p7p4"]
-[ext_resource type="Script" uid="uid://cgh2k4lw3fl4l" path="res://Scripts/health_bar.gd" id="3_3p7p4"]
+[ext_resource type="Script" uid="uid://cgh2k4lw3fl4l" path="res://Scripts/GameManagement/health_bar.gd" id="3_3p7p4"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_1yvdp"]
 
