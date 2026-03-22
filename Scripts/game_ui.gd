@@ -38,14 +38,15 @@ func show_action(action_type : String):
 		action_panel.visible = true
 
 func update_ui(selected_object):
+	if action_panel:
+		action_panel.visible = false
+
 	if selected_object == null:
 		return
 
-	if selected_object is BarracksBuilding:
-		action_panel.visible = false
-	
-	elif selected_object is Building:
-		action_panel.visible = true
+	if selected_object is Building:
+		if selected_object.can_train_units:
+			action_panel.visible = true
 
 func hide_actions():
 	if action_panel:

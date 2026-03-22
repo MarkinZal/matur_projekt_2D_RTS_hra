@@ -20,14 +20,25 @@ offset_top = -20.0
 grow_horizontal = 0
 grow_vertical = 0
 
-[node name="ActionPanel" type="PanelContainer" parent="Control"]
+[node name="TGPanel" type="PanelContainer" parent="Control"]
+layout_mode = 0
+offset_left = -132.0
+offset_top = -33.0
+offset_right = 26.0
+offset_bottom = 7.0
+
+[node name="TrainingGroundsAkce" type="Label" parent="Control/TGPanel"]
+layout_mode = 2
+text = "[U] vylepšit jednotky"
+
+[node name="BasePanel" type="PanelContainer" parent="Control"]
 layout_mode = 0
 offset_left = -138.0
 offset_top = -35.0
 offset_right = 30.0
 offset_bottom = 5.0
 
-[node name="ZakladnaAkce" type="Label" parent="Control/ActionPanel"]
+[node name="BaseAkce" type="Label" parent="Control/BasePanel"]
 layout_mode = 2
 text = "[Y] trénovat útočníka
 [X] trénovat dělníka"

@@ -7,17 +7,6 @@
 
 [node name="barracks" type="Area2D"]
 script = ExtResource("1_coeoc")
-food_generation_rate = null
-food_amount = null
-move_speed = null
-health_max = null
-health_current = null
-attack_range = null
-attack_rate = null
-attack_damage = null
-separation_radius = null
-separation_strength = null
-team = null
 
 [node name="Sprite2D" type="Sprite2D" parent="."]
 texture = ExtResource("2_3p7p4")

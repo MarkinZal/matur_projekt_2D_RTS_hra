@@ -3,6 +3,8 @@ class_name DefenseTower
 
 func _ready():
 	super._ready()
+	can_train_units = false
+	
 	health_max = 100
 	health_current = 100
 	
@@ -12,6 +14,9 @@ func _ready():
 
 func _process(delta):
 	_utok_logic()
+
+func _input(event):
+	pass
 
 func _on_detection_area_area_entered(area):
 	if area is Unit and area.team != team:

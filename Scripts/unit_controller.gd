@@ -169,7 +169,11 @@ func _update_ui():
 	if selected_units.size() == 1:
 		var unit = selected_units[0]
 		
-		if unit is BarracksBuilding:
+		if unit is Barracks:
+			ui.hide_actions()
+		if unit is DefenseTower:
+			ui.hide_actions()
+		if unit is TrainingGrounds:
 			ui.hide_actions()
 		elif unit is Building:
 			ui.show_action("base")
