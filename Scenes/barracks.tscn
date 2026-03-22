@@ -1,9 +1,21 @@
-[gd_scene load_steps=4 format=3 uid="uid://bsspm6cf0pbvt"]
+[gd_scene load_steps=7 format=3 uid="uid://bsspm6cf0pbvt"]
 
 [ext_resource type="Script" uid="uid://cdd4xgh626ok1" path="res://Scripts/barracks.gd" id="1_coeoc"]
 [ext_resource type="Texture2D" uid="uid://rds5ce0of8ft" path="res://Assets.2/MiniWorldSprites/Buildings/Wood/Barracks.png" id="2_3p7p4"]
+[ext_resource type="Script" uid="uid://cgh2k4lw3fl4l" path="res://Scripts/health_bar.gd" id="3_3p7p4"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_1yvdp"]
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_87o8n"]
+bg_color = Color(0.2159017, 0.21590173, 0.21590161, 1)
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_he61m"]
+bg_color = Color(0.79607844, 0, 0, 1)
+border_width_left = 5
+border_width_top = 5
+border_width_right = 5
+border_width_bottom = 5
+border_color = Color(0.21568628, 0.21568628, 0.21568628, 1)
 
 [node name="barracks" type="Area2D"]
 script = ExtResource("1_coeoc")
@@ -19,3 +31,15 @@ shape = SubResource("RectangleShape2D_1yvdp")
 
 [node name="NavigationObstacle2D" type="NavigationObstacle2D" parent="."]
 radius = 12.0
+
+[node name="HealthBar" type="ProgressBar" parent="."]
+offset_left = -10.0
+offset_top = -12.0
+offset_right = 190.0
+offset_bottom = 28.0
+scale = Vector2(0.1, 0.1)
+theme_override_styles/background = SubResource("StyleBoxFlat_87o8n")
+theme_override_styles/fill = SubResource("StyleBoxFlat_he61m")
+value = 60.0
+show_percentage = false
+script = ExtResource("3_3p7p4")

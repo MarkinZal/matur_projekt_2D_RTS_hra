@@ -1,11 +1,23 @@
-[gd_scene load_steps=5 format=3 uid="uid://bj8dhhm0oklge"]
+[gd_scene load_steps=8 format=3 uid="uid://bj8dhhm0oklge"]
 
 [ext_resource type="PackedScene" uid="uid://burie6p4gvvy3" path="res://Scenes/base.tscn" id="1_e0srh"]
 [ext_resource type="Script" uid="uid://pc33mj7i7obc" path="res://Scripts/defense_tower.gd" id="2_ipquv"]
 [ext_resource type="Texture2D" uid="uid://c0ish52au5s3v" path="res://Assets.2/MiniWorldSprites/Buildings/Wood/Tower.png" id="2_x5sp1"]
+[ext_resource type="Script" uid="uid://cgh2k4lw3fl4l" path="res://Scripts/health_bar.gd" id="4_wmmpi"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_x5sp1"]
 size = Vector2(16, 17)
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_wg2ss"]
+bg_color = Color(0.2159017, 0.21590173, 0.21590161, 1)
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_jgbqq"]
+bg_color = Color(0.79607844, 0, 0, 1)
+border_width_left = 5
+border_width_top = 5
+border_width_right = 5
+border_width_bottom = 5
+border_color = Color(0.21568628, 0.21568628, 0.21568628, 1)
 
 [node name="defense_tower" instance=ExtResource("1_e0srh")]
 script = ExtResource("2_ipquv")
@@ -26,3 +38,15 @@ shape = SubResource("RectangleShape2D_x5sp1")
 
 [node name="NavigationObstacle2D" parent="." index="4"]
 vertices = PackedVector2Array(9, -12, 9, 7, -9, 7, -9, -12)
+
+[node name="HealthBar" type="ProgressBar" parent="." index="5"]
+offset_left = -10.0
+offset_top = -12.0
+offset_right = 190.0
+offset_bottom = 28.0
+scale = Vector2(0.1, 0.1)
+theme_override_styles/background = SubResource("StyleBoxFlat_wg2ss")
+theme_override_styles/fill = SubResource("StyleBoxFlat_jgbqq")
+value = 60.0
+show_percentage = false
+script = ExtResource("4_wmmpi")

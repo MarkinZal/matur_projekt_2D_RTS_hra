@@ -1,11 +1,23 @@
-[gd_scene load_steps=5 format=3 uid="uid://dfco653o1sgd1"]
+[gd_scene load_steps=8 format=3 uid="uid://dfco653o1sgd1"]
 
 [ext_resource type="PackedScene" uid="uid://burie6p4gvvy3" path="res://Scenes/base.tscn" id="1_unuyv"]
 [ext_resource type="Texture2D" uid="uid://c5ee3fe04q87" path="res://Assets.2/MiniWorldSprites/Buildings/Wood/Workshops.png" id="2_ioxpv"]
 [ext_resource type="Script" uid="uid://d07rxn2gv31j5" path="res://Scripts/training_grounds.gd" id="2_tt1ox"]
+[ext_resource type="Script" uid="uid://cgh2k4lw3fl4l" path="res://Scripts/health_bar.gd" id="4_mkkmk"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_tt1ox"]
 size = Vector2(20, 12)
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_svngr"]
+bg_color = Color(0.2159017, 0.21590173, 0.21590161, 1)
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_3yvbd"]
+bg_color = Color(0.79607844, 0, 0, 1)
+border_width_left = 5
+border_width_top = 5
+border_width_right = 5
+border_width_bottom = 5
+border_color = Color(0.21568628, 0.21568628, 0.21568628, 1)
 
 [node name="training_grounds" instance=ExtResource("1_unuyv")]
 script = ExtResource("2_tt1ox")
@@ -24,3 +36,15 @@ shape = SubResource("RectangleShape2D_tt1ox")
 
 [node name="NavigationObstacle2D" parent="." index="4"]
 vertices = PackedVector2Array(9, -8, 9, 2, -9, 2, -9, -8)
+
+[node name="HealthBar" type="ProgressBar" parent="." index="5"]
+offset_left = -10.0
+offset_top = -12.0
+offset_right = 190.0
+offset_bottom = 28.0
+scale = Vector2(0.1, 0.1)
+theme_override_styles/background = SubResource("StyleBoxFlat_svngr")
+theme_override_styles/fill = SubResource("StyleBoxFlat_3yvbd")
+value = 60.0
+show_percentage = false
+script = ExtResource("4_mkkmk")
