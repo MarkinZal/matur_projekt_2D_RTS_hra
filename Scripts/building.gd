@@ -10,6 +10,8 @@ var cost_worker = {"wood": 5, "gold": 0, "food": 1}
 
 func _ready():
 	move_speed = 0.0
+	health_max = 500
+	health_current = health_max
 
 func _process(delta):
 	pass
@@ -41,4 +43,5 @@ func move_to_target(target: Vector2):
 	pass
 
 func _die():
-	queue_free()
+	GameManager.base_destroyed(team)
+	super._die()

@@ -1,0 +1,18 @@
+[gd_scene load_steps=5 format=3 uid="uid://coylewrvt82dm"]
+
+[ext_resource type="PackedScene" uid="uid://bdbn2a3p48834" path="res://Scenes/unit_base.tscn" id="1_f3tp4"]
+[ext_resource type="Script" uid="uid://cvmxfvj3asloc" path="res://Scripts/unit_siege.gd" id="2_38b35"]
+[ext_resource type="Texture2D" uid="uid://byxnhjjuvb73e" path="res://Assets.2/MiniWorldSprites/Characters/Soldiers/Ranged/Ballista.png" id="3_8r3yy"]
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_38b35"]
+
+[node name="unit_siege" instance=ExtResource("1_f3tp4")]
+script = ExtResource("2_38b35")
+
+[node name="Sprite" parent="." index="0"]
+texture = ExtResource("3_8r3yy")
+hframes = 7
+vframes = 4
+
+[node name="CollisionShape2D" parent="." index="1"]
+shape = SubResource("CircleShape2D_38b35")

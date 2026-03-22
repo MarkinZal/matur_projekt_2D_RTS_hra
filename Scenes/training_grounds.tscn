@@ -1,0 +1,26 @@
+[gd_scene load_steps=5 format=3 uid="uid://dfco653o1sgd1"]
+
+[ext_resource type="PackedScene" uid="uid://burie6p4gvvy3" path="res://Scenes/base.tscn" id="1_unuyv"]
+[ext_resource type="Texture2D" uid="uid://c5ee3fe04q87" path="res://Assets.2/MiniWorldSprites/Buildings/Wood/Workshops.png" id="2_ioxpv"]
+[ext_resource type="Script" uid="uid://d07rxn2gv31j5" path="res://Scripts/training_grounds.gd" id="2_tt1ox"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_tt1ox"]
+size = Vector2(20, 12)
+
+[node name="training_grounds" instance=ExtResource("1_unuyv")]
+script = ExtResource("2_tt1ox")
+
+[node name="SelectionVisual" parent="." index="1"]
+position = Vector2(5.9604645e-07, -3)
+scale = Vector2(0.0703125, 10)
+
+[node name="Sprite2D" parent="." index="2"]
+texture = ExtResource("2_ioxpv")
+vframes = 3
+
+[node name="CollisionShape2D" parent="." index="3"]
+position = Vector2(0, -3)
+shape = SubResource("RectangleShape2D_tt1ox")
+
+[node name="NavigationObstacle2D" parent="." index="4"]
+vertices = PackedVector2Array(9, -8, 9, 2, -9, 2, -9, -8)

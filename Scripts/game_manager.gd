@@ -24,9 +24,7 @@ func _ready():
 func register_unit(unit: Unit):
 	if unit.team in unit_counts:
 		unit_counts[unit.team] += 1
-	
-	if not unit.unit_death.is_connected(_on_unit_die):
-		unit.unit_death.connect(_on_unit_die)
+
 
 func add_resource(type: String, amount: int):
 	match type:
@@ -68,25 +66,11 @@ func try_spend_resources(wood_cost: int, gold_cost: int, food_cost: int) -> bool
 		
 	return false
 
-func _on_unit_die(unit : Unit):
-	if unit.team in unit_counts:
-		unit_counts[unit.team] -= 1
-		_check_game_over()
-
-func _check_game_over():
-	var teams_alive = 0
-	var possible_winner = -1
-	
-	for team in unit_counts:
-		if unit_counts[team] > 0:
-			teams_alive += 1
-			possible_winner = team
-	
-	if teams_alive > 1:
-		return
-	
+func base_destroyed(losing_team: int):
 	var winner_name = "Nikdo"
-	if possible_winner != -1:
-		winner_name = Unit.Team.keys()[possible_winner]
+	if losing_team == Unit.Team.ENEMY:
+		winner_name = "PLAYER"
+	elif losing_team == Unit.Team.PLAYER:
+		winner_name = "ENEMY"
 	
 	game_ended.emit(winner_name)

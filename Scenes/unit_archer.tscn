@@ -1,0 +1,13 @@
+[gd_scene load_steps=4 format=3 uid="uid://cx5eb3p3gyfw4"]
+
+[ext_resource type="PackedScene" uid="uid://bdbn2a3p48834" path="res://Scenes/unit_base.tscn" id="1_i87m8"]
+[ext_resource type="Script" uid="uid://bdeifavp4u7jp" path="res://Scripts/unit_archer.gd" id="2_pbmdn"]
+[ext_resource type="Texture2D" uid="uid://cyby8gmyp1yhi" path="res://Assets.2/MiniWorldSprites/Characters/Soldiers/Ranged/BowmanTemplate.png" id="3_ww6j8"]
+
+[node name="unit_archer" instance=ExtResource("1_i87m8")]
+script = ExtResource("2_pbmdn")
+
+[node name="Sprite" parent="." index="0"]
+texture = ExtResource("3_ww6j8")
+hframes = 5
+vframes = 7

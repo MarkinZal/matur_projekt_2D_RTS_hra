@@ -1,0 +1,28 @@
+[gd_scene load_steps=5 format=3 uid="uid://bj8dhhm0oklge"]
+
+[ext_resource type="PackedScene" uid="uid://burie6p4gvvy3" path="res://Scenes/base.tscn" id="1_e0srh"]
+[ext_resource type="Script" uid="uid://pc33mj7i7obc" path="res://Scripts/defense_tower.gd" id="2_ipquv"]
+[ext_resource type="Texture2D" uid="uid://c0ish52au5s3v" path="res://Assets.2/MiniWorldSprites/Buildings/Wood/Tower.png" id="2_x5sp1"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_x5sp1"]
+size = Vector2(16, 17)
+
+[node name="defense_tower" instance=ExtResource("1_e0srh")]
+script = ExtResource("2_ipquv")
+
+[node name="SelectionVisual" parent="." index="1"]
+visible = true
+position = Vector2(1.4305115e-06, -2.4999998)
+scale = Vector2(0.070312515, 19)
+
+[node name="Sprite2D" parent="." index="2"]
+position = Vector2(0, -11)
+texture = ExtResource("2_x5sp1")
+frame = 1
+
+[node name="CollisionShape2D" parent="." index="3"]
+position = Vector2(0, -2.5)
+shape = SubResource("RectangleShape2D_x5sp1")
+
+[node name="NavigationObstacle2D" parent="." index="4"]
+vertices = PackedVector2Array(9, -12, 9, 7, -9, 7, -9, -12)
