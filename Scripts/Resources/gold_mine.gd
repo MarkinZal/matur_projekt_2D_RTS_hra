@@ -37,6 +37,7 @@ func _process(delta):
 			GameManager.add_resource("gold", current_workers.size() * 5)
 
 func _input(event):
-	if not is_selected: return
-	if event is InputEventKey and event.pressed and event.keycode == KEY_E:
+	if not is_selected: 
+		return
+	if event.is_action_pressed("extract_worker"):
 		remove_worker()

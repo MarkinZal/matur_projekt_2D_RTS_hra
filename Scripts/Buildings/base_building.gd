@@ -15,13 +15,12 @@ func _ready():
 func _input(event):
 	if not is_selected:
 		return
-	if event is InputEventKey and event.pressed:
-		if event.keycode == KEY_Y:
-			if GameManager.try_spend_resources(cost_soldier.wood, cost_soldier.gold, cost_soldier.food):
-				spawn_unit(unit_scene)
-		elif event.keycode == KEY_X:
-			if GameManager.try_spend_resources(cost_worker.wood, cost_worker.gold, cost_worker.food):
-				spawn_unit(worker_scene)
+	if event.is_action_pressed("train_soldier"):
+		if GameManager.try_spend_resources(cost_soldier.wood, cost_soldier.gold, cost_soldier.food):
+			spawn_unit(unit_scene)
+	elif event.is_action_pressed("train_worker"):
+		if GameManager.try_spend_resources(cost_worker.wood, cost_worker.gold, cost_worker.food):
+			spawn_unit(worker_scene)
 
 func spawn_unit(scene_to_spawn):
 	var new_unit = scene_to_spawn.instantiate()

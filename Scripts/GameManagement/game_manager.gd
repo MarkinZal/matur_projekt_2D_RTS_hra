@@ -20,6 +20,17 @@ var unit_counts = {
 
 var game_ui: CanvasLayer
 
+var cost_barracks = {"wood": 50, "gold": 20, "food": 0}
+var cost_tower = {"wood": 40, "gold": 50, "food": 0}
+var cost_training = {"wood": 100, "gold": 100, "food": 0}
+
+func can_afford(wood_cost: int, gold_cost: int, food_cost: int) -> bool:
+	if food_cost > 0 and current_food + food_cost > max_food:
+		return false
+	if drevo >= wood_cost and zlato >= gold_cost:
+		return true
+	return false
+
 func _ready():
 	resource_updated.emit("wood", drevo)
 	resource_updated.emit("gold", zlato)

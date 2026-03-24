@@ -1,4 +1,4 @@
-[gd_scene load_steps=48 format=4 uid="uid://c6bkqujj3ue2j"]
+[gd_scene load_steps=45 format=4 uid="uid://c6bkqujj3ue2j"]
 
 [ext_resource type="Script" uid="uid://c2djnlai8ur1d" path="res://Scripts/Miscellaneous/unit_controller.gd" id="1_8gbba"]
 [ext_resource type="Script" uid="uid://dtpmcscmsb8es" path="res://Scripts/GameManagement/game_manager.gd" id="1_21xkr"]
@@ -25,9 +25,6 @@
 [ext_resource type="PackedScene" uid="uid://4nsdvq6d3jmt" path="res://Scenes/unit_ai.tscn" id="23_u50mg"]
 [ext_resource type="PackedScene" uid="uid://cthq7biai7wpy" path="res://Scenes/unit_worker.tscn" id="24_3pmx8"]
 [ext_resource type="PackedScene" uid="uid://b4q73iuwnpuq4" path="res://Scenes/goldmine.tscn" id="25_cbgmd"]
-[ext_resource type="PackedScene" uid="uid://bsspm6cf0pbvt" path="res://Scenes/barracks.tscn" id="26_1w6v2"]
-[ext_resource type="PackedScene" uid="uid://bj8dhhm0oklge" path="res://Scenes/defense_tower.tscn" id="27_1w6v2"]
-[ext_resource type="PackedScene" uid="uid://dfco653o1sgd1" path="res://Scenes/training_grounds.tscn" id="28_ueoa1"]
 
 [sub_resource type="NavigationPolygon" id="NavigationPolygon_pdsj5"]
 vertices = PackedVector2Array(277.03125, -176, 277.96875, 150.03906, -184, 151.95313, -184, 56.40625, -155.42969, 37.78125, 15.7265625, -54.15625, -185, 6.96875, -185, -27, -109.390625, -27, 46, -130.32813, 46, -176, -108.38281, -52.148438, 17.757813, -126.28906)
@@ -1194,18 +1191,9 @@ position = Vector2(165, -50)
 position = Vector2(190, -99)
 
 [node name="Unit_Worker" parent="." instance=ExtResource("24_3pmx8")]
-position = Vector2(-30, 80)
+position = Vector2(-49, 101)
 
 [node name="goldmine" parent="." instance=ExtResource("25_cbgmd")]
 position = Vector2(-110, 125)
-
-[node name="barracks" parent="." instance=ExtResource("26_1w6v2")]
-position = Vector2(-60, 119)
-
-[node name="defense_tower" parent="." instance=ExtResource("27_1w6v2")]
-position = Vector2(151, -75)
-
-[node name="training_grounds" parent="." instance=ExtResource("28_ueoa1")]
-position = Vector2(-133, 83)
 
 [connection signal="pressed" from="CanvasLayer/EndScreen/MenuButton" to="CanvasLayer/EndScreen" method="_on_menu_button_pressed"]

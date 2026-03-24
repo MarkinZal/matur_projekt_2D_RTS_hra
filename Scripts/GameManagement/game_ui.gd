@@ -2,13 +2,16 @@ extends CanvasLayer
 
 @onready var base_panel = $Control/BasePanel
 @onready var tg_panel = $Control/TGPanel
+@onready var worker_panel = $Control/WorkerPanel
 
 @export var wood_label : Label
 @export var gold_label : Label
 @export var food_label : Label
+@export var build_indicator_label : Label
 
 signal train_soldier_pressed
 signal train_worker_pressed
+signal build_mode_requested(building_type: String)
 
 func _ready():
 	GameManager.game_ui = self
@@ -17,6 +20,7 @@ func _ready():
 	GameManager.supply_updated.connect(_update_supply)
 	
 	hide_actions()
+	hide_build_indicator()
 
 func _update_resource(type : String, amount : int):
 	if type == "wood" and wood_label != null:
@@ -51,12 +55,34 @@ func update_ui(selected_object):
 			base_panel.visible = true
 		elif selected_object.is_training_grounds and tg_panel:
 			tg_panel.visible = true
+	elif selected_object is Worker and worker_panel:
+		worker_panel.visible = true
 
 func hide_actions():
 	if base_panel:
 		base_panel.visible = false
 	if tg_panel:
 		tg_panel.visible = false
+	if worker_panel:
+		worker_panel.visible = false
+
+func set_build_indicator(text: String):
+	if build_indicator_label:
+		build_indicator_label.text = text
+		build_indicator_label.visible = true
+
+func hide_build_indicator():
+	if build_indicator_label:
+		build_indicator_label.visible = false
+
+func _on_build_barracks_pressed():
+	build_mode_requested.emit("barracks")
+
+func _on_build_tower_pressed():
+	build_mode_requested.emit("tower")
+
+func _on_build_tg_pressed():
+	build_mode_requested.emit("training_grounds")
 
 func _on_train_soldier_button_pressed():
 	pass

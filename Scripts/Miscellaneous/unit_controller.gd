@@ -1,30 +1,72 @@
 extends Node2D
 
-var selected_units : Array = [] 
+var selected_units : Array = []
 var dragging : bool = false
 var drag_start : Vector2 = Vector2.ZERO
 var is_drag_active : bool = false
 
-@export var game_ui : Node
+var build_mode: bool = false
+var current_build_type: String = ""
+var ghost_sprite: Sprite2D = null
+var is_choosing_building: bool = false
+
+var scene_barracks = preload("res://Scenes/barracks.tscn")
+var scene_tower = preload("res://Scenes/defense_tower.tscn")
+var scene_tg = preload("res://Scenes/training_grounds.tscn")
 
 func _ready():
 	z_index = 100
+	await get_tree().process_frame
+	if GameManager.game_ui != null:
+		GameManager.game_ui.build_mode_requested.connect(_on_build_mode_requested)
 
 func _input(event):
-	if event is InputEventMouseButton and event.button_index == MOUSE_BUTTON_LEFT:
-		if event.pressed:
-			dragging = true
-			drag_start = get_global_mouse_position()
-			is_drag_active = false
+	var has_worker = false
+	for entity in selected_units:
+		if entity is Worker:
+			has_worker = true
+			break
+
+	if has_worker:
+		if event.is_action_pressed("open_build_menu"):
+			is_choosing_building = true
+			
+		if is_choosing_building or build_mode:
+			if event.is_action_pressed("select_barracks"):
+				_on_build_mode_requested("barracks")
+			elif event.is_action_pressed("select_tower"):
+				_on_build_mode_requested("tower")
+			elif event.is_action_pressed("select_tg"):
+				_on_build_mode_requested("training_grounds")
+
+	if build_mode and event.is_action_pressed("right_click"):
+		build_mode = false
+		is_choosing_building = false
+		if is_instance_valid(ghost_sprite): ghost_sprite.queue_free()
+		if GameManager.game_ui != null: GameManager.game_ui.hide_build_indicator()
+		return
+		
+	if build_mode and event.is_action_pressed("left_click"):
+		var pos = get_global_mouse_position()
+		if _can_place_building(pos):
+			_confirm_build(pos)
 		else:
-			dragging = false
-			queue_redraw()
-			
-			if not is_drag_active:
-				_select_entity_at_point(get_global_mouse_position())
-			
-			is_drag_active = false
-			_update_ui()
+			print("Zde nelze stavět nebo nemáš suroviny!")
+		return
+
+	if event.is_action_pressed("left_click"):
+		dragging = true
+		drag_start = get_global_mouse_position()
+		is_drag_active = false
+	elif event.is_action_released("left_click"):
+		dragging = false
+		queue_redraw()
+		
+		if not is_drag_active:
+			_select_entity_at_point(get_global_mouse_position())
+		
+		is_drag_active = false
+		_update_ui()
 	
 	elif event is InputEventMouseMotion and dragging:
 		var current_pos = get_global_mouse_position()
@@ -37,7 +79,7 @@ func _input(event):
 			queue_redraw()
 			_update_selection_in_box(drag_start, current_pos)
 
-	elif event is InputEventMouseButton and event.button_index == MOUSE_BUTTON_RIGHT and event.pressed:
+	elif event.is_action_pressed("right_click"):
 		_command_selected_units()
 
 func _draw():
@@ -118,8 +160,11 @@ func _deselect_all():
 			if entity is Building:
 				entity.is_selected = false
 	selected_units.clear()
+	is_choosing_building = false
+	build_mode = false
+	if is_instance_valid(ghost_sprite): ghost_sprite.queue_free()
+	if GameManager.game_ui != null: GameManager.game_ui.hide_build_indicator()
 	_update_ui()
-
 
 func _command_selected_units():
 	if selected_units.is_empty():
@@ -163,11 +208,100 @@ func _get_object_at_mouse() -> Node:
 	return null
 
 func _update_ui():
-	var ui = GameManager.game_ui
+	var ui = GameManager.game_ui 
 	if ui == null:
 		return
-	
+
 	if selected_units.size() == 1:
 		ui.update_ui(selected_units[0])
 	else:
 		ui.update_ui(null)
+
+func _on_build_mode_requested(type: String):
+	build_mode = true
+	current_build_type = type
+	is_choosing_building = false
+	
+	if is_instance_valid(ghost_sprite):
+		ghost_sprite.queue_free()
+		
+	ghost_sprite = Sprite2D.new()
+	ghost_sprite.modulate = Color(1, 1, 1, 0.5) 
+	
+	var indicator_text = "Stavba: "
+	
+	match type:
+		"barracks": 
+			ghost_sprite.texture = load("res://Assets.2/MiniWorldSprites/Buildings/Wood/Barracks.png")
+			indicator_text += "Kasárna"
+		"tower": 
+			ghost_sprite.texture = load("res://Assets.2/MiniWorldSprites/Buildings/Wood/Tower.png")
+			indicator_text += "Věž"
+		"training_grounds": 
+			ghost_sprite.texture = load("res://Assets.2/MiniWorldSprites/Buildings/Wood/Workshops.png")
+			indicator_text += "Cvičiště"
+		
+	add_child(ghost_sprite)
+	
+	if GameManager.game_ui != null:
+		GameManager.game_ui.set_build_indicator(indicator_text + " (Zrušit: Pravé tlačítko)")
+
+func _process(delta):
+	if build_mode and is_instance_valid(ghost_sprite):
+		var mouse_pos = get_global_mouse_position()
+		ghost_sprite.global_position = mouse_pos
+		
+		if _can_place_building(mouse_pos):
+			ghost_sprite.modulate = Color(0, 1, 0, 0.6) 
+		else:
+			ghost_sprite.modulate = Color(1, 0, 0, 0.6) 
+
+func _can_place_building(pos: Vector2) -> bool:
+	var cost = {}
+	if current_build_type == "barracks": cost = GameManager.cost_barracks
+	elif current_build_type == "tower": cost = GameManager.cost_tower
+	elif current_build_type == "training_grounds": cost = GameManager.cost_training
+	
+	if not GameManager.can_afford(cost.wood, cost.gold, cost.food):
+		return false
+		
+	var space = get_world_2d().direct_space_state
+	var query = PhysicsShapeQueryParameters2D.new()
+	var shape = RectangleShape2D.new()
+	shape.size = Vector2(40, 40) 
+	query.shape = shape
+	query.transform = Transform2D(0, pos)
+	query.collide_with_areas = true
+	var result = space.intersect_shape(query)
+	
+	for item in result:
+		if item.collider is Entity or item.collider.is_in_group("Tree") or item.collider.is_in_group("GoldMine"):
+			return false
+			
+	return true
+
+func _confirm_build(pos: Vector2):
+	var cost = {}
+	var scene_to_pass : PackedScene
+	
+	match current_build_type:
+		"barracks": 
+			cost = GameManager.cost_barracks
+			scene_to_pass = scene_barracks
+		"tower": 
+			cost = GameManager.cost_tower
+			scene_to_pass = scene_tower
+		"training_grounds": 
+			cost = GameManager.cost_training
+			scene_to_pass = scene_tg
+
+	GameManager.try_spend_resources(cost.wood, cost.gold, cost.food)
+	
+	for unit in selected_units:
+		if unit is Worker:
+			unit.command_build(pos, scene_to_pass)
+			break 
+			
+	build_mode = false
+	if is_instance_valid(ghost_sprite): ghost_sprite.queue_free()
+	if GameManager.game_ui != null: GameManager.game_ui.hide_build_indicator()

@@ -21,12 +21,26 @@ grow_horizontal = 0
 grow_vertical = 0
 mouse_filter = 2
 
+[node name="WorkerPanel" type="PanelContainer" parent="Control"]
+layout_mode = 0
+offset_left = -149.0
+offset_top = -126.0
+offset_right = -109.0
+offset_bottom = -86.0
+
+[node name="WorkerAkce" type="Label" parent="Control/WorkerPanel"]
+layout_mode = 2
+text = "[B] režim stavění
+- [F] Kasárny
+- [G] Obranná věž
+- [H] Cvičiště"
+
 [node name="TGPanel" type="PanelContainer" parent="Control"]
 layout_mode = 0
-offset_left = -132.0
-offset_top = -33.0
-offset_right = 26.0
-offset_bottom = 7.0
+offset_left = -148.0
+offset_top = -125.0
+offset_right = 10.0
+offset_bottom = -85.0
 
 [node name="TrainingGroundsAkce" type="Label" parent="Control/TGPanel"]
 layout_mode = 2
@@ -34,10 +48,10 @@ text = "[U] vylepšit jednotky"
 
 [node name="BasePanel" type="PanelContainer" parent="Control"]
 layout_mode = 0
-offset_left = -138.0
-offset_top = -35.0
-offset_right = 30.0
-offset_bottom = 5.0
+offset_left = -147.0
+offset_top = -125.0
+offset_right = 21.0
+offset_bottom = -85.0
 
 [node name="BaseAkce" type="Label" parent="Control/BasePanel"]
 layout_mode = 2
@@ -65,3 +79,11 @@ text = "Zlato: 0"
 [node name="Jidlo" type="Label" parent="Control/ResourcePanel/HBoxContainer"]
 layout_mode = 2
 text = "Jidlo: 0"
+
+[node name="build_indicator_label" type="Label" parent="Control"]
+layout_mode = 0
+offset_left = -147.0
+offset_top = -187.0
+offset_right = 11.0
+offset_bottom = -135.0
+text = "Režim stavění"
