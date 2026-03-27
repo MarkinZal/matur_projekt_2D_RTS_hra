@@ -1,21 +1,9 @@
-[gd_scene load_steps=7 format=3 uid="uid://b4q73iuwnpuq4"]
+[gd_scene load_steps=4 format=3 uid="uid://b4q73iuwnpuq4"]
 
 [ext_resource type="Script" uid="uid://bp5h0s6ey0clj" path="res://Scripts/Resources/gold_mine.gd" id="1_da0p1"]
 [ext_resource type="Texture2D" uid="uid://doegi8p6e731n" path="res://Assets.2/MiniWorldSprites/Buildings/Wood/CaveV2.png" id="1_ko8gm"]
-[ext_resource type="Script" uid="uid://cgh2k4lw3fl4l" path="res://Scripts/GameManagement/health_bar.gd" id="3_upfdr"]
 
 [sub_resource type="CircleShape2D" id="CircleShape2D_da0p1"]
-
-[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_tomk2"]
-bg_color = Color(0.2159017, 0.21590173, 0.21590161, 1)
-
-[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_fd8xl"]
-bg_color = Color(0.79607844, 0, 0, 1)
-border_width_left = 5
-border_width_top = 5
-border_width_right = 5
-border_width_bottom = 5
-border_color = Color(0.21568628, 0.21568628, 0.21568628, 1)
 
 [node name="goldmine" type="Area2D"]
 script = ExtResource("1_da0p1")
@@ -34,15 +22,3 @@ vframes = 2
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
 shape = SubResource("CircleShape2D_da0p1")
-
-[node name="HealthBar" type="ProgressBar" parent="."]
-offset_left = -10.0
-offset_top = -12.0
-offset_right = 190.0
-offset_bottom = 28.0
-scale = Vector2(0.1, 0.1)
-theme_override_styles/background = SubResource("StyleBoxFlat_tomk2")
-theme_override_styles/fill = SubResource("StyleBoxFlat_fd8xl")
-value = 60.0
-show_percentage = false
-script = ExtResource("3_upfdr")

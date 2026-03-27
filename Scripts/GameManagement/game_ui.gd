@@ -3,6 +3,8 @@ extends CanvasLayer
 @onready var base_panel = $Control/BasePanel
 @onready var tg_panel = $Control/TGPanel
 @onready var worker_panel = $Control/WorkerPanel
+@onready var mine_panel = $Control/MinePanel
+@onready var mine_akce = $Control/MinePanel/MineAkce
 
 @export var wood_label : Label
 @export var gold_label : Label
@@ -57,6 +59,10 @@ func update_ui(selected_object):
 			tg_panel.visible = true
 	elif selected_object is Worker and worker_panel:
 		worker_panel.visible = true
+	elif selected_object.is_in_group("GoldMine") and mine_panel:
+		mine_panel.visible = true
+		if mine_akce:
+			mine_akce.text = "[E] Odstranit dělníka " + str(selected_object.current_workers.size()) + " / " + str(selected_object.max_workers)
 
 func hide_actions():
 	if base_panel:
@@ -65,6 +71,8 @@ func hide_actions():
 		tg_panel.visible = false
 	if worker_panel:
 		worker_panel.visible = false
+	if mine_panel:
+		mine_panel.visible = false
 
 func set_build_indicator(text: String):
 	if build_indicator_label:

@@ -2,11 +2,12 @@
 
 [ext_resource type="Script" uid="uid://dp4p746g6se7w" path="res://Scripts/GameManagement/game_ui.gd" id="1_gek4i"]
 
-[node name="GameUI" type="CanvasLayer" node_paths=PackedStringArray("wood_label", "gold_label", "food_label")]
+[node name="GameUI" type="CanvasLayer" node_paths=PackedStringArray("wood_label", "gold_label", "food_label", "build_indicator_label")]
 script = ExtResource("1_gek4i")
 wood_label = NodePath("Control/ResourcePanel/HBoxContainer/Drevo")
 gold_label = NodePath("Control/ResourcePanel/HBoxContainer/Zlato")
 food_label = NodePath("Control/ResourcePanel/HBoxContainer/Jidlo")
+build_indicator_label = NodePath("Control/build_indicator_label")
 
 [node name="Control" type="Control" parent="."]
 layout_mode = 3
@@ -20,6 +21,16 @@ offset_top = -20.0
 grow_horizontal = 0
 grow_vertical = 0
 mouse_filter = 2
+
+[node name="MinePanel" type="PanelContainer" parent="Control"]
+layout_mode = 0
+offset_left = -202.0
+offset_top = -119.0
+offset_right = -162.0
+offset_bottom = -79.0
+
+[node name="MineAkce" type="Label" parent="Control/MinePanel"]
+layout_mode = 2
 
 [node name="WorkerPanel" type="PanelContainer" parent="Control"]
 layout_mode = 0
@@ -82,8 +93,8 @@ text = "Jidlo: 0"
 
 [node name="build_indicator_label" type="Label" parent="Control"]
 layout_mode = 0
-offset_left = -147.0
-offset_top = -187.0
-offset_right = 11.0
-offset_bottom = -135.0
+offset_left = -312.0
+offset_top = -185.0
+offset_right = -154.0
+offset_bottom = -133.0
 text = "Režim stavění"

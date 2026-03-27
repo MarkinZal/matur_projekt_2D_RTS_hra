@@ -131,34 +131,34 @@ func _select_entity_at_point(point : Vector2):
 	
 	if not result.is_empty():
 		var collider = result[0].collider
-		if collider is Entity and collider.team == Entity.Team.PLAYER:
+		if (collider is Entity and collider.team == Entity.Team.PLAYER) or collider.is_in_group("GoldMine"):
 			_add_to_selection(collider)
 
-func _add_to_selection(entity : Entity):
-	if not selected_units.has(entity):
-		selected_units.append(entity)
-		if is_instance_valid(entity):
-			if entity.has_node("PlayerUnit"):
-				entity.get_node("PlayerUnit").toggle_selection_visual(true)
-			if entity is Building:
-				entity.is_selected = true
+func _add_to_selection(node):
+	if not selected_units.has(node):
+		selected_units.append(node)
+		if is_instance_valid(node):
+			if node.has_node("PlayerUnit"):
+				node.get_node("PlayerUnit").toggle_selection_visual(true)
+			if node is Building or node.is_in_group("GoldMine"):
+				node.is_selected = true
 
-func _remove_from_selection(entity : Entity):
-	if selected_units.has(entity):
-		selected_units.erase(entity)
-		if is_instance_valid(entity):
-			if entity.has_node("PlayerUnit"):
-				entity.get_node("PlayerUnit").toggle_selection_visual(false)
-			if entity is Building:
-				entity.is_selected = false
+func _remove_from_selection(node):
+	if selected_units.has(node):
+		selected_units.erase(node)
+		if is_instance_valid(node):
+			if node.has_node("PlayerUnit"):
+				node.get_node("PlayerUnit").toggle_selection_visual(false)
+			if node is Building or node.is_in_group("GoldMine"):
+				node.is_selected = false
 
 func _deselect_all():
-	for entity in selected_units:
-		if is_instance_valid(entity):
-			if entity.has_node("PlayerUnit"):
-				entity.get_node("PlayerUnit").toggle_selection_visual(false)
-			if entity is Building:
-				entity.is_selected = false
+	for node in selected_units:
+		if is_instance_valid(node):
+			if node.has_node("PlayerUnit"):
+				node.get_node("PlayerUnit").toggle_selection_visual(false)
+			if node is Building or node.is_in_group("GoldMine"):
+				node.is_selected = false
 	selected_units.clear()
 	is_choosing_building = false
 	build_mode = false
@@ -178,7 +178,7 @@ func _command_selected_units():
 			continue
 		
 		if entity is Unit:
-			if target_obj != null and target_obj.is_in_group("Tree"):
+			if target_obj != null and (target_obj.is_in_group("Tree") or target_obj.is_in_group("GoldMine")):
 				if entity is Worker:
 					entity.set_target(target_obj)
 				else:
@@ -202,7 +202,7 @@ func _get_object_at_mouse() -> Node:
 	
 	var collider = result[0].collider
 	
-	if collider is Entity or collider.is_in_group("Tree"):
+	if collider is Entity or collider.is_in_group("Tree") or collider.is_in_group("GoldMine"):
 		return collider
 	
 	return null
@@ -228,17 +228,27 @@ func _on_build_mode_requested(type: String):
 	ghost_sprite = Sprite2D.new()
 	ghost_sprite.modulate = Color(1, 1, 1, 0.5) 
 	
-	var indicator_text = "Stavba: "
+	var indicator_text = "Postav "
 	
 	match type:
 		"barracks": 
 			ghost_sprite.texture = load("res://Assets.2/MiniWorldSprites/Buildings/Wood/Barracks.png")
+			ghost_sprite.hframes = 4
+			ghost_sprite.vframes = 5
+			ghost_sprite.frame = 2
 			indicator_text += "Kasárna"
 		"tower": 
 			ghost_sprite.texture = load("res://Assets.2/MiniWorldSprites/Buildings/Wood/Tower.png")
+			ghost_sprite.hframes = 3
+			ghost_sprite.vframes = 2
+			ghost_sprite.frame = 1
+			ghost_sprite.offset.y = -20
 			indicator_text += "Věž"
 		"training_grounds": 
 			ghost_sprite.texture = load("res://Assets.2/MiniWorldSprites/Buildings/Wood/Workshops.png")
+			ghost_sprite.hframes = 3
+			ghost_sprite.vframes = 3
+			ghost_sprite.frame = 5
 			indicator_text += "Cvičiště"
 		
 	add_child(ghost_sprite)

@@ -27,7 +27,7 @@ position = Vector2(0, 10)
 texture = ExtResource("3_ww6j8")
 offset = Vector2(0, -8.305)
 hframes = 5
-vframes = 7
+vframes = 8
 script = ExtResource("3_k5h6d")
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
