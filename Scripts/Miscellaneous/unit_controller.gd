@@ -22,10 +22,15 @@ func _ready():
 
 func _input(event):
 	var has_worker = false
+	var valid_units = []
+	
 	for entity in selected_units:
-		if entity is Worker:
-			has_worker = true
-			break
+		if is_instance_valid(entity):
+			valid_units.append(entity)
+			if entity is Worker:
+				has_worker = true
+				
+	selected_units = valid_units
 
 	if has_worker:
 		if event.is_action_pressed("open_build_menu"):

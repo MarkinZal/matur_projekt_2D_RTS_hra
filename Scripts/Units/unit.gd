@@ -4,7 +4,7 @@ class_name Unit
 @export var move_speed: float = 30.0
 @export var attack_range: float = 20.0
 @export var attack_rate: float = 0.5
-@export var attack_damage: int = 5
+@export var attack_damage: int = 1
 @export var separation_radius: float = 35.0
 @export var separation_strength: float = 200.0
 
@@ -14,6 +14,11 @@ var base_health_max: int
 var base_attack_damage: int
 
 @onready var agent: NavigationAgent2D = $NavigationAgent2D
+@onready var animation_tree: AnimationTree = get_node_or_null("AnimationTree")
+
+var current_velocity: Vector2 = Vector2.ZERO
+var last_facing_direction: Vector2 = Vector2.DOWN
+var is_attacking: bool = false
 
 func _ready():
 	GameManager.register_unit(self)
@@ -22,11 +27,18 @@ func _ready():
 	if team == Team.PLAYER:
 		GameManager.global_upgrades_changed.connect(_on_upgrade_received)
 		_on_upgrade_received()
+		
+	if animation_tree:
+		animation_tree.active = true
 
 func _process(delta):
 	if not agent.is_navigation_finished():
 		_move(delta)
+	else:
+		current_velocity = Vector2.ZERO
+		
 	_utok_logic()
+	_update_animation_tree()
 
 func _move(delta):
 	var next_position = agent.get_next_path_position()
@@ -51,23 +63,29 @@ func _move(delta):
 		separation = separation / count * separation_strength
 		velocity += separation
 	
+	current_velocity = velocity
 	translate(velocity * delta)
 
 func _utok_logic():
 	if not is_instance_valid(target_unit):
+		is_attacking = false
 		return
+		
 	var distance = global_position.distance_to(target_unit.global_position)
 	if distance <= attack_range:
 		agent.target_position = global_position
+		is_attacking = true
 		_try_attack()
 	else:
 		agent.target_position = target_unit.global_position
+		is_attacking = false
 
 func _try_attack():
 	var time = Time.get_unix_time_from_system()
 	if time - last_attack_time < attack_rate:
 		return
 	last_attack_time = time
+	
 	if target_unit.has_method("take_damage"):
 		target_unit.take_damage(attack_damage)
 
@@ -86,3 +104,30 @@ func _on_upgrade_received():
 	attack_damage = base_attack_damage + GameManager.global_bonus_damage
 	health_current = health_max - health_missing
 	health_changed.emit(health_current)
+
+func _update_animation_tree():
+	if not animation_tree:
+		return
+		
+	if current_velocity.length() > 0.1:
+		last_facing_direction = current_velocity.normalized()
+		
+	if is_attacking and is_instance_valid(target_unit):
+		last_facing_direction = global_position.direction_to(target_unit.global_position)
+
+	animation_tree.set("parameters/Move/blend_position", last_facing_direction)
+	animation_tree.set("parameters/Idle/blend_position", last_facing_direction)
+	animation_tree.set("parameters/Attack/blend_position", last_facing_direction)
+	
+	if is_attacking:
+		animation_tree.set("parameters/conditions/is_attacking", true)
+		animation_tree.set("parameters/conditions/is_moving", false)
+		animation_tree.set("parameters/conditions/is_idle", false)
+	elif current_velocity.length() > 0.1:
+		animation_tree.set("parameters/conditions/is_attacking", false)
+		animation_tree.set("parameters/conditions/is_moving", true)
+		animation_tree.set("parameters/conditions/is_idle", false)
+	else:
+		animation_tree.set("parameters/conditions/is_attacking", false)
+		animation_tree.set("parameters/conditions/is_moving", false)
+		animation_tree.set("parameters/conditions/is_idle", true)

@@ -28,9 +28,6 @@ border_color = Color(0.21568628, 0.21568628, 0.21568628, 1)
 
 [node name="training_grounds" type="Area2D" groups=["Unit"]]
 script = ExtResource("2_tt1ox")
-team = 0
-health_max = 20
-health_current = 20
 
 [node name="PlayerUnit" type="Node" parent="."]
 script = ExtResource("2_mkkmk")

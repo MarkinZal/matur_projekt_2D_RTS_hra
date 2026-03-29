@@ -1,25 +1,40 @@
 extends Unit
-class_name UnitSiege
+class_name SiegeEngine
+
+@export var bolt_scene = preload("res://Scenes/bolt.tscn")
 
 func _ready():
 	super._ready()
-	move_speed = 20.0
-	health_max = 25
-	health_current = 25
+	health_max = 80
+	health_current = 80
+	move_speed = 30.0
 	attack_range = 150.0
-	attack_rate = 2.5
+	attack_rate = 4.0
 	attack_damage = 15
 
+
 func _try_attack():
+	if not is_instance_valid(target_unit):
+		return
+	
 	var time = Time.get_unix_time_from_system()
 	if time - last_attack_time < attack_rate:
 		return
-	
-	if is_instance_valid(target_unit) and target_unit.has_method("take_damage"):
-		last_attack_time = time
 		
-		var final_damage = attack_damage
-		if target_unit is Building:
-			final_damage *= 3 
-			
-		target_unit.take_damage(final_damage)
+	if global_position.distance_to(target_unit.global_position) > attack_range:
+		move_to_target(target_unit.global_position)
+		return
+	
+	agent.target_position = global_position
+	last_attack_time = time
+	
+	_spawn_boulder()
+
+func _spawn_boulder():
+	if is_instance_valid(target_unit):
+		var projectile = bolt_scene.instantiate()
+		projectile.global_position = global_position
+		projectile.damage = attack_damage
+		projectile.target = target_unit
+		projectile.shooter_team = team
+		get_tree().current_scene.add_child(projectile)

@@ -1083,9 +1083,8 @@ script = ExtResource("1_21xkr")
 [node name="GameManager" type="Node2D" parent="."]
 script = ExtResource("1_21xkr")
 
-[node name="UnitController" type="Node2D" parent="." node_paths=PackedStringArray("game_ui")]
+[node name="UnitController" type="Node2D" parent="."]
 script = ExtResource("1_8gbba")
-game_ui = NodePath("../GameUI")
 
 [node name="Camera2D" type="Camera2D" parent="."]
 zoom = Vector2(2, 2)
@@ -1183,12 +1182,21 @@ position = Vector2(177, 107)
 
 [node name="Unit_AI" parent="." instance=ExtResource("23_u50mg")]
 position = Vector2(121, -98)
+attack_range = 0.0
+health_max = 200
+health_current = 200
 
 [node name="Unit_AI2" parent="." instance=ExtResource("23_u50mg")]
 position = Vector2(165, -50)
+attack_range = 0.0
+health_max = 200
+health_current = 200
 
 [node name="Unit_AI3" parent="." instance=ExtResource("23_u50mg")]
 position = Vector2(190, -99)
+attack_range = 0.0
+health_max = 200
+health_current = 200
 
 [node name="Unit_Worker" parent="." instance=ExtResource("24_3pmx8")]
 position = Vector2(-49, 101)

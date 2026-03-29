@@ -41,7 +41,7 @@ offset_bottom = -86.0
 
 [node name="WorkerAkce" type="Label" parent="Control/WorkerPanel"]
 layout_mode = 2
-text = "[B] režim stavění
+text = "[B] Režim stavění
 - [F] Kasárny
 - [G] Obranná věž
 - [H] Cvičiště"
@@ -55,19 +55,21 @@ offset_bottom = -85.0
 
 [node name="TrainingGroundsAkce" type="Label" parent="Control/TGPanel"]
 layout_mode = 2
-text = "[U] vylepšit jednotky"
+text = "[U] Vylepšit jednotky"
 
 [node name="BasePanel" type="PanelContainer" parent="Control"]
 layout_mode = 0
-offset_left = -147.0
-offset_top = -125.0
-offset_right = 21.0
-offset_bottom = -85.0
+offset_left = -205.0
+offset_top = -124.0
+offset_right = -37.0
+offset_bottom = -84.0
 
 [node name="BaseAkce" type="Label" parent="Control/BasePanel"]
 layout_mode = 2
-text = "[Y] trénovat útočníka
-[X] trénovat dělníka"
+text = "[U] Trénovat útočníka
+[I] Trénovat dělníka
+[J] Trénovat lukostřelce
+[K] Trénovat Obléhací stroj"
 
 [node name="ResourcePanel" type="PanelContainer" parent="Control"]
 layout_mode = 0
