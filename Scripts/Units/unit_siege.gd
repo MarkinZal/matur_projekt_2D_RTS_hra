@@ -1,6 +1,8 @@
 extends Unit
 class_name SiegeEngine
 
+@onready var sprite = $Sprite
+
 @export var bolt_scene = preload("res://Scenes/bolt.tscn")
 
 func _ready():
@@ -11,6 +13,15 @@ func _ready():
 	attack_range = 150.0
 	attack_rate = 4.0
 	attack_damage = 15
+
+func _process(delta):
+	super._process(delta)
+	
+	if is_instance_valid(target_unit) and is_attacking:
+		var direction_to_target = global_position.direction_to(target_unit.global_position)
+		sprite.rotation = direction_to_target.angle()
+	elif current_velocity.length() > 0.1:
+		sprite.rotation = current_velocity.angle()
 
 
 func _try_attack():

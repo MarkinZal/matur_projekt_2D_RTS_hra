@@ -30,7 +30,7 @@ frame = 2
 shape = SubResource("RectangleShape2D_1yvdp")
 
 [node name="NavigationObstacle2D" type="NavigationObstacle2D" parent="."]
-radius = 12.0
+vertices = PackedVector2Array(-8, -5, -8, 8, 8, 8, 8, -5)
 
 [node name="HealthBar" type="ProgressBar" parent="."]
 offset_left = -10.0

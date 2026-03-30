@@ -10,7 +10,7 @@
 animation = &"attack_south"
 
 [sub_resource type="AnimationNodeAnimation" id="AnimationNodeAnimation_7l07e"]
-animation = &"idle_north"
+animation = &"attack_north"
 
 [sub_resource type="AnimationNodeAnimation" id="AnimationNodeAnimation_fpc2b"]
 animation = &"attack_east"
@@ -22,7 +22,7 @@ animation = &"attack_west"
 blend_point_0/node = SubResource("AnimationNodeAnimation_6rt2j")
 blend_point_0/pos = Vector2(0, 1)
 blend_point_1/node = SubResource("AnimationNodeAnimation_7l07e")
-blend_point_1/pos = Vector2(0, -0.90000004)
+blend_point_1/pos = Vector2(0, -1)
 blend_point_2/node = SubResource("AnimationNodeAnimation_fpc2b")
 blend_point_2/pos = Vector2(1, 0)
 blend_point_3/node = SubResource("AnimationNodeAnimation_nhp5j")
@@ -32,10 +32,10 @@ blend_point_3/pos = Vector2(-1, 0)
 animation = &"idle_south"
 
 [sub_resource type="AnimationNodeAnimation" id="AnimationNodeAnimation_3xtcd"]
-animation = &"walk_north"
+animation = &"idle_north"
 
 [sub_resource type="AnimationNodeAnimation" id="AnimationNodeAnimation_n238h"]
-animation = &"walk_east"
+animation = &"idle_east"
 
 [sub_resource type="AnimationNodeAnimation" id="AnimationNodeAnimation_dmclq"]
 animation = &"idle_west"
@@ -179,7 +179,7 @@ tracks/0/keys = {
 "times": PackedFloat32Array(0),
 "transitions": PackedFloat32Array(1),
 "update": 1,
-"values": [18]
+"values": [12]
 }
 
 [sub_resource type="Animation" id="Animation_6uord"]
@@ -247,7 +247,7 @@ tracks/0/keys = {
 "times": PackedFloat32Array(0.1, 0.2, 0.3, 0.4, 0.5),
 "transitions": PackedFloat32Array(1, 1, 1, 1, 1),
 "update": 1,
-"values": [18, 19, 20, 21, 22]
+"values": [12, 13, 14, 15, 16]
 }
 
 [sub_resource type="Animation" id="Animation_lyrnd"]
@@ -403,6 +403,7 @@ texture = SubResource("GradientTexture1D_to24h")
 position = Vector2(0, 10)
 texture = ExtResource("3_qq154")
 offset = Vector2(0, -8.305)
+flip_h = true
 hframes = 6
 vframes = 6
 script = ExtResource("4_d270f")

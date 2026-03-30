@@ -46,7 +46,10 @@ texture = ExtResource("3_8r3yy")
 offset = Vector2(0, -8.305)
 hframes = 7
 vframes = 4
+frame = 15
 script = ExtResource("3_0h5c2")
+can_tilt = false
+auto_flip = false
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
 position = Vector2(0, 2)

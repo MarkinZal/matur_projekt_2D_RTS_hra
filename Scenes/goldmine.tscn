@@ -1,7 +1,14 @@
-[gd_scene load_steps=4 format=3 uid="uid://b4q73iuwnpuq4"]
+[gd_scene load_steps=6 format=3 uid="uid://b4q73iuwnpuq4"]
 
 [ext_resource type="Script" uid="uid://bp5h0s6ey0clj" path="res://Scripts/Resources/gold_mine.gd" id="1_da0p1"]
 [ext_resource type="Texture2D" uid="uid://doegi8p6e731n" path="res://Assets.2/MiniWorldSprites/Buildings/Wood/CaveV2.png" id="1_ko8gm"]
+
+[sub_resource type="Gradient" id="Gradient_qq154"]
+offsets = PackedFloat32Array(1)
+colors = PackedColorArray(0, 0.84705883, 0, 1)
+
+[sub_resource type="GradientTexture1D" id="GradientTexture1D_da0p1"]
+gradient = SubResource("Gradient_qq154")
 
 [sub_resource type="CircleShape2D" id="CircleShape2D_da0p1"]
 
@@ -14,6 +21,12 @@ texture = ExtResource("1_ko8gm")
 hframes = 3
 vframes = 2
 frame = 3
+
+[node name="SelectionVisual" type="Sprite2D" parent="."]
+visible = false
+position = Vector2(0, 6.0000005)
+scale = Vector2(0.0703125, 6)
+texture = SubResource("GradientTexture1D_da0p1")
 
 [node name="SpriteDul" type="Sprite2D" parent="."]
 texture = ExtResource("1_ko8gm")

@@ -23,24 +23,17 @@ func _process(delta):
 func _find_closest_enemy():
 	var shortest_dist = detection_range
 	var closest_target = null
-	
 	var all_units = get_tree().get_nodes_in_group("Unit")
-	
 	for target in all_units:
 		if not is_instance_valid(target):
 			continue
-			
 		if target == unit:
 			continue
-		
 		if target.team == unit.team:
 			continue
-			
 		var dist = unit.global_position.distance_to(target.global_position)
-		
 		if dist < shortest_dist:
 			shortest_dist = dist
 			closest_target = target
-	
 	if closest_target != null:
 		unit.set_target(closest_target)
