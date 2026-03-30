@@ -1198,6 +1198,12 @@ attack_range = 0.0
 health_max = 200
 health_current = 200
 
+[node name="Unit_AI4" parent="." instance=ExtResource("23_u50mg")]
+position = Vector2(-12, 51)
+attack_range = 0.0
+health_max = 200
+health_current = 200
+
 [node name="Unit_Worker" parent="." instance=ExtResource("24_3pmx8")]
 position = Vector2(-49, 101)
 

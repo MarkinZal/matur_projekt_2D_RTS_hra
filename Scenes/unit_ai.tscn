@@ -38,6 +38,7 @@ offset = Vector2(0, -8.305)
 hframes = 5
 vframes = 9
 script = ExtResource("4_paacx")
+auto_flip = false
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
 position = Vector2(0, 2)

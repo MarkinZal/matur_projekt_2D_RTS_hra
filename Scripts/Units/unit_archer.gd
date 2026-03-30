@@ -9,7 +9,7 @@ func _ready():
 	health_current = 30
 	move_speed = 70.0
 	attack_range = 100.0
-	attack_rate = 1.6
+	attack_rate = 0.9
 	attack_damage = 5
 
 func _try_attack():
