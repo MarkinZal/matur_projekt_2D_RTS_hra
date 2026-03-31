@@ -1,10 +1,9 @@
-[gd_scene load_steps=9 format=3 uid="uid://738ag1vuviab"]
+[gd_scene load_steps=8 format=3 uid="uid://738ag1vuviab"]
 
 [ext_resource type="Script" uid="uid://cdd4xgh626ok1" path="res://Scripts/Buildings/barracks.gd" id="1_7pdfh"]
 [ext_resource type="Script" uid="uid://bk6rq04y3s7e3" path="res://Scripts/Units/unit_ai.gd" id="2_2clc0"]
 [ext_resource type="Texture2D" uid="uid://bmhhb33vb32bi" path="res://Assets/Buildings/Red/RedBarracks.png" id="3_gav28"]
 [ext_resource type="Script" uid="uid://cgh2k4lw3fl4l" path="res://Scripts/GameManagement/health_bar.gd" id="4_txnnk"]
-[ext_resource type="PackedScene" uid="uid://e4aaka8gncce" path="res://Scenes/enemy_scenes/unit_ai.tscn" id="5_b76on"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_nj7fr"]
 
@@ -48,5 +47,3 @@ theme_override_styles/fill = SubResource("StyleBoxFlat_8s8xk")
 value = 60.0
 show_percentage = false
 script = ExtResource("4_txnnk")
-
-[node name="UnitAI" parent="." instance=ExtResource("5_b76on")]

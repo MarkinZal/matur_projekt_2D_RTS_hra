@@ -1,11 +1,10 @@
-[gd_scene load_steps=47 format=3 uid="uid://4wn0osmucjbd"]
+[gd_scene load_steps=46 format=3 uid="uid://4wn0osmucjbd"]
 
 [ext_resource type="Script" uid="uid://7a48xa6h1mva" path="res://Scripts/Units/unit.gd" id="1_vy5a1"]
 [ext_resource type="Script" uid="uid://bk6rq04y3s7e3" path="res://Scripts/Units/unit_ai.gd" id="2_vnyfl"]
 [ext_resource type="Texture2D" uid="uid://cj5yotkdq7x5a" path="res://Assets/Characters/Workers/RedWorker/FarmerRed.png" id="3_6hupb"]
 [ext_resource type="Script" uid="uid://dpy78u6qmjf3u" path="res://Scripts/Miscellaneous/unit_visual.gd" id="4_7tqv8"]
 [ext_resource type="Script" uid="uid://cgh2k4lw3fl4l" path="res://Scripts/GameManagement/health_bar.gd" id="5_ugxm7"]
-[ext_resource type="PackedScene" uid="uid://e4aaka8gncce" path="res://Scenes/enemy_scenes/unit_ai.tscn" id="6_xpbqi"]
 
 [sub_resource type="AnimationNodeAnimation" id="AnimationNodeAnimation_48x2u"]
 animation = &"attack_south"
@@ -403,5 +402,3 @@ theme_override_styles/fill = SubResource("StyleBoxFlat_souon")
 value = 60.0
 show_percentage = false
 script = ExtResource("5_ugxm7")
-
-[node name="UnitAI" parent="." instance=ExtResource("6_xpbqi")]

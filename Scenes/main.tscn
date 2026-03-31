@@ -1,4 +1,4 @@
-[gd_scene load_steps=37 format=3 uid="uid://c6bkqujj3ue2j"]
+[gd_scene load_steps=38 format=3 uid="uid://c6bkqujj3ue2j"]
 
 [ext_resource type="Script" uid="uid://c2djnlai8ur1d" path="res://Scripts/Miscellaneous/unit_controller.gd" id="1_8gbba"]
 [ext_resource type="Script" uid="uid://dtpmcscmsb8es" path="res://Scripts/GameManagement/game_manager.gd" id="1_21xkr"]
@@ -13,7 +13,8 @@
 [ext_resource type="Texture2D" uid="uid://cuhg5kcyoxp5y" path="res://MapThings/Ground/Cliff.png" id="10_b3802"]
 [ext_resource type="Texture2D" uid="uid://gyl3ujp4jrm2" path="res://MapThings/fog_32.png" id="11_wsu2k"]
 [ext_resource type="Texture2D" uid="uid://e3l76dgmha4n" path="res://MapThings/fog_128.png" id="12_k12tt"]
-[ext_resource type="PackedScene" uid="uid://4nsdvq6d3jmt" path="res://Scenes/enemy_scenes/ai_melee.tscn" id="16_k12tt"]
+[ext_resource type="PackedScene" uid="uid://slul4uoka2l3" path="res://Scenes/enemy_scenes/ai_base.tscn" id="16_h1bgf"]
+[ext_resource type="PackedScene" uid="uid://4wn0osmucjbd" path="res://Scenes/enemy_scenes/ai_worker.tscn" id="17_b3802"]
 [ext_resource type="PackedScene" uid="uid://burie6p4gvvy3" path="res://Scenes/player_scenes/base.tscn" id="22_ee4r6"]
 [ext_resource type="PackedScene" uid="uid://c3ygdbo7ocoxv" path="res://Scenes/game_ui.tscn" id="23_gt3je"]
 
@@ -654,7 +655,16 @@ text = "Menu"
 
 [node name="GameUI" parent="." instance=ExtResource("23_gt3je")]
 
-[node name="AIMelee" parent="." instance=ExtResource("16_k12tt")]
-position = Vector2(289, 245)
+[node name="AIBase" parent="." instance=ExtResource("16_h1bgf")]
+position = Vector2(1988, 1066)
+
+[node name="AIWorker" parent="." instance=ExtResource("17_b3802")]
+position = Vector2(2040, 1123)
+
+[node name="AIWorker2" parent="." instance=ExtResource("17_b3802")]
+position = Vector2(1857, 1077)
+
+[node name="AIWorker3" parent="." instance=ExtResource("17_b3802")]
+position = Vector2(2014, 963)
 
 [connection signal="pressed" from="CanvasLayer/EndScreen/MenuButton" to="CanvasLayer/EndScreen" method="_on_menu_button_pressed"]

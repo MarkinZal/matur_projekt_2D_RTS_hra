@@ -1,11 +1,10 @@
-[gd_scene load_steps=48 format=3 uid="uid://4nsdvq6d3jmt"]
+[gd_scene load_steps=47 format=3 uid="uid://4nsdvq6d3jmt"]
 
 [ext_resource type="Script" uid="uid://7a48xa6h1mva" path="res://Scripts/Units/unit.gd" id="1_ao4f7"]
 [ext_resource type="Script" uid="uid://bk6rq04y3s7e3" path="res://Scripts/Units/unit_ai.gd" id="2_64rv4"]
 [ext_resource type="Texture2D" uid="uid://baaisi318y53y" path="res://Assets/Characters/Soldiers/Melee/RedMelee/AxemanRed.png" id="3_ao4f7"]
 [ext_resource type="Script" uid="uid://dpy78u6qmjf3u" path="res://Scripts/Miscellaneous/unit_visual.gd" id="4_paacx"]
 [ext_resource type="Script" uid="uid://cgh2k4lw3fl4l" path="res://Scripts/GameManagement/health_bar.gd" id="5_nipgx"]
-[ext_resource type="PackedScene" uid="uid://e4aaka8gncce" path="res://Scenes/enemy_scenes/unit_ai.tscn" id="6_eop7s"]
 
 [sub_resource type="AnimationNodeAnimation" id="AnimationNodeAnimation_paacx"]
 animation = &"attack_south"
@@ -420,5 +419,3 @@ theme_override_styles/fill = SubResource("StyleBoxFlat_aj46g")
 value = 60.0
 show_percentage = false
 script = ExtResource("5_nipgx")
-
-[node name="UnitAI" parent="." instance=ExtResource("6_eop7s")]
