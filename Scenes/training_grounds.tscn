@@ -1,6 +1,6 @@
 [gd_scene load_steps=10 format=3 uid="uid://dfco653o1sgd1"]
 
-[ext_resource type="Texture2D" uid="uid://c5ee3fe04q87" path="res://Assets.2/MiniWorldSprites/Buildings/Wood/Workshops.png" id="2_ioxpv"]
+[ext_resource type="Texture2D" uid="uid://c5ee3fe04q87" path="res://Assets/Buildings/Wood/Workshops.png" id="2_ioxpv"]
 [ext_resource type="Script" uid="uid://bxto5tjgfrjim" path="res://Scripts/Units/unit_player.gd" id="2_mkkmk"]
 [ext_resource type="Script" uid="uid://d07rxn2gv31j5" path="res://Scripts/Buildings/training_grounds.gd" id="2_tt1ox"]
 [ext_resource type="Script" uid="uid://cgh2k4lw3fl4l" path="res://Scripts/GameManagement/health_bar.gd" id="4_mkkmk"]

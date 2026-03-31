@@ -2,7 +2,7 @@
 
 [ext_resource type="Script" uid="uid://7a48xa6h1mva" path="res://Scripts/Units/unit.gd" id="1_ao4f7"]
 [ext_resource type="Script" uid="uid://bk6rq04y3s7e3" path="res://Scripts/Units/unit_ai.gd" id="2_64rv4"]
-[ext_resource type="Texture2D" uid="uid://35uiby0pdxve" path="res://Assets.2/MiniWorldSprites/Characters/Champions/Grum.png" id="2_gu8n8"]
+[ext_resource type="Texture2D" uid="uid://35uiby0pdxve" path="res://Assets/Characters/Champions/Grum.png" id="2_gu8n8"]
 [ext_resource type="Script" uid="uid://dpy78u6qmjf3u" path="res://Scripts/Miscellaneous/unit_visual.gd" id="4_paacx"]
 [ext_resource type="Script" uid="uid://cgh2k4lw3fl4l" path="res://Scripts/GameManagement/health_bar.gd" id="5_nipgx"]
 

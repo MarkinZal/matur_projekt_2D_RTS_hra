@@ -1,6 +1,6 @@
 [gd_scene load_steps=4 format=3 uid="uid://dpnlivsvteqhi"]
 
-[ext_resource type="Texture2D" uid="uid://bao8if2a2f45p" path="res://Assets.2/MiniWorldSprites/Objects/BallistaBolt.png" id="1_1q8yf"]
+[ext_resource type="Texture2D" uid="uid://bao8if2a2f45p" path="res://Assets/Objects/BallistaBolt.png" id="1_1q8yf"]
 [ext_resource type="Script" uid="uid://ccp52gveut3k1" path="res://Scripts/Miscellaneous/bolt.gd" id="1_periq"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_periq"]

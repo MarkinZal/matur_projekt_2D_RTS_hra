@@ -1,7 +1,7 @@
 [gd_scene load_steps=6 format=3 uid="uid://b4q73iuwnpuq4"]
 
 [ext_resource type="Script" uid="uid://bp5h0s6ey0clj" path="res://Scripts/Resources/gold_mine.gd" id="1_da0p1"]
-[ext_resource type="Texture2D" uid="uid://doegi8p6e731n" path="res://Assets.2/MiniWorldSprites/Buildings/Wood/CaveV2.png" id="1_ko8gm"]
+[ext_resource type="Texture2D" uid="uid://doegi8p6e731n" path="res://Assets/Buildings/Wood/CaveV2.png" id="1_ko8gm"]
 
 [sub_resource type="Gradient" id="Gradient_qq154"]
 offsets = PackedFloat32Array(1)

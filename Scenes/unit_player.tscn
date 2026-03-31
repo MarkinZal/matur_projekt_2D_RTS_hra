@@ -2,7 +2,7 @@
 
 [ext_resource type="Script" uid="uid://7a48xa6h1mva" path="res://Scripts/Units/unit.gd" id="1_u42x6"]
 [ext_resource type="Script" uid="uid://bxto5tjgfrjim" path="res://Scripts/Units/unit_player.gd" id="2_to24h"]
-[ext_resource type="Texture2D" uid="uid://dhw2irgy81q6k" path="res://Assets.2/MiniWorldSprites/Characters/Soldiers/Melee/AxemanTemplate.png" id="3_qq154"]
+[ext_resource type="Texture2D" uid="uid://dhw2irgy81q6k" path="res://Assets/Characters/Soldiers/Melee/AxemanTemplate.png" id="3_qq154"]
 [ext_resource type="Script" uid="uid://dpy78u6qmjf3u" path="res://Scripts/Miscellaneous/unit_visual.gd" id="4_d270f"]
 [ext_resource type="Script" uid="uid://cgh2k4lw3fl4l" path="res://Scripts/GameManagement/health_bar.gd" id="5_8fdhn"]
 

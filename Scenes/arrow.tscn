@@ -1,6 +1,6 @@
 [gd_scene load_steps=4 format=3 uid="uid://dr3h75t58g7tg"]
 
-[ext_resource type="Texture2D" uid="uid://cxla6n34xr5x0" path="res://Assets.2/MiniWorldSprites/Objects/ArrowShort.png" id="1_2u0bd"]
+[ext_resource type="Texture2D" uid="uid://cxla6n34xr5x0" path="res://Assets/Objects/ArrowShort.png" id="1_2u0bd"]
 [ext_resource type="Script" uid="uid://uamayfcrcof5" path="res://Scripts/Miscellaneous/arrow.gd" id="1_h5x2m"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_h5x2m"]

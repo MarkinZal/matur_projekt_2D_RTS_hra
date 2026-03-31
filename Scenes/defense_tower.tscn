@@ -2,7 +2,7 @@
 
 [ext_resource type="Script" uid="uid://pc33mj7i7obc" path="res://Scripts/Buildings/defense_tower.gd" id="2_ipquv"]
 [ext_resource type="Script" uid="uid://bxto5tjgfrjim" path="res://Scripts/Units/unit_player.gd" id="2_wmmpi"]
-[ext_resource type="Texture2D" uid="uid://c0ish52au5s3v" path="res://Assets.2/MiniWorldSprites/Buildings/Wood/Tower.png" id="2_x5sp1"]
+[ext_resource type="Texture2D" uid="uid://c0ish52au5s3v" path="res://Assets/Buildings/Wood/Tower.png" id="2_x5sp1"]
 [ext_resource type="Script" uid="uid://cgh2k4lw3fl4l" path="res://Scripts/GameManagement/health_bar.gd" id="4_wmmpi"]
 
 [sub_resource type="Gradient" id="Gradient_qq154"]

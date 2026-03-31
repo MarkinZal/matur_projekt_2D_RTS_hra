@@ -1,7 +1,7 @@
 [gd_scene load_steps=4 format=3 uid="uid://dwdvsbvi483h6"]
 
 [ext_resource type="Script" uid="uid://bham0dnctfqr5" path="res://Scripts/GameManagement/menu.gd" id="1_xhh6f"]
-[ext_resource type="Texture2D" uid="uid://xujcq22lslvp" path="res://World Asset Pack Opengameart/Example 2.PNG" id="2_xhh6f"]
+[ext_resource type="Texture2D" uid="uid://xujcq22lslvp" path="res://MapThings/menu_background.PNG" id="2_xhh6f"]
 
 [sub_resource type="LabelSettings" id="LabelSettings_158mb"]
 font_size = 61

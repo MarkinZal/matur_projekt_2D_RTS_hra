@@ -2,7 +2,7 @@
 
 [ext_resource type="Script" uid="uid://bxto5tjgfrjim" path="res://Scripts/Units/unit_player.gd" id="2_kyclo"]
 [ext_resource type="Script" uid="uid://b5xffm4m6yegu" path="res://Scripts/Units/unit_worker.gd" id="2_ucp6w"]
-[ext_resource type="Texture2D" uid="uid://do6xy7fv64ihn" path="res://Assets.2/MiniWorldSprites/Characters/Workers/FarmerTemplate.png" id="3_e62rc"]
+[ext_resource type="Texture2D" uid="uid://do6xy7fv64ihn" path="res://Assets/Characters/Workers/FarmerTemplate.png" id="3_e62rc"]
 [ext_resource type="Script" uid="uid://dpy78u6qmjf3u" path="res://Scripts/Miscellaneous/unit_visual.gd" id="4_ucp6w"]
 [ext_resource type="Script" uid="uid://cgh2k4lw3fl4l" path="res://Scripts/GameManagement/health_bar.gd" id="5_eis7c"]
 
@@ -111,6 +111,37 @@ states/Move/node = SubResource("AnimationNodeBlendSpace2D_pvodd")
 states/Move/position = Vector2(373, 180)
 transitions = ["Start", "Move", SubResource("AnimationNodeStateMachineTransition_5dwjq"), "Move", "Attack", SubResource("AnimationNodeStateMachineTransition_hsv4r"), "Attack", "Move", SubResource("AnimationNodeStateMachineTransition_2fwrc"), "Move", "Idle", SubResource("AnimationNodeStateMachineTransition_rq04r"), "Idle", "Move", SubResource("AnimationNodeStateMachineTransition_8a4bw"), "Idle", "Attack", SubResource("AnimationNodeStateMachineTransition_wcw4o"), "Attack", "Idle", SubResource("AnimationNodeStateMachineTransition_niaiy")]
 
+[sub_resource type="Animation" id="Animation_4yib0"]
+length = 0.001
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Sprite:frame")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [0]
+}
+
+[sub_resource type="Animation" id="Animation_4kccy"]
+resource_name = "attack_east"
+loop_mode = 1
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Sprite:frame")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.45, 0.9),
+"transitions": PackedFloat32Array(1, 1, 1),
+"update": 1,
+"values": [50, 51, 52]
+}
+
 [sub_resource type="Animation" id="Animation_y72j1"]
 resource_name = "attack_north"
 loop_mode = 1
@@ -159,9 +190,9 @@ tracks/0/keys = {
 "values": [55, 56, 57]
 }
 
-[sub_resource type="Animation" id="Animation_4kccy"]
-resource_name = "attack_east"
-loop_mode = 1
+[sub_resource type="Animation" id="Animation_1xfu8"]
+resource_name = "idle_east"
+length = 0.1
 tracks/0/type = "value"
 tracks/0/imported = false
 tracks/0/enabled = true
@@ -169,10 +200,10 @@ tracks/0/path = NodePath("Sprite:frame")
 tracks/0/interp = 1
 tracks/0/loop_wrap = true
 tracks/0/keys = {
-"times": PackedFloat32Array(0, 0.45, 0.9),
-"transitions": PackedFloat32Array(1, 1, 1),
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
 "update": 1,
-"values": [50, 51, 52]
+"values": [10]
 }
 
 [sub_resource type="Animation" id="Animation_er0hq"]
@@ -207,22 +238,6 @@ tracks/0/keys = {
 "values": [0]
 }
 
-[sub_resource type="Animation" id="Animation_1xfu8"]
-resource_name = "idle_east"
-length = 0.1
-tracks/0/type = "value"
-tracks/0/imported = false
-tracks/0/enabled = true
-tracks/0/path = NodePath("Sprite:frame")
-tracks/0/interp = 1
-tracks/0/loop_wrap = true
-tracks/0/keys = {
-"times": PackedFloat32Array(0),
-"transitions": PackedFloat32Array(1),
-"update": 1,
-"values": [10]
-}
-
 [sub_resource type="Animation" id="Animation_c4aea"]
 resource_name = "idle_west"
 length = 0.1
@@ -237,6 +252,23 @@ tracks/0/keys = {
 "transitions": PackedFloat32Array(1),
 "update": 1,
 "values": [15]
+}
+
+[sub_resource type="Animation" id="Animation_vraoo"]
+resource_name = "move_east"
+length = 0.6
+loop_mode = 1
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Sprite:frame")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0.1, 0.2, 0.3, 0.4, 0.5),
+"transitions": PackedFloat32Array(1, 1, 1, 1, 1),
+"update": 1,
+"values": [10, 11, 12, 13, 14]
 }
 
 [sub_resource type="Animation" id="Animation_wsfe0"]
@@ -288,38 +320,6 @@ tracks/0/keys = {
 "transitions": PackedFloat32Array(1, 1, 1, 1, 1),
 "update": 1,
 "values": [15, 16, 17, 18, 19]
-}
-
-[sub_resource type="Animation" id="Animation_vraoo"]
-resource_name = "move_east"
-length = 0.6
-loop_mode = 1
-tracks/0/type = "value"
-tracks/0/imported = false
-tracks/0/enabled = true
-tracks/0/path = NodePath("Sprite:frame")
-tracks/0/interp = 1
-tracks/0/loop_wrap = true
-tracks/0/keys = {
-"times": PackedFloat32Array(0.1, 0.2, 0.3, 0.4, 0.5),
-"transitions": PackedFloat32Array(1, 1, 1, 1, 1),
-"update": 1,
-"values": [10, 11, 12, 13, 14]
-}
-
-[sub_resource type="Animation" id="Animation_4yib0"]
-length = 0.001
-tracks/0/type = "value"
-tracks/0/imported = false
-tracks/0/enabled = true
-tracks/0/path = NodePath("Sprite:frame")
-tracks/0/interp = 1
-tracks/0/loop_wrap = true
-tracks/0/keys = {
-"times": PackedFloat32Array(0),
-"transitions": PackedFloat32Array(1),
-"update": 1,
-"values": [0]
 }
 
 [sub_resource type="AnimationLibrary" id="AnimationLibrary_nf0ad"]

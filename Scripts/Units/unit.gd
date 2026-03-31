@@ -39,6 +39,11 @@ func _process(delta):
 		
 	_utok_logic()
 	_update_animation_tree()
+	
+	if team == Team.PLAYER:
+		var gm = get_tree().get_first_node_in_group("game_manager")
+		if gm:
+			gm.reveal_fog(global_position, 5)
 
 func _move(delta):
 	var next_position = agent.get_next_path_position()

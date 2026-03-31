@@ -233,24 +233,30 @@ func _on_build_mode_requested(type: String):
 	ghost_sprite = Sprite2D.new()
 	ghost_sprite.modulate = Color(1, 1, 1, 0.5) 
 	
+	ghost_sprite.top_level = true
+	ghost_sprite.z_index = 99 
+	
 	var indicator_text = "Postav "
 	
 	match type:
 		"barracks": 
-			ghost_sprite.texture = load("res://Assets.2/MiniWorldSprites/Buildings/Wood/Barracks.png")
+			var tex = load("res://Assets/Buildings/Wood/Barracks.png")
+			if tex == null: 
+				print("KRITICKÁ CHYBA: Textura kasáren neexistuje na této cestě!")
+			ghost_sprite.texture = tex
 			ghost_sprite.hframes = 4
 			ghost_sprite.vframes = 5
 			ghost_sprite.frame = 2
 			indicator_text += "Kasárna"
 		"tower": 
-			ghost_sprite.texture = load("res://Assets.2/MiniWorldSprites/Buildings/Wood/Tower.png")
+			ghost_sprite.texture = load("res://Assets/Buildings/Wood/Tower.png")
 			ghost_sprite.hframes = 3
 			ghost_sprite.vframes = 2
 			ghost_sprite.frame = 1
 			ghost_sprite.offset.y = -20
 			indicator_text += "Věž"
 		"training_grounds": 
-			ghost_sprite.texture = load("res://Assets.2/MiniWorldSprites/Buildings/Wood/Workshops.png")
+			ghost_sprite.texture = load("res://Assets/Buildings/Wood/Workshops.png")
 			ghost_sprite.hframes = 3
 			ghost_sprite.vframes = 3
 			ghost_sprite.frame = 5
