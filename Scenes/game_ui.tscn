@@ -12,10 +12,10 @@ food_label = NodePath("Control/ResourcePanel/HBoxContainer/Jidlo")
 build_indicator_label = NodePath("Control/build_indicator_label")
 
 [node name="Minimap" type="TextureRect" parent="."]
-offset_left = 918.0
-offset_top = 28.0
-offset_right = 1118.0
-offset_bottom = 228.0
+offset_left = 24.0
+offset_top = 21.0
+offset_right = 224.0
+offset_bottom = 221.0
 texture = ExtResource("2_xjnnq")
 script = ExtResource("3_x63ue")
 
@@ -32,6 +32,14 @@ offset_top = 230.0
 offset_right = 629.0
 offset_bottom = 305.0
 text = "Pokračovat"
+
+[node name="SaveButton" type="Button" parent="PauseMenu"]
+layout_mode = 0
+offset_left = 469.0
+offset_top = 420.0
+offset_right = 629.0
+offset_bottom = 495.0
+text = "Uložit hru"
 
 [node name="MenuButton" type="Button" parent="PauseMenu"]
 layout_mode = 0
@@ -105,10 +113,10 @@ text = "[U] Trénovat útočníka
 
 [node name="ResourcePanel" type="PanelContainer" parent="Control"]
 layout_mode = 0
-offset_left = -1090.0
-offset_top = -600.0
-offset_right = -982.0
-offset_bottom = -523.0
+offset_left = -141.0
+offset_top = -592.0
+offset_right = -38.0
+offset_bottom = -515.0
 
 [node name="HBoxContainer" type="VBoxContainer" parent="Control/ResourcePanel"]
 layout_mode = 2
@@ -134,4 +142,5 @@ offset_bottom = -133.0
 text = "Režim stavění"
 
 [connection signal="pressed" from="PauseMenu/ResumeButton" to="." method="_on_resume_button_pressed"]
+[connection signal="pressed" from="PauseMenu/SaveButton" to="." method="_on_save_button_pressed"]
 [connection signal="pressed" from="PauseMenu/MenuButton" to="." method="_on_menu_button_pressed"]

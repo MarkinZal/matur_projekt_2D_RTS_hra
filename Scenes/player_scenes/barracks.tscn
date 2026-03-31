@@ -17,7 +17,7 @@ border_width_right = 5
 border_width_bottom = 5
 border_color = Color(0.21568628, 0.21568628, 0.21568628, 1)
 
-[node name="barracks" type="Area2D"]
+[node name="barracks" type="Area2D" groups=["Buildings"]]
 script = ExtResource("1_coeoc")
 
 [node name="Sprite2D" type="Sprite2D" parent="."]

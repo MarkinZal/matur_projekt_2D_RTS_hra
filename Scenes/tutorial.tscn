@@ -22,7 +22,7 @@
 [ext_resource type="Script" uid="uid://cjwimbur0c3sl" path="res://Scripts/GameManagement/end_screen.gd" id="19_boubs"]
 [ext_resource type="PackedScene" uid="uid://c3ygdbo7ocoxv" path="res://Scenes/game_ui.tscn" id="21_ilalk"]
 [ext_resource type="PackedScene" uid="uid://dmq5ua2m1x08k" path="res://Scenes/tree.tscn" id="22_b3wap"]
-[ext_resource type="PackedScene" uid="uid://cthq7biai7wpy" path="res://Scenes/unit_worker.tscn" id="23_djl3p"]
+[ext_resource type="PackedScene" uid="uid://cthq7biai7wpy" path="res://Scenes/player_scenes/unit_worker.tscn" id="23_djl3p"]
 
 [sub_resource type="NavigationPolygon" id="NavigationPolygon_pdsj5"]
 vertices = PackedVector2Array(277.03125, -176, 277.96875, 150.03906, -184, 151.95313, -184, 56.40625, -155.42969, 37.78125, 15.7265625, -54.15625, -185, 6.96875, -185, -27, -109.390625, -27, 46, -130.32813, 46, -176, -108.38281, -52.148438, 17.757813, -126.28906)

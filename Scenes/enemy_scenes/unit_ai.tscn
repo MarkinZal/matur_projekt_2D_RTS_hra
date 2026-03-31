@@ -1,0 +1,16 @@
+[gd_scene load_steps=3 format=3 uid="uid://e4aaka8gncce"]
+
+[ext_resource type="Script" uid="uid://bk6rq04y3s7e3" path="res://Scripts/Units/unit_ai.gd" id="1_cyia3"]
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_j2xnj"]
+radius = 300.0
+
+[node name="UnitAI" type="Node"]
+script = ExtResource("1_cyia3")
+
+[node name="AttackTimer" type="Timer" parent="."]
+
+[node name="DetectionArea" type="Area2D" parent="."]
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="DetectionArea"]
+shape = SubResource("CircleShape2D_j2xnj")

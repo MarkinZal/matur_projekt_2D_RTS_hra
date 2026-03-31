@@ -26,7 +26,7 @@ border_width_right = 5
 border_width_bottom = 5
 border_color = Color(0.21568628, 0.21568628, 0.21568628, 1)
 
-[node name="training_grounds" type="Area2D" groups=["Unit"]]
+[node name="training_grounds" type="Area2D" groups=["Buildings", "Unit"]]
 script = ExtResource("2_tt1ox")
 
 [node name="PlayerUnit" type="Node" parent="."]

@@ -22,6 +22,8 @@ var last_facing_direction: Vector2 = Vector2.DOWN
 var is_attacking: bool = false
 
 func _ready():
+	add_to_group("Unit")
+	add_to_group("UnitPlayer")
 	GameManager.register_unit(self)
 	base_health_max = health_max
 	base_attack_damage = attack_damage
@@ -41,8 +43,6 @@ func _process(delta):
 	_utok_logic()
 	_update_animation_tree()
 	
-	if team == Team.PLAYER:
-		GameManager.reveal_fog(global_position, vision_radius)
 
 func _move(delta):
 	var next_position = agent.get_next_path_position()

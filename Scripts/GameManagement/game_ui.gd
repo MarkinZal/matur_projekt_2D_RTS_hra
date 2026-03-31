@@ -35,12 +35,15 @@ func toggle_pause():
 	pause_menu.visible = is_paused
 
 func _on_resume_button_pressed():
-	self.hide()
+	pause_menu.hide()
 	get_tree().paused = false
 
-func _on_main_menu_button_pressed():
+func _on_menu_button_pressed():
 	get_tree().paused = false
 	get_tree().change_scene_to_file("res://Scenes/menu.tscn")
+
+func _on_save_button_pressed():
+	GameManager.save_game()
 
 func _update_resource(type : String, amount : int):
 	if type == "wood" and wood_label != null:
@@ -109,10 +112,3 @@ func _on_build_tower_pressed():
 
 func _on_build_tg_pressed():
 	build_mode_requested.emit("training_grounds")
-
-func _on_train_soldier_button_pressed():
-	pass
-
-
-func _on_menu_button_pressed() -> void:
-	pass # Replace with function body.

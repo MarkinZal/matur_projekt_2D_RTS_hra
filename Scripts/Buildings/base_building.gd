@@ -1,10 +1,10 @@
 extends Building
 class_name BaseBuilding
 
-var scene_melee = preload("res://Scenes/unit_player.tscn")
-var scene_worker = preload("res://Scenes/unit_worker.tscn")
-var scene_ranged = preload("res://Scenes/unit_archer.tscn")
-var scene_siege = preload("res://Scenes/unit_siege.tscn")
+var scene_melee = preload("res://Scenes/player_scenes/unit_player.tscn")
+var scene_worker = preload("res://Scenes/player_scenes/unit_worker.tscn")
+var scene_ranged = preload("res://Scenes/player_scenes/unit_archer.tscn")
+var scene_siege = preload("res://Scenes/player_scenes/unit_siege.tscn")
 
 var cost_melee = {"wood": 10, "gold": 5, "food": 1}
 var cost_worker = {"wood": 5, "gold": 0, "food": 1}
@@ -12,6 +12,7 @@ var cost_ranged = {"wood": 15, "gold": 15, "food": 1}
 var cost_siege = {"wood": 50, "gold": 30, "food": 2}
 
 func _ready():
+	add_to_group("Buildings")
 	can_train_units = true
 	health_max = 200
 	health_current = 200

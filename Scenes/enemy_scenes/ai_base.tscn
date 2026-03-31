@@ -1,0 +1,55 @@
+[gd_scene load_steps=9 format=3 uid="uid://slul4uoka2l3"]
+
+[ext_resource type="Script" uid="uid://hogsc3032tud" path="res://Scripts/Buildings/base_building.gd" id="1_666hr"]
+[ext_resource type="Script" uid="uid://bk6rq04y3s7e3" path="res://Scripts/Units/unit_ai.gd" id="2_mms5m"]
+[ext_resource type="Texture2D" uid="uid://pq37daeafap7" path="res://Assets/Buildings/Red/RedKeep.png" id="3_b5tti"]
+[ext_resource type="Script" uid="uid://cgh2k4lw3fl4l" path="res://Scripts/GameManagement/health_bar.gd" id="4_4xokn"]
+[ext_resource type="PackedScene" uid="uid://e4aaka8gncce" path="res://Scenes/enemy_scenes/unit_ai.tscn" id="5_c7nle"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_uwgoo"]
+size = Vector2(32, 24)
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_h557g"]
+bg_color = Color(0.2159017, 0.21590173, 0.21590161, 1)
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_bbf05"]
+bg_color = Color(0.79607844, 0, 0, 1)
+border_width_left = 5
+border_width_top = 5
+border_width_right = 5
+border_width_bottom = 5
+border_color = Color(0.21568628, 0.21568628, 0.21568628, 1)
+
+[node name="AIBase" type="Area2D" groups=["UnitAI"]]
+script = ExtResource("1_666hr")
+
+[node name="AI" type="Node" parent="." groups=["UnitAI"]]
+script = ExtResource("2_mms5m")
+
+[node name="Sprite2D" type="Sprite2D" parent="."]
+texture = ExtResource("3_b5tti")
+offset = Vector2(0, -8)
+hframes = 3
+vframes = 2
+frame = 5
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+position = Vector2(0, -4)
+shape = SubResource("RectangleShape2D_uwgoo")
+
+[node name="NavigationObstacle2D" type="NavigationObstacle2D" parent="."]
+vertices = PackedVector2Array(16, -16, 16, 8, -16, 8, -16, -16)
+
+[node name="HealthBar" type="ProgressBar" parent="."]
+offset_left = -10.0
+offset_top = -12.0
+offset_right = 190.0
+offset_bottom = 28.0
+scale = Vector2(0.1, 0.1)
+theme_override_styles/background = SubResource("StyleBoxFlat_h557g")
+theme_override_styles/fill = SubResource("StyleBoxFlat_bbf05")
+value = 60.0
+show_percentage = false
+script = ExtResource("4_4xokn")
+
+[node name="UnitAI" parent="." instance=ExtResource("5_c7nle")]

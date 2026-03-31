@@ -21,6 +21,8 @@ var terrain_source_id = 1
 var rock_source_id = 5
 var water_source_id = 4
 var water_rock_source_id = 6
+var fog_source_id = 7
+var map_size: int = 100
 
 var grass_variants = [
 	Vector2i(0,0), Vector2i(1,0), Vector2i(2,0),
@@ -67,16 +69,52 @@ func can_afford(wood_cost: int, gold_cost: int, food_cost: int) -> bool:
 func _ready():
 	add_to_group("game_manager")
 	
-	terrain_noise.seed = randi()
 	terrain_noise.noise_type = FastNoiseLite.TYPE_PERLIN
 	terrain_noise.frequency = 0.03
-	
-	forest_noise.seed = randi() + 1
 	forest_noise.noise_type = FastNoiseLite.TYPE_PERLIN
 	forest_noise.frequency = 0.08
 	
-	if terrain_layer:
-		generate_map()
+	if Global.chci_nacist_hru:
+		Global.chci_nacist_hru = false
+		call_deferred("load_game")
+	else:
+		terrain_noise.seed = randi()
+		forest_noise.seed = randi() + 1
+		if terrain_layer:
+			generate_map()
+	
+	create_fog()
+	var fog_timer = Timer.new()
+	fog_timer.wait_time = 0.1
+	fog_timer.autostart = true
+	fog_timer.timeout.connect(update_all_fog)
+	add_child(fog_timer)
+
+func create_fog():
+	if not fog_layer:
+		return
+	for x in range(-map_size, map_size):
+		for y in range(-map_size, map_size):
+			fog_layer.set_cell(Vector2i(x, y), fog_source_id, Vector2i(0, 0))
+
+func reveal_fog_around(world_pos: Vector2, vision_radius: int):
+	if not fog_layer: return
+	
+	var map_pos = fog_layer.local_to_map(world_pos)
+	
+	for x in range(-vision_radius, vision_radius + 1):
+		for y in range(-vision_radius, vision_radius + 1):
+			if Vector2(x, y).length() <= vision_radius:
+				fog_layer.erase_cell(map_pos + Vector2i(x, y))
+
+func update_all_fog():
+	var units = get_tree().get_nodes_in_group("UnitPlayer")
+	for unit in units:
+		reveal_fog_around(unit.global_position, 6) 
+		
+	var buildings = get_tree().get_nodes_in_group("Buildings")
+	for building in buildings:
+		reveal_fog_around(building.global_position, 8)
 
 func generate_map():
 	terrain_layer.clear()
@@ -119,13 +157,12 @@ func generate_map():
 				
 				if not is_safe_path:
 					_spawn_objects(pos, x, y)
-	
+
 	if player_base_scene:
 		var base = player_base_scene.instantiate()
 		base.global_position = player_start_world_pos
 		get_tree().current_scene.call_deferred("add_child", base)
 		
-	reveal_fog(player_start_world_pos, 12)
 
 func _build_large_rock(x: int, y: int):
 	if x + 2 >= map_width or y + 2 >= map_height: 
@@ -200,14 +237,6 @@ func _distance_to_segment(p: Vector2, v: Vector2, w: Vector2) -> float:
 	var projection = v + t * (w - v)
 	return p.distance_to(projection)
 
-func reveal_fog(world_pos: Vector2, radius: int = 5):
-	if not fog_layer: return
-	var map_pos = fog_layer.local_to_map(world_pos)
-	for x in range(-radius, radius + 1):
-		for y in range(-radius, radius + 1):
-			if Vector2(x, y).length() <= radius:
-				fog_layer.erase_cell(map_pos + Vector2i(x, y))
-
 func register_unit(unit: Unit):
 	if unit.team in unit_counts:
 		unit_counts[unit.team] += 1
@@ -265,42 +294,110 @@ func base_destroyed(losing_team: int):
 		winner_name = "ENEMY"
 	game_ended.emit(winner_name)
 
-func save_game():
-	var save_data = []
-	var units = get_tree().get_nodes_in_group("units")
+func get_save_path() -> String:
+	var save_dir = ""
 	
+	if OS.has_feature("editor"):
+		save_dir = "res://Saves"
+	else:
+		save_dir = OS.get_executable_path().get_base_dir() + "/Saves"
+		
+	if not DirAccess.dir_exists_absolute(save_dir):
+		DirAccess.make_dir_absolute(save_dir)
+		
+	return save_dir + "/savegame.json"
+
+func save_game():
+	var save_data = {
+		"seeds": {
+			"terrain": terrain_noise.seed,
+			"forest": forest_noise.seed
+		},
+		"resources": {
+			"wood": drevo,
+			"gold": zlato,
+			"current_food": current_food,
+			"max_food": max_food
+		},
+		"upgrades": {
+			"bonus_hp": global_bonus_hp,
+			"bonus_damage": global_bonus_damage
+		},
+		"units": [],
+		"buildings": []
+	}
+	
+	var units = get_tree().get_nodes_in_group("UnitPlayer")
 	for unit in units:
-		var unit_data = {
+		save_data["units"].append({
 			"pos_x": unit.global_position.x,
 			"pos_y": unit.global_position.y,
 			"team": unit.team,
-			"scene_path": unit.scene_file_path 
-		}
-		save_data.append(unit_data)
+			"scene_path": unit.scene_file_path,
+			"health_current": unit.health_current
+		})
+		
+	var buildings = get_tree().get_nodes_in_group("Buildings")
+	for building in buildings:
+		save_data["buildings"].append({
+			"pos_x": building.global_position.x,
+			"pos_y": building.global_position.y,
+			"team": building.team,
+			"scene_path": building.scene_file_path
+		})
 	
-	var file = FileAccess.open("user://savegame.json", FileAccess.WRITE)
+	var file = FileAccess.open(get_save_path(), FileAccess.WRITE)
 	file.store_string(JSON.stringify(save_data))
-	print("Uloženo!")
+	print("Ulozeno do: ", get_save_path())
 
 func load_game():
-	if not FileAccess.file_exists("user://savegame.json"): 
-		print("Soubor s uloženou hrou neexistuje.")
+	var path = get_save_path()
+	if not FileAccess.file_exists(path): 
 		return
 	
-	var file = FileAccess.open("user://savegame.json", FileAccess.READ)
+	var file = FileAccess.open(path, FileAccess.READ)
 	var data = JSON.parse_string(file.get_as_text())
 	
-	for u in get_tree().get_nodes_in_group("units"): 
-		u.queue_free()
+	terrain_noise.seed = data["seeds"]["terrain"]
+	forest_noise.seed = data["seeds"]["forest"]
+	if terrain_layer:
+		generate_map()
 	
-	for d in data:
-		var specific_scene = load(d["scene_path"]) 
-		
+	drevo = data["resources"]["wood"]
+	zlato = data["resources"]["gold"]
+	current_food = data["resources"]["current_food"]
+	max_food = data["resources"]["max_food"]
+	
+	global_bonus_hp = data["upgrades"]["bonus_hp"]
+	global_bonus_damage = data["upgrades"]["bonus_damage"]
+	
+	resource_updated.emit("wood", drevo)
+	resource_updated.emit("gold", zlato)
+	supply_updated.emit(current_food, max_food)
+	global_upgrades_changed.emit()
+	
+	for u in get_tree().get_nodes_in_group("UnitPlayer"): 
+		u.queue_free()
+	for b in get_tree().get_nodes_in_group("Buildings"): 
+		b.queue_free()
+	
+	for u_data in data["units"]:
+		var specific_scene = load(u_data["scene_path"]) 
 		if specific_scene:
 			var new_unit = specific_scene.instantiate()
+			new_unit.global_position = Vector2(u_data["pos_x"], u_data["pos_y"])
+			new_unit.team = u_data["team"]
+			new_unit.health_current = u_data["health_current"]
+			
 			get_tree().current_scene.add_child(new_unit) 
 			
-			new_unit.global_position = Vector2(d["pos_x"], d["pos_y"])
-			new_unit.team = d["team"]
+	for b_data in data["buildings"]:
+		var specific_scene = load(b_data["scene_path"]) 
+		if specific_scene:
+			var new_building = specific_scene.instantiate()
+			new_building.global_position = Vector2(b_data["pos_x"], b_data["pos_y"])
+			new_building.team = b_data["team"]
 			
-	print("Hra úspěšně načtena!")
+			get_tree().current_scene.add_child(new_building)
+			
+	print("Nacteno z: ", path)

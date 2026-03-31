@@ -1,0 +1,6 @@
+[gd_scene load_steps=2 format=3 uid="uid://12mavgrkad3f"]
+
+[ext_resource type="Script" uid="uid://ccwmt5i0p8jju" path="res://Scripts/Units/enemy_commander.gd" id="1_gbi1g"]
+
+[node name="EnemyCommander" type="Node"]
+script = ExtResource("1_gbi1g")

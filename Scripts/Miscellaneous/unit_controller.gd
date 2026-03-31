@@ -10,9 +10,9 @@ var current_build_type: String = ""
 var ghost_sprite: Sprite2D = null
 var is_choosing_building: bool = false
 
-var scene_barracks = preload("res://Scenes/barracks.tscn")
-var scene_tower = preload("res://Scenes/defense_tower.tscn")
-var scene_tg = preload("res://Scenes/training_grounds.tscn")
+var scene_barracks = preload("res://Scenes/player_scenes/barracks.tscn")
+var scene_tower = preload("res://Scenes/player_scenes/barracks.tscn")
+var scene_tg = preload("res://Scenes/player_scenes/training_grounds.tscn")
 
 func _ready():
 	z_index = 100

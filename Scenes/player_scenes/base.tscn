@@ -26,7 +26,7 @@ border_width_right = 5
 border_width_bottom = 5
 border_color = Color(0.21568628, 0.21568628, 0.21568628, 1)
 
-[node name="Base" type="Area2D" groups=["Unit"]]
+[node name="Base" type="Area2D" groups=["Buildings", "Unit"]]
 script = ExtResource("1_jdayy")
 
 [node name="PlayerUnit" type="Node" parent="."]
