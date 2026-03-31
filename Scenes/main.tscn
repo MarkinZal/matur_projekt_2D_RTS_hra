@@ -378,12 +378,16 @@ shadow_offset = Vector2(3, 3)
 
 [node name="Main" type="Node2D"]
 script = ExtResource("1_21xkr")
+map_width = null
+map_height = null
 
 [node name="GameManager" type="Node2D" parent="." node_paths=PackedStringArray("terrain_layer", "hill_layer", "fog_layer")]
 script = ExtResource("1_21xkr")
 terrain_layer = NodePath("../TileMapLayer_Terrain")
 hill_layer = NodePath("../TileMapLayer_Hill")
 fog_layer = NodePath("../TileMapLayer_Fog")
+map_width = null
+map_height = null
 player_base_scene = ExtResource("22_ee4r6")
 
 [node name="UnitController" type="Node2D" parent="."]

@@ -7,6 +7,7 @@ class_name Unit
 @export var attack_damage: int = 1
 @export var separation_radius: float = 35.0
 @export var separation_strength: float = 200.0
+@export var vision_radius : int = 5
 
 var target_unit: Node2D = null
 var last_attack_time: float = 0.0
@@ -41,9 +42,7 @@ func _process(delta):
 	_update_animation_tree()
 	
 	if team == Team.PLAYER:
-		var gm = get_tree().get_first_node_in_group("game_manager")
-		if gm:
-			gm.reveal_fog(global_position, 5)
+		GameManager.reveal_fog(global_position, vision_radius)
 
 func _move(delta):
 	var next_position = agent.get_next_path_position()

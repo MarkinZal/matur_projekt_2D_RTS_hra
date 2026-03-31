@@ -5,6 +5,7 @@ extends CanvasLayer
 @onready var worker_panel = $Control/WorkerPanel
 @onready var mine_panel = $Control/MinePanel
 @onready var mine_akce = $Control/MinePanel/MineAkce
+@onready var pause_menu = $PauseMenu
 
 @export var wood_label : Label
 @export var gold_label : Label
@@ -23,6 +24,23 @@ func _ready():
 	
 	hide_actions()
 	hide_build_indicator()
+
+func _process(delta):
+	if Input.is_action_just_pressed("ui_cancel"):
+		toggle_pause()
+
+func toggle_pause():
+	var is_paused = not get_tree().paused
+	get_tree().paused = is_paused
+	pause_menu.visible = is_paused
+
+func _on_resume_button_pressed():
+	self.hide()
+	get_tree().paused = false
+
+func _on_main_menu_button_pressed():
+	get_tree().paused = false
+	get_tree().change_scene_to_file("res://Scenes/menu.tscn")
 
 func _update_resource(type : String, amount : int):
 	if type == "wood" and wood_label != null:
@@ -94,3 +112,7 @@ func _on_build_tg_pressed():
 
 func _on_train_soldier_button_pressed():
 	pass
+
+
+func _on_menu_button_pressed() -> void:
+	pass # Replace with function body.

@@ -1,6 +1,8 @@
-[gd_scene load_steps=2 format=3 uid="uid://c3ygdbo7ocoxv"]
+[gd_scene load_steps=4 format=3 uid="uid://c3ygdbo7ocoxv"]
 
 [ext_resource type="Script" uid="uid://dp4p746g6se7w" path="res://Scripts/GameManagement/game_ui.gd" id="1_gek4i"]
+[ext_resource type="Texture2D" uid="uid://bd5vm4lan0klp" path="res://MapThings/minimap_background.png" id="2_xjnnq"]
+[ext_resource type="Script" uid="uid://egbnh0rh2vnd" path="res://Scripts/GameManagement/minimap.gd" id="3_x63ue"]
 
 [node name="GameUI" type="CanvasLayer" node_paths=PackedStringArray("wood_label", "gold_label", "food_label", "build_indicator_label")]
 script = ExtResource("1_gek4i")
@@ -8,6 +10,36 @@ wood_label = NodePath("Control/ResourcePanel/HBoxContainer/Drevo")
 gold_label = NodePath("Control/ResourcePanel/HBoxContainer/Zlato")
 food_label = NodePath("Control/ResourcePanel/HBoxContainer/Jidlo")
 build_indicator_label = NodePath("Control/build_indicator_label")
+
+[node name="Minimap" type="TextureRect" parent="."]
+offset_left = 918.0
+offset_top = 28.0
+offset_right = 1118.0
+offset_bottom = 228.0
+texture = ExtResource("2_xjnnq")
+script = ExtResource("3_x63ue")
+
+[node name="PauseMenu" type="Panel" parent="."]
+process_mode = 3
+visible = false
+offset_right = 1152.0
+offset_bottom = 649.0
+
+[node name="ResumeButton" type="Button" parent="PauseMenu"]
+layout_mode = 0
+offset_left = 469.0
+offset_top = 230.0
+offset_right = 629.0
+offset_bottom = 305.0
+text = "Pokračovat"
+
+[node name="MenuButton" type="Button" parent="PauseMenu"]
+layout_mode = 0
+offset_left = 456.0
+offset_top = 327.0
+offset_right = 643.0
+offset_bottom = 402.0
+text = "Zpět do hlavního menu"
 
 [node name="Control" type="Control" parent="."]
 layout_mode = 3
@@ -100,3 +132,6 @@ offset_top = -185.0
 offset_right = -154.0
 offset_bottom = -133.0
 text = "Režim stavění"
+
+[connection signal="pressed" from="PauseMenu/ResumeButton" to="." method="_on_resume_button_pressed"]
+[connection signal="pressed" from="PauseMenu/MenuButton" to="." method="_on_menu_button_pressed"]

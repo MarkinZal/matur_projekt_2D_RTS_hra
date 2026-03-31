@@ -21,6 +21,7 @@ var terrain_source_id = 1
 var rock_source_id = 5
 var water_source_id = 4
 var water_rock_source_id = 6
+
 var grass_variants = [
 	Vector2i(0,0), Vector2i(1,0), Vector2i(2,0),
 	Vector2i(0,1), Vector2i(1,1), Vector2i(2,1),
@@ -199,17 +200,13 @@ func _distance_to_segment(p: Vector2, v: Vector2, w: Vector2) -> float:
 	var projection = v + t * (w - v)
 	return p.distance_to(projection)
 
-func reveal_fog(world_pos: Vector2, radius: int = 4):
-	if not fog_layer:
-		return
-		
+func reveal_fog(world_pos: Vector2, radius: int = 5):
+	if not fog_layer: return
 	var map_pos = fog_layer.local_to_map(world_pos)
-	
 	for x in range(-radius, radius + 1):
 		for y in range(-radius, radius + 1):
 			if Vector2(x, y).length() <= radius:
-				var clear_pos = map_pos + Vector2i(x, y)
-				fog_layer.erase_cell(clear_pos)
+				fog_layer.erase_cell(map_pos + Vector2i(x, y))
 
 func register_unit(unit: Unit):
 	if unit.team in unit_counts:
@@ -267,3 +264,43 @@ func base_destroyed(losing_team: int):
 	elif losing_team == Entity.Team.PLAYER:
 		winner_name = "ENEMY"
 	game_ended.emit(winner_name)
+
+func save_game():
+	var save_data = []
+	var units = get_tree().get_nodes_in_group("units")
+	
+	for unit in units:
+		var unit_data = {
+			"pos_x": unit.global_position.x,
+			"pos_y": unit.global_position.y,
+			"team": unit.team,
+			"scene_path": unit.scene_file_path 
+		}
+		save_data.append(unit_data)
+	
+	var file = FileAccess.open("user://savegame.json", FileAccess.WRITE)
+	file.store_string(JSON.stringify(save_data))
+	print("Uloženo!")
+
+func load_game():
+	if not FileAccess.file_exists("user://savegame.json"): 
+		print("Soubor s uloženou hrou neexistuje.")
+		return
+	
+	var file = FileAccess.open("user://savegame.json", FileAccess.READ)
+	var data = JSON.parse_string(file.get_as_text())
+	
+	for u in get_tree().get_nodes_in_group("units"): 
+		u.queue_free()
+	
+	for d in data:
+		var specific_scene = load(d["scene_path"]) 
+		
+		if specific_scene:
+			var new_unit = specific_scene.instantiate()
+			get_tree().current_scene.add_child(new_unit) 
+			
+			new_unit.global_position = Vector2(d["pos_x"], d["pos_y"])
+			new_unit.team = d["team"]
+			
+	print("Hra úspěšně načtena!")
