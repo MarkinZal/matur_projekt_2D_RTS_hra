@@ -5,9 +5,9 @@ class_name Archer
 
 func _ready():
 	super._ready()
-	health_max = 30
-	health_current = 30
-	move_speed = 70.0
+	health_max = 20
+	health_current = 20
+	move_speed = 30.0
 	attack_range = 100.0
 	attack_rate = 0.9
 	attack_damage = 5

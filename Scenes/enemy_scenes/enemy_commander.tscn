@@ -4,3 +4,7 @@
 
 [node name="EnemyCommander" type="Node"]
 script = ExtResource("1_gbi1g")
+decision_interval = null
+tower_cost = null
+max_army_size = null
+unit_cost = null

@@ -1,47 +1,52 @@
-extends Building
+extends Area2D
 class_name DefenseTower
 
-@export var attack_range: float = 150.0
+@export var is_player_tower: bool = true 
+@export var attack_damage: int = 15
 @export var attack_rate: float = 1.0
-@export var attack_damage: int = 10
 
-var target_unit: Node2D = null
-var last_attack_time: float = 0.0
+var target_node: Node2D = null
+var enemy_group: String = ""
+
+@onready var detection_area: Area2D = $DetectionArea
+@onready var shoot_timer: Timer = $ShootTimer
 
 func _ready():
-	can_train_units = false
+	shoot_timer.wait_time = attack_rate
+	shoot_timer.timeout.connect(_on_shoot_timer_timeout)
 	
-	health_max = 100
-	health_current = 100
+	detection_area.area_entered.connect(_on_target_detected)
+	detection_area.body_entered.connect(_on_target_detected)
+	detection_area.area_exited.connect(_on_target_lost)
+	detection_area.body_exited.connect(_on_target_lost)
+	
+	if is_player_tower:
+		add_to_group("Buildings")
+		enemy_group = "UnitEnemy"
+	else:
+		add_to_group("BuildingEnemy")
+		add_to_group("Buildings")
+		enemy_group = "UnitPlayer"
 
-func _process(delta):
-	_utok_logic()
+func _process(_delta):
+	if is_instance_valid(target_node) and shoot_timer.is_stopped():
+		shoot_timer.start()
+		_on_shoot_timer_timeout() 
+	elif not is_instance_valid(target_node) and not shoot_timer.is_stopped():
+		shoot_timer.stop()
 
-func _utok_logic():
-	if not is_instance_valid(target_unit):
-		return
-		
-	var distance = global_position.distance_to(target_unit.global_position)
-	if distance <= attack_range:
-		_try_attack()
+func _on_shoot_timer_timeout():
+	if is_instance_valid(target_node) and target_node.has_method("take_damage"):
+		target_node.take_damage(attack_damage)
 
-func _try_attack():
-	var time = Time.get_unix_time_from_system()
-	if time - last_attack_time < attack_rate:
-		return
-		
-	last_attack_time = time
-	if target_unit.has_method("take_damage"):
-		target_unit.take_damage(attack_damage)
+func _on_target_detected(node: Node2D):
+	if target_node == null and node.is_in_group(enemy_group):
+		target_node = node
 
-func _input(event):
-	pass
-
-func _on_detection_area_area_entered(area):
-	if area is Unit and area.team != team:
-		if not is_instance_valid(target_unit):
-			target_unit = area
-
-func _on_detection_area_area_exited(area):
-	if area == target_unit:
-		target_unit = null
+func _on_target_lost(node: Node2D):
+	if node == target_node:
+		target_node = null
+		for overlapping_node in detection_area.get_overlapping_areas():
+			if overlapping_node.is_in_group(enemy_group):
+				target_node = overlapping_node
+				break

@@ -1,7 +1,7 @@
 [gd_scene load_steps=47 format=3 uid="uid://4nsdvq6d3jmt"]
 
 [ext_resource type="Script" uid="uid://7a48xa6h1mva" path="res://Scripts/Units/unit.gd" id="1_ao4f7"]
-[ext_resource type="Script" uid="uid://bk6rq04y3s7e3" path="res://Scripts/Units/unit_ai.gd" id="2_64rv4"]
+[ext_resource type="PackedScene" uid="uid://e4aaka8gncce" path="res://Scenes/enemy_scenes/unit_ai.tscn" id="2_ynpu5"]
 [ext_resource type="Texture2D" uid="uid://baaisi318y53y" path="res://Assets/Characters/Soldiers/Melee/RedMelee/AxemanRed.png" id="3_ao4f7"]
 [ext_resource type="Script" uid="uid://dpy78u6qmjf3u" path="res://Scripts/Miscellaneous/unit_visual.gd" id="4_paacx"]
 [ext_resource type="Script" uid="uid://cgh2k4lw3fl4l" path="res://Scripts/GameManagement/health_bar.gd" id="5_nipgx"]
@@ -368,7 +368,6 @@ border_color = Color(0.21568628, 0.21568628, 0.21568628, 1)
 [node name="AIMelee" type="Area2D" groups=["Unit", "UnitAI"]]
 collision_mask = 2
 script = ExtResource("1_ao4f7")
-move_speed = 0.0
 attack_range = 30.0
 attack_rate = 0.7
 team = 1
@@ -388,8 +387,7 @@ libraries = {
 &"": SubResource("AnimationLibrary_u42x6")
 }
 
-[node name="AI" type="Node" parent="." groups=["UnitAI"]]
-script = ExtResource("2_64rv4")
+[node name="UnitAI" parent="." instance=ExtResource("2_ynpu5")]
 
 [node name="Sprite" type="Sprite2D" parent="."]
 position = Vector2(0, 10)

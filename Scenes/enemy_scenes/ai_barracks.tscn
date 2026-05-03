@@ -1,7 +1,6 @@
-[gd_scene load_steps=8 format=3 uid="uid://738ag1vuviab"]
+[gd_scene load_steps=7 format=3 uid="uid://738ag1vuviab"]
 
 [ext_resource type="Script" uid="uid://cdd4xgh626ok1" path="res://Scripts/Buildings/barracks.gd" id="1_7pdfh"]
-[ext_resource type="Script" uid="uid://bk6rq04y3s7e3" path="res://Scripts/Units/unit_ai.gd" id="2_2clc0"]
 [ext_resource type="Texture2D" uid="uid://bmhhb33vb32bi" path="res://Assets/Buildings/Red/RedBarracks.png" id="3_gav28"]
 [ext_resource type="Script" uid="uid://cgh2k4lw3fl4l" path="res://Scripts/GameManagement/health_bar.gd" id="4_txnnk"]
 
@@ -20,9 +19,6 @@ border_color = Color(0.21568628, 0.21568628, 0.21568628, 1)
 
 [node name="AIBarracks" type="Area2D" groups=["UnitAI"]]
 script = ExtResource("1_7pdfh")
-
-[node name="AI" type="Node" parent="." groups=["UnitAI"]]
-script = ExtResource("2_2clc0")
 
 [node name="Sprite2D" type="Sprite2D" parent="."]
 texture = ExtResource("3_gav28")

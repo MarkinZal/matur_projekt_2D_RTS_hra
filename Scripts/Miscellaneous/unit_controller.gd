@@ -131,13 +131,17 @@ func _select_entity_at_point(point : Vector2):
 	var query = PhysicsPointQueryParameters2D.new()
 	query.position = point
 	query.collide_with_areas = true
+	query.collide_with_bodies = false 
 	
-	var result = space.intersect_point(query, 1)
+	var result = space.intersect_point(query, 10)
 	
 	if not result.is_empty():
-		var collider = result[0].collider
-		if (collider is Entity and collider.team == Entity.Team.PLAYER) or collider.is_in_group("GoldMine"):
-			_add_to_selection(collider)
+		for item in result:
+			var collider = item.collider
+			
+			if (collider is Entity and collider.team == Entity.Team.PLAYER) or collider.is_in_group("GoldMine"):
+				_add_to_selection(collider)
+				break
 
 func _add_to_selection(node):
 	if not selected_units.has(node):

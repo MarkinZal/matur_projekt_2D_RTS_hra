@@ -366,7 +366,8 @@ border_color = Color(0.21568628, 0.21568628, 0.21568628, 1)
 
 [node name="Unit_Player" type="Area2D" groups=["Unit", "UnitPlayer"]]
 script = ExtResource("2_pbmdn")
-move_speed = 40.0
+move_speed = 30.0
+attack_rate = 0.9
 
 [node name="AnimationTree" type="AnimationTree" parent="."]
 tree_root = SubResource("AnimationNodeStateMachine_lxpub")

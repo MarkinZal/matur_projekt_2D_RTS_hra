@@ -22,6 +22,10 @@ func _ready():
 	GameManager.resource_updated.connect(_update_resource)
 	GameManager.supply_updated.connect(_update_supply)
 	
+	_update_resource("wood", GameManager.drevo)
+	_update_resource("gold", GameManager.zlato)
+	_update_supply(GameManager.current_food, GameManager.max_food)
+	
 	hide_actions()
 	hide_build_indicator()
 
@@ -71,6 +75,9 @@ func update_ui(selected_object):
 	hide_actions()
 
 	if selected_object == null:
+		return
+
+	if "team" in selected_object and selected_object.team == Entity.Team.ENEMY:
 		return
 
 	if selected_object is Building:

@@ -13,5 +13,8 @@ func _ready():
 		entity.health_changed.connect(_on_health_changed)
 
 func _on_health_changed(new_health : int):
+	if entity:
+		max_value = entity.health_max 
+		
 	value = new_health
 	visible = value < max_value

@@ -1,9 +1,14 @@
-[gd_scene load_steps=8 format=3 uid="uid://slul4uoka2l3"]
+[gd_scene load_steps=13 format=3 uid="uid://slul4uoka2l3"]
 
 [ext_resource type="Script" uid="uid://hogsc3032tud" path="res://Scripts/Buildings/base_building.gd" id="1_666hr"]
-[ext_resource type="Script" uid="uid://bk6rq04y3s7e3" path="res://Scripts/Units/unit_ai.gd" id="2_mms5m"]
+[ext_resource type="PackedScene" uid="uid://12mavgrkad3f" path="res://Scenes/enemy_scenes/enemy_commander.tscn" id="2_hnaty"]
 [ext_resource type="Texture2D" uid="uid://pq37daeafap7" path="res://Assets/Buildings/Red/RedKeep.png" id="3_b5tti"]
+[ext_resource type="PackedScene" uid="uid://738ag1vuviab" path="res://Scenes/enemy_scenes/ai_barracks.tscn" id="3_c7nle"]
+[ext_resource type="PackedScene" uid="uid://bgjhme62c15ce" path="res://Scenes/enemy_scenes/ai_defense_tower.tscn" id="3_mms5m"]
 [ext_resource type="Script" uid="uid://cgh2k4lw3fl4l" path="res://Scripts/GameManagement/health_bar.gd" id="4_4xokn"]
+[ext_resource type="PackedScene" uid="uid://4nsdvq6d3jmt" path="res://Scenes/enemy_scenes/ai_melee.tscn" id="4_b5tti"]
+[ext_resource type="PackedScene" uid="uid://4wn0osmucjbd" path="res://Scenes/enemy_scenes/ai_worker.tscn" id="5_t2ujg"]
+[ext_resource type="PackedScene" uid="uid://dvohn4k36j3k7" path="res://Scenes/enemy_scenes/ai_archer.tscn" id="7_dofcb"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_uwgoo"]
 size = Vector2(32, 24)
@@ -22,8 +27,14 @@ border_color = Color(0.21568628, 0.21568628, 0.21568628, 1)
 [node name="AIBase" type="Area2D" groups=["UnitAI"]]
 script = ExtResource("1_666hr")
 
-[node name="AI" type="Node" parent="." groups=["UnitAI"]]
-script = ExtResource("2_mms5m")
+[node name="EnemyCommander" parent="." instance=ExtResource("2_hnaty")]
+decision_interval = 3.0
+barracks_scene = ExtResource("3_c7nle")
+tower_scene = ExtResource("3_mms5m")
+worker_scene = ExtResource("5_t2ujg")
+melee_scene = ExtResource("4_b5tti")
+archer_scene = ExtResource("7_dofcb")
+max_army_size = 20
 
 [node name="Sprite2D" type="Sprite2D" parent="."]
 texture = ExtResource("3_b5tti")

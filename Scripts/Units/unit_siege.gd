@@ -9,7 +9,7 @@ func _ready():
 	super._ready()
 	health_max = 80
 	health_current = 80
-	move_speed = 30.0
+	move_speed = 20.0
 	attack_range = 150.0
 	attack_rate = 4.0
 	attack_damage = 15

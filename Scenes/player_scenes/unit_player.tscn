@@ -374,7 +374,6 @@ border_color = Color(0.21568628, 0.21568628, 0.21568628, 1)
 
 [node name="Unit_Player" type="Area2D" groups=["Unit", "UnitPlayer"]]
 script = ExtResource("1_u42x6")
-move_speed = 40.0
 
 [node name="AnimationTree" type="AnimationTree" parent="."]
 tree_root = SubResource("AnimationNodeStateMachine_gireg")

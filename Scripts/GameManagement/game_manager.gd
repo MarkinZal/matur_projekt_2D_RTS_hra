@@ -6,6 +6,7 @@ extends Node
 @export var map_width: int = 100
 @export var map_height: int = 100
 @export var player_base_scene: PackedScene
+@export var enemy_base_scene: PackedScene
 
 var player_start_world_pos: Vector2 
 
@@ -80,6 +81,9 @@ func _ready():
 	else:
 		terrain_noise.seed = randi()
 		forest_noise.seed = randi() + 1
+		
+		GameManager.reset_economy()
+		
 		if terrain_layer:
 			generate_map()
 	
@@ -110,11 +114,11 @@ func reveal_fog_around(world_pos: Vector2, vision_radius: int):
 func update_all_fog():
 	var units = get_tree().get_nodes_in_group("UnitPlayer")
 	for unit in units:
-		reveal_fog_around(unit.global_position, 6) 
+			reveal_fog_around(unit.global_position, 6) 
 		
 	var buildings = get_tree().get_nodes_in_group("Buildings")
 	for building in buildings:
-		reveal_fog_around(building.global_position, 8)
+			reveal_fog_around(building.global_position, 8)
 
 func generate_map():
 	terrain_layer.clear()
@@ -160,9 +164,16 @@ func generate_map():
 
 	if player_base_scene:
 		var base = player_base_scene.instantiate()
+		base.team = Entity.Team.PLAYER
 		base.global_position = player_start_world_pos
 		get_tree().current_scene.call_deferred("add_child", base)
-		
+	
+	if enemy_base_scene:
+		var e_base = enemy_base_scene.instantiate()
+		e_base.team = Entity.Team.ENEMY
+		e_base.global_position = Vector2(enemy_spawn.x * 16, enemy_spawn.y * 16) 
+		get_tree().current_scene.call_deferred("add_child", e_base)
+	
 
 func _build_large_rock(x: int, y: int):
 	if x + 2 >= map_width or y + 2 >= map_height: 
@@ -401,3 +412,17 @@ func load_game():
 			get_tree().current_scene.add_child(new_building)
 			
 	print("Nacteno z: ", path)
+
+func reset_economy():
+	drevo = 100
+	zlato = 100
+	current_food = 0
+	max_food = 10
+	
+	global_bonus_hp = 0
+	global_bonus_damage = 0
+	
+	resource_updated.emit("wood", drevo)
+	resource_updated.emit("gold", zlato)
+	supply_updated.emit(current_food, max_food)
+	global_upgrades_changed.emit()

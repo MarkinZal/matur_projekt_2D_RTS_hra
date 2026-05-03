@@ -1,10 +1,10 @@
 extends Entity
 class_name Unit
 
-@export var move_speed: float = 30.0
+@export var move_speed: float = 40.0
 @export var attack_range: float = 20.0
 @export var attack_rate: float = 0.5
-@export var attack_damage: int = 1
+@export var attack_damage: int = 5
 @export var separation_radius: float = 35.0
 @export var separation_strength: float = 200.0
 @export var vision_radius : int = 5
@@ -20,16 +20,22 @@ var base_attack_damage: int
 var current_velocity: Vector2 = Vector2.ZERO
 var last_facing_direction: Vector2 = Vector2.DOWN
 var is_attacking: bool = false
+@export var is_worker: bool = false
 
 func _ready():
 	add_to_group("Unit")
-	add_to_group("UnitPlayer")
-	GameManager.register_unit(self)
+	
 	base_health_max = health_max
 	base_attack_damage = attack_damage
+	
 	if team == Team.PLAYER:
+		add_to_group("UnitPlayer")
 		GameManager.global_upgrades_changed.connect(_on_upgrade_received)
 		_on_upgrade_received()
+	else:
+		add_to_group("UnitEnemy")
+		
+	GameManager.register_unit(self)
 		
 	if animation_tree:
 		animation_tree.active = true
